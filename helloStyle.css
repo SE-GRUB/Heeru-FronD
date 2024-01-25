@@ -1,0 +1,63 @@
+body{
+    
+}
+
+h1{
+    
+}
+
+p{
+   
+}
+
+
+.navbar{
+    display: flex;
+    background: #fff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 25%);
+    padding: 30px 20px;
+}
+
+.leftside a{
+    text-decoration: none;
+    font-family: 'Inter';
+    color: black;
+    padding: 15px 15px;
+}
+
+.leftside{
+    justify-content: space-between;
+    
+}
+
+.rightside a{
+    text-decoration: none;
+    font-family: 'Inter';
+    color: black;
+}
+
+.beranda{
+    color: #000;
+    background-color: aquamarine;
+    border-radius: 100px;
+    text-align: center;
+    
+}
+
+.rightside{
+    margin-left: auto;
+
+}
+
+
+
+
+.isinya{
+    background-color: green;
+}
+
+
+.slide{
+    width: 100px;
+    height: 100px;
+}
