@@ -18,22 +18,30 @@ p{
 
 .formnya{
     margin-top: 145px;
+    display: grid;
+    justify-content: center;
 }
 
 .mb-3 input[type="text"]{
+    width: 291px;
     background-color: #F1F1F5;
     color: black;
+    
 }
 
     .mb-3 input[type="text"]::placeholder{
         color: #D6D6D6;
     }
 
+.d-grid{
+    margin-top: 84px;
+}
+
 button[type="button"]{
+    width: 100%;
     background-color: #348AFA;
     border-color: #348AFA;
     border-radius: 20px;
-    margin-top: 84px;
 }
 
 .needhelp{
