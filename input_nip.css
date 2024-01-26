@@ -22,11 +22,10 @@ p{
     justify-content: center;
 }
 
-.mb-3 input[type="text"]{
+.mb-3 input[type="number"]{
     width: 291px;
     background-color: #F1F1F5;
     color: black;
-    
 }
 
     .mb-3 input[type="text"]::placeholder{
@@ -35,10 +34,12 @@ p{
 
 .d-grid{
     margin-top: 84px;
+    display: flex;
+    justify-content: center;
 }
 
 button[type="button"]{
-    width: 100%;
+    width: 255px;
     background-color: #348AFA;
     border-color: #348AFA;
     border-radius: 20px;
@@ -49,6 +50,11 @@ button[type="button"]{
     margin-top: 25px;
     font-size: 12px;
 }
+
+.hide{
+    display: none;
+    font-size: 12px;
+  }
 
 .circle{
     height: 100vh;
