@@ -1,20 +1,13 @@
 /* DIPAKE DI : 
-    input_nip
-    sign_up2 
+    setup
     
 */
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
 
 
 .container-fluid{
     justify-content: center;
     text-align: center;
-    padding-top: 150px;
+    padding-top: 100px;
     font-family: 'Poppins';
 }
 
@@ -29,8 +22,26 @@ p{
     font-size: 14px;
 }
 
+.photoprofile{
+    display: flex;
+    justify-content: center;
+    
+}
+
+.lingkarannya{
+    background-color: #D6D6D6;
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
 .formnya{
-    margin-top: 145px;
+    margin-top: 40px;
     display: grid;
     justify-content: center;
 }
@@ -111,7 +122,11 @@ button[type="button"]{
 
 .hide{
     display: none;
-  }
+}
+
+.hide2{
+display: none;
+}
 
 .circle{
     height: 100vh;
