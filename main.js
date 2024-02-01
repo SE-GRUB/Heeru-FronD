@@ -4,14 +4,22 @@ let no_telp = "";
 let user_id = "";
 let username = "";
 
+var histhost
+
+// histhost='http://localhost:8000/'
+// histhost='http://47.245.121.87/Heeru-BackD/public/'
+histhost='https://enp.lahoras.my.id/'
+
 async function requestdata(param){
-    return fetch(`http://localhost:8000/api/${param}`)
+    return fetch(`${histhost}api/${param}`)
         .then(response => response.json())
-        .then(data => alldata = data);
+        .then(data => alldata = data)
 }
 
 function initpoin() {
+    alert("jalan 1")
     async function ceknip() {
+        alert("Jalan 2")
         var inputField = document.getElementById("nipinput");
         var errortext=document.getElementById("errortext")
            
@@ -22,6 +30,7 @@ function initpoin() {
         } else {
             await requestdata(`checkuser?nip=${inputField.value}`);
             try {
+                alert("Ga Jelas")
                 nip = alldata.user["nip"];
                 username = alldata.user["name"];
                 localStorage.setItem('username', username);
