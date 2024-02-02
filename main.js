@@ -77,6 +77,7 @@ function initpoin2(){
             if (inputField.value==phonenumber) {
                 window.location.href="./otp_signup.html"            
             }else{
+                inputField.value = phoneNumber;
                 errortext.innerHTML="Phone number is not registered, please contact your PIC"
                 errortext.classList.remove("hide")
             }
