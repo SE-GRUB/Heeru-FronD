@@ -17,9 +17,9 @@ async function requestdata(param){
 }
 
 function initpoin() {
-    alert("jalan 1")
+    // alert("jalan 1")
     async function ceknip() {
-        alert("Jalan 2")
+        // alert("Jalan 2")
         var inputField = document.getElementById("nipinput");
         var errortext=document.getElementById("errortext")
            
@@ -30,7 +30,7 @@ function initpoin() {
         } else {
             await requestdata(`checkuser?nip=${inputField.value}`);
             try {
-                alert("Ga Jelas")
+                // alert("Ga Jelas")
                 nip = alldata.user["nip"];
                 username = alldata.user["name"];
                 localStorage.setItem('username', username);
