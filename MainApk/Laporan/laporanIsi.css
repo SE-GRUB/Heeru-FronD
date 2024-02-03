@@ -1,0 +1,103 @@
+.container{
+    font-family: 'Poppins';    
+}
+
+/* PROGRESSBAR */
+
+.progressBar{
+    margin: 35px 42px 45px 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+}
+
+.garis{
+    background-color: #E2E5EA;
+    width: 291px;
+    height: 2px;
+    border-radius: 100%;
+}
+
+.lingkaransss{
+    position: absolute;
+    display: flex;
+    column-gap: 115px;
+    justify-content: space-evenly;
+}
+
+.lingkaran{
+    background-color: #C6D2E2;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+
+/* ISI KATEGORI */
+.isikategori{
+    margin: 45px 25px 1px 25px;
+}
+
+.judul{
+    font-size: 14px;
+    font-weight: 500;
+    color: #64A5F9;
+}
+
+.row{
+    margin-top: 10px !important;
+}
+
+.col{
+    width: 102px;
+    height: 102px;
+    border-radius: 8px;
+    color: white;
+    position: relative;
+    margin-right: 10px;
+}
+
+.teks{
+    font-size: 12px;
+    bottom: 0;
+    left: 0;
+    position: absolute;   
+    margin: 8px;
+}
+
+.bobot5{
+    background-color: #245595
+}
+
+.bobot4{
+    background-color: #3977C6;
+}
+
+.bobot3{
+    background-color: #69A2EC;
+}
+
+.bobot2{
+    background-color: #7DB5FF;
+}
+
+
+/* BUTTON */
+
+.buttonplace{
+    display: flex;
+    justify-content: center;
+    margin: 190px 42px 1px 42px;
+}
+
+.buttonnext{
+    background-color: #64A5F9;
+    border-radius: 20px;
+    border: 0;
+    width: 291px;
+    height: 41px;
+    color: white;
+    font-size: 15px;
+    font-weight: 400;
+}

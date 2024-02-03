@@ -51,7 +51,8 @@
 .pernomor{
     display: grid;
     grid-template-columns: auto auto auto;
-    margin: 35px 27px 30px 27px;
+    margin: 35px 27px 30px 20px;
+    align-items: center;
 }
 
 .nomornya{
@@ -66,7 +67,8 @@
 }
 
 .penjelasan{
-    padding: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
     font-size: 12px;
     text-align: justify;
     width: 265px;
@@ -75,7 +77,7 @@
 .buttonplace{
     display: flex;
     justify-content: center;
-    margin-top: 100px;
+    padding-top: 150px;
 }
 
 .buttonnext{
@@ -86,14 +88,32 @@
     height: 41px;
     color: white;
     font-size: 15px;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 
 .circle{
-    height: 100vh;
-    width: 375px;
+    height: 92%;
+    width: 97%;
     background-image: radial-gradient(circle at right, rgba(100, 165, 249, 45%),white 70%);
     position: absolute;
     z-index: -1;
+}
+
+
+
+/* THANK YOU */
+.makasi{
+    padding-top: 300px;
+    padding-left: 10px;
+}
+
+.judulty{
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.desc{
+    font-size: 12px;
+    font-weight: 400;
 }
