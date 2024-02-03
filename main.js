@@ -7,9 +7,9 @@ let email = "";
 
 var histhost
 
-// histhost='http://localhost:8000/'
+histhost='http://127.0.0.1:8000/'
 // histhost='http://47.245.121.87/Heeru-BackD/public/'
-histhost='https://enp.lahoras.my.id/'
+// histhost='https://enp.lahoras.my.id/'
 
 async function requestdata(param){
     return fetch(`${histhost}api/${param}`)
@@ -167,6 +167,37 @@ function initpoin3() {
                 }
             }
         }
+        return false;
+    });
+}
+
+function initpoin4() {
+    var names = localStorage.getItem('username');
+    var dataNama = document.getElementById("databaseName");
+
+    dataNama.innerHTML = names;
+
+    document.getElementById("submitBtn").addEventListener("click", async function() {
+        var password = document.getElementById('passwordinput');
+        var pass = localStorage.getItem('password');
+        var errortext=document.getElementById("errortext");     
+        
+        
+         if (password.value.trim() === "") {
+                errortext.innerHTML="Please input your Password"
+                errortext.classList.remove("hide")
+            }else{
+                await requestdata(`checkPass?password=${password.value}&pass=${pass}`)
+
+                if (alldata[0] === 200) {
+                    errortext.classList.add("hide");
+                    window.location.href = "./MainApk/home.html";
+                    return true;
+                } else {
+                    errortext.innerHTML = "Password Incorrect";
+                    errortext.classList.remove("hide");
+                }
+            }
         return false;
     });
 }

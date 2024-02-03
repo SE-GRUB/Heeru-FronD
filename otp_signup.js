@@ -12,7 +12,12 @@ document.getElementById("submitBtn").addEventListener("click", function() {
     }else{
         if (inputField.value==otp) {
             // alert("user ada")
-            window.location.href="./setup.html"            
+            var pass = localStorage.getItem('password')
+            if(pass == 'null'){
+                window.location.href="./setup.html"          
+            } else{
+                window.location.href="./login.html"          
+            }
         }else{
             errortext.innerHTML="Error! OTP code incorrect"
             errortext.classList.remove("hide")
