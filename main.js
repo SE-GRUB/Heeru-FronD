@@ -401,22 +401,24 @@ async function initpoin7(){
             var reader = new FileReader();
             reader.onload = async function (e) {
                 var base64Content = e.target.result.split(",")[1];
-                await requestdata(`makereport?file=${encodeURIComponent(base64Content)}&title=${title}&details=${details}&category_id=${category_id}&user_id=${user_id}`)
+                try {
+                    await requestdata(`makereport?evidence=${encodeURIComponent(base64Content)}&title=${title}&details=${details}&category_id=${category_id}&user_id=${user_id}`)
+
+                    if (alldata.success) {
+                        localStorage.removeItem('title');
+                        localStorage.removeItem('category_id');
+                        localStorage.removeItem('details');
+                        window.location.href = "laporanThankyou.html";
+                    }
+                } catch (error) {
+                    // Handle any errors
+                    console.error('Error:', error);
+                }
+                
                 // console.log(`makereport?file=${encodeURIComponent(base64Content)}&title=${title}&details=${details}&category_id=${category_id}&user_id=${user_id}`);
             };
 
             reader.readAsDataURL(file);
-
-            // await requestdata(`makereport?evidence=DUMMY_EVIDENCE&title=${title}&details=${details}&category_id=${category_id}&user_id=${user_id}`)
-
-            if(alldata.success){
-                localStorage.removeItem('title');
-                localStorage.removeItem('category_id');
-                localStorage.removeItem('details');
-                window.location.href = "laporanThankyou.html";
-
-            }
-            // console.log(alldata.success)
         });
     })
 }
