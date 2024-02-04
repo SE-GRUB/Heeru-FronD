@@ -208,6 +208,7 @@ async function initpoin5() {
 
     var container = document.getElementById('containerisi');
 
+
     for(var i = 0; i < Object.keys(alldata.report_categories).length; i+=3){
         var row = document.createElement('div');
         row.className = 'row';
@@ -232,6 +233,7 @@ async function initpoin5() {
         container.appendChild(row);
     }
 
+    
     for (var i = 0; i < Object.keys(alldata.report_categories).length; i++) {
         var categoryId = alldata.report_categories[i].id;
         
@@ -244,9 +246,19 @@ async function initpoin5() {
         return function () {
             // console.log(categoryId);
             localStorage.setItem('category_id', categoryId);
-            window.location.href = 'laporanWH.html'
+    
+            // Show the button by setting its display property to 'block'
+            document.getElementById('buttonplace').style.display = 'block';
         };
     }
+    
+    // Example usage
+    var clickListener = createClickListener(categoryId);
+    document.getElementById('buttonplace').addEventListener('click', clickListener);
+    
+
+
+
     
 }
 
