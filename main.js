@@ -7,9 +7,9 @@ let email = "";
 
 var histhost
 
-// histhost='http://127.0.0.1:8000/'
+histhost='http://127.0.0.1:8000/'
 // histhost='http://47.245.121.87/Heeru-BackD/public/'
-histhost='https://enp.lahoras.my.id/'
+// histhost='https://enp.lahoras.my.id/'
 
 async function requestdata(param){
     return fetch(`${histhost}api/${param}`)
@@ -201,3 +201,52 @@ function initpoin4() {
         return false;
     });
 }
+
+
+async function initpoin5() {
+    await requestdata(`categoryName`)
+
+    var container = document.getElementById('containerisi');
+
+    for(var i = 0; i < Object.keys(alldata.report_categories).length; i+=3){
+        var row = document.createElement('div');
+        row.className = 'row';
+        for(var j = 0; j < 3 && (i + j) < Object.keys(alldata.report_categories).length; j++){
+            var weight = alldata.report_categories[i + j].weight;
+            var category_name = alldata.report_categories[i + j].category_name;
+            var category_id = alldata.report_categories[i + j].id;
+
+
+            var colElement = document.createElement('button');
+            colElement.className = 'col bobot' + weight;
+            colElement.id = category_id;
+
+            var teksElement = document.createElement('div');
+            teksElement.className = 'teks';
+            teksElement.id = 'col bobot' + weight;
+            teksElement.textContent = category_name;
+
+            colElement.appendChild(teksElement);
+            row.appendChild(colElement);
+        }
+        container.appendChild(row);
+    }
+
+    for (var i = 0; i < Object.keys(alldata.report_categories).length; i++) {
+        var categoryId = alldata.report_categories[i].id;
+        
+        // console.log("Get Element by ID : " + categoryId);
+    
+        document.getElementById(categoryId).addEventListener("click", createClickListener(categoryId));
+    }
+    
+    function createClickListener(categoryId) {
+        return function () {
+            // console.log(categoryId);
+            localStorage.setItem('category_id', categoryId);
+            window.location.href = 'laporanWH.html'
+        };
+    }
+    
+}
+
