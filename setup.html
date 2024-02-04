@@ -31,11 +31,26 @@
       </h2>
       <p>Let us know you more</p>
 
-      <div class="photoprofile mb-">
+      <!-- <div class="photoprofile mb-">
         <div class="lingkarannya">
-          <img src="./asset/editpp.png" alt="" />
+            <input type="file" id="fileInput" accept="image/*" style="display: none;" />
+            <label for="fileInput" class="edit-icon" id="labelForFileInput">
+                <img src="./asset/editpp.png" alt="Edit Profile" />
+            </label>
         </div>
-      </div>
+      </div>    -->
+
+      <div class="photoprofile mb-">
+        <div class="lingkarannya" id="profileImageContainer">
+          <label for="fileInput" class="edit-icon" id="labelForFileInput">
+              <!-- <label class="edit-icon"> -->
+                <img id="pensil" src="./asset/editpp.png" alt="" />
+              <!-- </label> -->
+              <img style="display: none;" id="profileImage" src="" alt="" />
+              <input type="file" id="fileInput" accept="image/*" style="display: none;" />
+          </label>
+        </div>
+    </div>
 
       <div class="formnya">
         <div class="mb-3">

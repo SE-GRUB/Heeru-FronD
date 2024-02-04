@@ -100,6 +100,21 @@ function initpoin3() {
         }
     });
 
+    document.getElementById('fileInput').addEventListener('change', function (event) {
+        const fileInput = event.target;
+        document.getElementById("pensil").style.display = "none";
+        if (fileInput.files && fileInput.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                document.getElementById('profileImage').src = e.target.result;
+                document.getElementById("profileImage").style.display = "block";
+            };
+
+            reader.readAsDataURL(fileInput.files[0]);
+        }
+    });
+
     document.getElementById("submitBtn").addEventListener("click", async function() {
         var email = document.getElementById("emailinput");
         var password = document.getElementById('passwordinput');
