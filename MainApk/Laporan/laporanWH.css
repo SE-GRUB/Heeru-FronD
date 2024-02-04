@@ -109,3 +109,13 @@
     width: 150px;
     height: 150px;
 }
+
+/* error text */
+.text-danger{
+    font-size: smaller;
+}
+
+/* tag i */
+.i {
+    font-size: smaller;
+}
