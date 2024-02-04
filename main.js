@@ -242,29 +242,39 @@ async function initpoin5() {
         document.getElementById(categoryId).addEventListener("click", createClickListener(categoryId));
     }
 
-    var currentClickedElement = null;
-    document.getElementById('buttonnext').style.display = 'none';
+    var currentClickedCategoryId = null;
 
     function createClickListener(categoryId) {
         return function () {
+            var buttonNext = document.getElementById('buttonnext');
             var element = document.getElementById(categoryId);
 
-            if (currentClickedElement !== null) {
+            if (currentClickedCategoryId !== null) {
                 // Remove 'clicked' class from the previously clicked element
-                currentClickedElement.classList.remove('clicked');
+                var previousClickedElement = document.getElementById(currentClickedCategoryId);
+                previousClickedElement.classList.remove('clicked');
+    
+                // Reset localStorage and hide the button if the same element is clicked again
+                if (currentClickedCategoryId === categoryId) {
+                    localStorage.removeItem('category_id');
+                    buttonNext.style.display = 'none';
+                    currentClickedCategoryId = null;
+                    return;
+                }
             }
 
-            // If the clicked element is not the currently clicked one
-            if (currentClickedElement !== element) {
-                localStorage.setItem('category_id', categoryId);
-                document.getElementById('buttonnext').style.display = 'block';
-                element.classList.add('clicked');
-                currentClickedElement = element;
-            } else {
-                // Toggle the display of the 'buttonnext' element if the same element is clicked again
-                var buttonNext = document.getElementById('buttonnext');
-                buttonNext.style.display = buttonNext.style.display === 'none' ? 'block' : 'none';
-            }
+           // Store categoryId in localStorage
+            localStorage.setItem('category_id', categoryId);
+            // console.log(localStorage.getItem('category_id'));
+
+            // Add 'clicked' class to the clicked element
+            element.classList.add('clicked');
+
+            // Toggle the display of the 'buttonnext' element
+            buttonNext.style.display = buttonNext.style.display === 'none' ? 'block' : 'none';
+
+            // Update currentClickedCategoryId
+            currentClickedCategoryId = categoryId;
         };
     }
 }
