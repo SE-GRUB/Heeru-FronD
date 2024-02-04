@@ -56,6 +56,11 @@
     color: white;
     position: relative;
     margin-right: 10px;
+
+    /* Custom col as button */
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 }
 
 .teks{
@@ -100,4 +105,10 @@
     color: white;
     font-size: 15px;
     font-weight: 400;
+}
+
+.clicked {
+    background-color: #ADD8E6; /* Change the background color to red when clicked */
+    color: #ffffff; /* Change the text color to white when clicked */
+    /* Add any other styles you want to apply to the clicked element */
 }

@@ -237,28 +237,38 @@ async function initpoin5() {
     for (var i = 0; i < Object.keys(alldata.report_categories).length; i++) {
         var categoryId = alldata.report_categories[i].id;
         
-        // console.log("Get Element by ID : " + categoryId);
+        console.log("Get Element by ID : " + categoryId);
     
         document.getElementById(categoryId).addEventListener("click", createClickListener(categoryId));
     }
-    
+
+    var currentClickedElement = null;
+    document.getElementById('buttonnext').style.display = 'none';
+
     function createClickListener(categoryId) {
         return function () {
-            // console.log(categoryId);
-            localStorage.setItem('category_id', categoryId);
-    
-            // Show the button by setting its display property to 'block'
-            document.getElementById('buttonplace').style.display = 'block';
+            var element = document.getElementById(categoryId);
+
+            if (currentClickedElement !== null) {
+                // Remove 'clicked' class from the previously clicked element
+                currentClickedElement.classList.remove('clicked');
+            }
+
+            // If the clicked element is not the currently clicked one
+            if (currentClickedElement !== element) {
+                localStorage.setItem('category_id', categoryId);
+                document.getElementById('buttonnext').style.display = 'block';
+                element.classList.add('clicked');
+                currentClickedElement = element;
+            } else {
+                // Toggle the display of the 'buttonnext' element if the same element is clicked again
+                var buttonNext = document.getElementById('buttonnext');
+                buttonNext.style.display = buttonNext.style.display === 'none' ? 'block' : 'none';
+            }
         };
     }
-    
-    // Example usage
-    var clickListener = createClickListener(categoryId);
-    document.getElementById('buttonplace').addEventListener('click', clickListener);
-    
 
-
-
-    
 }
+    
+
 
