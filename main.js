@@ -423,29 +423,38 @@ async function initpoin7(){
             var category_id = localStorage.getItem('category_id');
             var user_id = localStorage.getItem('user_id');
             var details = localStorage.getItem('details');
+            var evidence = document.getElementById("formFileMultiple").files[0];
 
-            var file = evidence.files[0];
-            var reader = new FileReader();
-            reader.onload = async function (e) {
-                var base64Content = e.target.result.split(",")[1];
-                try {
-                    await requestdata(`makereport?evidence=${encodeURIComponent(base64Content)}&title=${title}&details=${details}&category_id=${category_id}&user_id=${user_id}`)
+            var formData = new FormData();
+            formData.append('evidence', evidence);
 
-                    if (alldata.success) {
+            formData.append('title', title);
+            formData.append('details', details);
+            formData.append('category_id', category_id);
+            formData.append('user_id', user_id);
+
+            await $.ajax({
+                url: `${histhost}api/makereport`,
+                method: 'POST',
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function (response) {
+                    // Handle success response
+                    if (response.success) {
                         localStorage.removeItem('title');
                         localStorage.removeItem('category_id');
                         localStorage.removeItem('details');
                         window.location.href = "laporanThankyou.html";
+                    } else {
+                        console.error('Error:', response.message);
                     }
-                } catch (error) {
-                    // Handle any errors
+                },
+                error: function (error) {
+                    // Handle error
                     console.error('Error:', error);
                 }
-                
-                // console.log(`makereport?file=${encodeURIComponent(base64Content)}&title=${title}&details=${details}&category_id=${category_id}&user_id=${user_id}`);
-            };
-
-            reader.readAsDataURL(file);
+            });
         });
     })
 }
