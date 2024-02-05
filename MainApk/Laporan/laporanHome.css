@@ -1,3 +1,7 @@
+body{
+    overflow: hidden;
+}
+
 .container{
     font-family: 'Poppins';
 }
@@ -10,9 +14,9 @@
     bottom: 0;
     right: 0;
     left: 0;
-    height: 66px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    /* height: 66px; */
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
     text-align: center;
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -27,74 +31,62 @@
 }
 
 .nonactivate{
-    font-size: 36px !important;
+    font-size: 35px !important;
     color: #C6D2E2;
 }
 
 .active{
-    font-size: 36px !important;
+    font-size: 35px !important;
     color: #64A5F9;
+    
 }
 
 
 /* ISI LAPORAN */
-
-.judulnya{
+.judul{
     font-size: 14px;
     font-weight: 500;
-    display: flex;
-    justify-content: center;
-    margin-top: 50px;
-
+    padding-top: 4rem;
+    margin-bottom: 3.5rem;
 }
 
-.pernomor{
-    display: grid;
-    grid-template-columns: auto auto auto;
-    margin: 35px 27px 30px 20px;
-    align-items: center;
-}
-
-.nomornya{
-    width: 50px;
-    height: 50px;
-    background-color: #348AFA;
-    color: white;
-    border-radius: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.isi{
+    font-size: 12px;
 }
 
 .penjelasan{
-    padding-left: 10px;
-    padding-top: 10px;
-    font-size: 12px;
-    text-align: justify;
-    width: 265px;
+    margin-bottom: 3rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
 }
 
-.buttonplace{
-    display: flex;
-    justify-content: center;
-    padding-top: 150px;
-}
-
-.buttonnext{
-    background-color: #64A5F9;
-    border-radius: 20px;
-    border: 0;
-    width: 291px;
-    height: 41px;
+.bulet{
+    background-color: #348AFA;
     color: white;
-    font-size: 15px;
-    font-weight: 400;
+    border-radius: 100%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+.tombol{
+    margin-top: 8rem;
+    border-radius: 50%;
+    color: #64A5F9;
+}
+
+.btn{
+    background-color: #64A5F9 !important;
+    font-size: 14px !important;
+    border-radius: 20px !important;
+    border: 0 !important;
+}
 
 .circle{
-    height: 92%;
-    width: 97%;
+    height: 100vh;
+    width: 100vw;
     background-image: radial-gradient(circle at right, rgba(100, 165, 249, 45%),white 70%);
     position: absolute;
     z-index: -1;

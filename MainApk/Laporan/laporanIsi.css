@@ -36,7 +36,16 @@
 
 /* ISI KATEGORI */
 .isikategori{
-    margin: 45px 25px 1px 25px;
+    /* margin: 45px 25px 1px 25px; */
+}
+
+.edit{
+    font-size: 12px;
+    padding: 0.4rem;
+    color: white;
+    height: 6rem;
+    border: 0;
+    /* transform: scale(1); */
 }
 
 .judul{
@@ -45,26 +54,26 @@
     color: #64A5F9;
 }
 
-.row{
+/* .row{
     margin-top: 10px !important;
-}
+} */
 
-.col{
+/* .col{
     width: 102px;
     height: 102px;
     border-radius: 8px;
     color: white;
     position: relative;
-    margin-right: 10px;
-}
+    padding-right: 10px;
+} */
 
-.teks{
+/* .teks{
     font-size: 12px;
     bottom: 0;
     left: 0;
     position: absolute;   
     margin: 8px;
-}
+} */
 
 .bobot5{
     background-color: #245595
@@ -82,22 +91,22 @@
     background-color: #7DB5FF;
 }
 
+.pw{
+    padding: 5px;
+}
+
 
 /* BUTTON */
 
-.buttonplace{
-    display: flex;
-    justify-content: center;
-    margin: 190px 42px 1px 42px;
+.tombol{   
+    margin-top: 8rem;
+    border-radius: 50%;
+    color: #64A5F9;
 }
 
-.buttonnext{
-    background-color: #64A5F9;
-    border-radius: 20px;
-    border: 0;
-    width: 291px;
-    height: 41px;
-    color: white;
-    font-size: 15px;
-    font-weight: 400;
+.bawah{
+    background-color: #64A5F9 !important;
+    font-size: 15px !important;
+    border-radius: 20px !important;
+    border: 0 !important;
 }

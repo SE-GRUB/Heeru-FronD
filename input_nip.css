@@ -45,15 +45,18 @@ p{
         color: #D6D6D6;
     }
 
-.mb-3 input[type="tel"]{
-    width: 310px;
+.mb3{
+    width: 80vw !important;
+}
+
+.mb3 input[type="tel"]{
     background-color: #F1F1F5;
     color: black;
 }
 
-    .mb-3 input[type="tel"]::placeholder{
-        color: #D6D6D6;
-    }
+.mb3 input[type="tel"]::placeholder{
+    color: #D6D6D6;
+}
 
 .mb-3 input[type="text"]{
     width: 310px;

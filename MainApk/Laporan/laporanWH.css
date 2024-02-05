@@ -56,7 +56,20 @@
     color: #64A5F9;
 }
 
-.tanya{
+.edit{
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.tambahan{
+    background-color: #F1F1F5 !important;
+}
+
+.tambahan::placeholder{
+    color: #d6d6d6 !important;
+}
+
+/* .tanya{
     font-size: 14px;
     font-weight: 500;
 }
@@ -71,13 +84,8 @@
         font-size: 12px;
         color: #D6D6D6;
     }
+ */
 
-
-
-.how{
-    height: 200px;
-    
-}
 
 .hide{
     display: none;
