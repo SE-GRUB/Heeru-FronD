@@ -7,8 +7,8 @@ let email = "";
 
 var histhost
 
-histhost='http://127.0.0.1:8000/'
-// histhost='http://47.245.121.87/Heeru-BackD/public/'
+// histhost='http://127.0.0.1:8000/'
+histhost='http://47.245.121.87/Heeru-BackD/public/'
 // histhost='https://enp.lahoras.my.id/'
 
 async function requestdata(param){
@@ -97,6 +97,21 @@ function initpoin3() {
         var storedEmail = localStorage.getItem('email');
         if (storedEmail !== null) {
             emailInput.value = storedEmail;
+        }
+    });
+
+    document.getElementById('fileInput').addEventListener('change', function (event) {
+        const fileInput = event.target;
+        document.getElementById("pensil").style.display = "none";
+        if (fileInput.files && fileInput.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                document.getElementById('profileImage').src = e.target.result;
+                document.getElementById("profileImage").style.display = "block";
+            };
+
+            reader.readAsDataURL(fileInput.files[0]);
         }
     });
 
@@ -241,21 +256,45 @@ async function initpoin5() {
     
         document.getElementById(categoryId).addEventListener("click", createClickListener(categoryId));
     }
-    
+
+    var currentClickedCategoryId = null;
+
     function createClickListener(categoryId) {
         return function () {
-            // console.log(categoryId);
-            localStorage.setItem('category_id', categoryId);
+            var buttonNext = document.getElementById('buttonnext');
+            var element = document.getElementById(categoryId);
+
+            if (currentClickedCategoryId !== null) {
+                // Remove 'clicked' class from the previously clicked element
+                var previousClickedElement = document.getElementById(currentClickedCategoryId);
+                previousClickedElement.classList.remove('clicked');
     
-            // Show the button by setting its display property to 'block'
-            // document.getElementById('buttonplace').style.display = 'block';
+                // Reset localStorage and hide the button if the same element is clicked again
+                if (currentClickedCategoryId === categoryId) {
+                    localStorage.removeItem('category_id');
+                    buttonNext.style.display = 'none';
+                    currentClickedCategoryId = null;
+                    return;
+                }
+            }
+
+           // Store categoryId in localStorage
+            localStorage.setItem('category_id', categoryId);
+            // console.log(localStorage.getItem('category_id'));
+
+            // Add 'clicked' class to the clicked element
+            element.classList.add('clicked');
+
+            // Toggle the display of the 'buttonnext' element
+            buttonNext.style.display = buttonNext.style.display === 'none' ? 'block' : 'none';
+
+            // Update currentClickedCategoryId
+            currentClickedCategoryId = categoryId;
         };
     }
-    
-    // // Example usage
-    // var clickListener = createClickListener(categoryId);
-    // document.getElementById('buttonplace').addEventListener('click', clickListener);
 }
+    
+
 
 function initpoin6() {
     document.getElementById("nextBtn").addEventListener("click", async function() {
@@ -387,22 +426,24 @@ async function initpoin7(){
             var reader = new FileReader();
             reader.onload = async function (e) {
                 var base64Content = e.target.result.split(",")[1];
-                await requestdata(`makereport?file=${encodeURIComponent(base64Content)}&title=${title}&details=${details}&category_id=${category_id}&user_id=${user_id}`)
+                try {
+                    await requestdata(`makereport?evidence=${encodeURIComponent(base64Content)}&title=${title}&details=${details}&category_id=${category_id}&user_id=${user_id}`)
+
+                    if (alldata.success) {
+                        localStorage.removeItem('title');
+                        localStorage.removeItem('category_id');
+                        localStorage.removeItem('details');
+                        window.location.href = "laporanThankyou.html";
+                    }
+                } catch (error) {
+                    // Handle any errors
+                    console.error('Error:', error);
+                }
+                
                 // console.log(`makereport?file=${encodeURIComponent(base64Content)}&title=${title}&details=${details}&category_id=${category_id}&user_id=${user_id}`);
             };
 
             reader.readAsDataURL(file);
-
-            // await requestdata(`makereport?evidence=DUMMY_EVIDENCE&title=${title}&details=${details}&category_id=${category_id}&user_id=${user_id}`)
-
-            if(alldata.success){
-                localStorage.removeItem('title');
-                localStorage.removeItem('category_id');
-                localStorage.removeItem('details');
-                window.location.href = "laporanThankyou.html";
-
-            }
-            // console.log(alldata.success)
         });
     })
 }
