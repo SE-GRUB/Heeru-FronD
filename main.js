@@ -7,8 +7,8 @@ let email = "";
 
 var histhost
 
-histhost='http://127.0.0.1:8000/'
-// histhost='http://47.245.121.87/Heeru-BackD/public/'
+// histhost='http://127.0.0.1:8000/'
+histhost='http://47.245.121.87/Heeru-BackD/public/'
 // histhost='https://enp.lahoras.my.id/'
 
 async function requestdata(param){
