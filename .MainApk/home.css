@@ -1,0 +1,150 @@
+.container{
+    font-family: 'Poppins';
+    font-size: 13px;
+}
+
+.navbarr{
+    display: flex;   
+    justify-content: center;
+    gap: 50px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 66px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+.nonactivate{
+    font-size: 36px !important;
+    color: #C6D2E2;
+}
+
+.active{
+    font-size: 36px !important;
+    color: #64A5F9;
+}
+
+
+
+/* HEADER SEARCH BAR */
+.searchbar{
+    display: flex;   
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.nyari{
+    border: 0;
+    border-radius: 20px;
+    background-color: #F2F2F2;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    width: 100%;
+    
+}
+
+    .nyari[type="search"]::placeholder{
+        color: #D6D6D6;
+    }
+
+.ikonnyari{
+    vertical-align: middle;
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 300,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+button[type="submit"]{
+    position: absolute;
+    right: 0;
+    margin-right: 30px;
+    background-color: transparent;
+    border: 0;
+}
+
+
+
+/* HOME - POST */
+.badanpost{
+    display: grid;   
+    justify-content: center;
+    background-color: #fff;
+    margin-top: 20px;
+    margin-left: 12px;
+    margin-right: 12px;
+}
+
+.kotakpost{
+    background-color: #fff;
+    width: 100%;
+    height: fit-content;
+    border-radius: 5px;
+    padding: 10px 15px 10px 15px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.bioyangpost{
+    display: flex;
+    align-items: center;
+}
+
+.photoprofile{
+    background-color: #D6D6D6;
+    width: 43px;
+    height: 43px;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.databaseName{
+    margin-left: 10px;
+    font-weight: 600;
+}
+
+.isipost{
+    margin-top: 9px;
+
+}
+
+.actionpost{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+}
+
+.baglike {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #F96464;
+}
+
+.bagreply{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #64A5F9;
+}
