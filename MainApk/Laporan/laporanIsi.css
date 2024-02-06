@@ -64,8 +64,8 @@
     border-radius: 8px;
     color: white;
     position: relative;
-    padding-right: 10px;
-} */
+    margin-right: 10px;
+}
 
 /* .teks{
     font-size: 12px;
@@ -109,4 +109,10 @@
     font-size: 15px !important;
     border-radius: 20px !important;
     border: 0 !important;
+}
+
+.clicked {
+    background-color: #ADD8E6; /* Change the background color to red when clicked */
+    color: #ffffff; /* Change the text color to white when clicked */
+    /* Add any other styles you want to apply to the clicked element */
 }
