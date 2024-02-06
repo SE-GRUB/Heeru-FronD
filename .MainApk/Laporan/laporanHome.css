@@ -1,0 +1,111 @@
+body{
+    overflow: hidden;
+}
+
+.container{
+    font-family: 'Poppins';
+}
+
+.navbarr{
+    display: flex;   
+    justify-content: center;
+    gap: 50px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    /* height: 66px; */
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    text-align: center;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+.nonactivate{
+    font-size: 35px !important;
+    color: #C6D2E2;
+}
+
+.active{
+    font-size: 35px !important;
+    color: #64A5F9;
+    
+}
+
+
+/* ISI LAPORAN */
+.judul{
+    font-size: 14px;
+    font-weight: 500;
+    padding-top: 4rem;
+    margin-bottom: 3.5rem;
+}
+
+.isi{
+    font-size: 12px;
+}
+
+.penjelasan{
+    margin-bottom: 3rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.bulet{
+    background-color: #348AFA;
+    color: white;
+    border-radius: 100%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tombol{
+    margin-top: 8rem;
+    border-radius: 50%;
+    color: #64A5F9;
+}
+
+.btn{
+    background-color: #64A5F9 !important;
+    font-size: 14px !important;
+    border-radius: 20px !important;
+    border: 0 !important;
+}
+
+.circle{
+    height: 100vh;
+    width: 100vw;
+    background-image: radial-gradient(circle at right, rgba(100, 165, 249, 45%),white 70%);
+    position: absolute;
+    z-index: -1;
+}
+
+
+
+/* THANK YOU */
+.makasi{
+    padding-top: 300px;
+    padding-left: 10px;
+}
+
+.judulty{
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.desc{
+    font-size: 12px;
+    font-weight: 400;
+}
