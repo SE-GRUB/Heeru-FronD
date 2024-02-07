@@ -7,9 +7,9 @@ let email = "";
 
 var histhost
 
-// histhost='http://127.0.0.1:8000/'
+histhost='http://127.0.0.1:8000/'
 // histhost='http://47.245.121.87/Heeru-BackD/public/'
-histhost='https://dwt.lahoras.my.id/'
+// histhost='https://dwt.lahoras.my.id/'
 
 async function requestdata(param){
     return fetch(`${histhost}api/${param}`)
@@ -299,6 +299,20 @@ async function initpoin5() {
 
 
 function initpoin6() {
+    $(document).ready(async function(){
+        const urlParams = new URLSearchParams(window.location.search);
+
+        const successMessage = urlParams.get('success');
+        const errorMessage = urlParams.get('error');
+
+        if (successMessage) {
+            localStorage.removeItem('category_id');
+            window.location.href = "laporanThankyou.html";
+        } else if (errorMessage) {
+            alert(errorMessage);
+        }
+    });
+
     document.getElementById("nextBtn").addEventListener("click", async function() {
         var title = document.getElementById('title');
         var w1 = document.getElementById('w1');
@@ -357,7 +371,7 @@ function initpoin6() {
             errortext6.classList.remove("hide");
         }else{
             errortext6.classList.add("hide");
-            localStorage.setItem('title', title.value);
+            // localStorage.setItem('title', title.value);
             var details = {
                 w1: w1.value,
                 w2: w2.value,
@@ -367,8 +381,13 @@ function initpoin6() {
                 h1: h1.value
             };
             var detailsJSON = JSON.stringify(details);
-            localStorage.setItem('details', detailsJSON);
-            window.location.href = "laporanBukti.html";
+            // localStorage.setItem('details', detailsJSON);
+            // window.location.href = "laporanBukti.html";
+            // var title = localStorage.getItem('title');
+            var category_id = localStorage.getItem('category_id');
+            var user_id = localStorage.getItem('user_id');
+            // var details = localStorage.getItem('details');
+            window.location.href = `${histhost}laporanBukti?user_id=${user_id}&category_id=${category_id}&title=${title.value}&details=${detailsJSON}`
             return true;
         }
         return false;
