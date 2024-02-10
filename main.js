@@ -119,13 +119,19 @@ function initpoin3() {
         var email = document.getElementById("emailinput");
         var password = document.getElementById('passwordinput');
         var password_confirmation = document.getElementById('passwordconfirmationinput');
-
+        var profile_pic = document.getElementById('fileInput');
 
         var errortext=document.getElementById("errortext");
         var errortext2=document.getElementById("errortext2");
-        var errortext3=document.getElementById("errortext3");        
+        var errortext3=document.getElementById("errortext3");   
         
-        
+        if(profile_pic.files.length === 0){
+            errortext3.innerHTML="Choose your photo profile"
+            errortext3.classList.remove("hide")
+        }else{
+            errortext3.classList.add("hide")
+        }
+
         if (email.value.trim() === "") {
             errortext.innerHTML = "Please input your email address";
             errortext.classList.remove("hide");
@@ -177,9 +183,39 @@ function initpoin3() {
                         errortext3.innerHTML = "Your password and password confirmation do not match";
                         errortext3.classList.remove("hide");
                     } else {
-                        await requestdata(`updateProfile?user_id=${localStorage.getItem('user_id')}&email=${email.value}&password=${password.value}`)
-                        window.location.href = "./MainApk/home.html";
-                        return true;
+                        profile_pic = profile_pic.files[0];
+
+                        var formData = new FormData();
+                        formData.append('profile_pic', profile_pic);
+                        formData.append('email', email.value);
+                        formData.append('password', password.value);
+                        formData.append('user_id', localStorage.getItem('user_id'));
+
+                        await $.ajax({
+                            url: `${histhost}api/updateProfile`,
+                            method: 'POST',
+                            processData: false,
+                            contentType: false,
+                            data: formData,
+                            success: function (response) {
+                                if (response.success) {
+                                    // localStorage.removeItem('title');
+                                    // localStorage.removeItem('category_id');
+                                    // localStorage.removeItem('details');
+                                    window.location.href = "./MainApk/home.html";
+                                    return true;
+                                } else {
+                                    console.error('Error:', response.message);
+                                }
+                            },
+                            error: function (error) {
+                                // Handle error
+                                console.error('Error:', error);
+                            }
+                        });
+                        // await requestdata(`updateProfile?user_id=${localStorage.getItem('user_id')}&email=${email.value}&password=${password.value}`)
+                        // window.location.href = "./MainApk/home.html";
+                        // return true;
                     }
                 
             }
@@ -299,19 +335,6 @@ async function initpoin5() {
 
 
 function initpoin6() {
-    $(document).ready(async function(){
-        const urlParams = new URLSearchParams(window.location.search);
-
-        const successMessage = urlParams.get('success');
-        const errorMessage = urlParams.get('error');
-
-        if (successMessage) {
-            localStorage.removeItem('category_id');
-            window.location.href = "laporanThankyou.html";
-        } else if (errorMessage) {
-            alert(errorMessage);
-        }
-    });
 
     document.getElementById("nextBtn").addEventListener("click", async function() {
         var title = document.getElementById('title');
@@ -371,7 +394,7 @@ function initpoin6() {
             errortext6.classList.remove("hide");
         }else{
             errortext6.classList.add("hide");
-            // localStorage.setItem('title', title.value);
+            localStorage.setItem('title', title.value);
             var details = {
                 w1: w1.value,
                 w2: w2.value,
@@ -381,13 +404,13 @@ function initpoin6() {
                 h1: h1.value
             };
             var detailsJSON = JSON.stringify(details);
-            // localStorage.setItem('details', detailsJSON);
-            // window.location.href = "laporanBukti.html";
+            localStorage.setItem('details', detailsJSON);
+            window.location.href = "laporanBukti.html";
             // var title = localStorage.getItem('title');
-            var category_id = localStorage.getItem('category_id');
-            var user_id = localStorage.getItem('user_id');
+            // var category_id = localStorage.getItem('category_id');
+            // var user_id = localStorage.getItem('user_id');
             // var details = localStorage.getItem('details');
-            window.location.href = `${histhost}laporanBukti?user_id=${user_id}&category_id=${category_id}&title=${title.value}&details=${detailsJSON}`
+            // window.location.href = `${histhost}laporanBukti?user_id=${user_id}&category_id=${category_id}&title=${title.value}&details=${detailsJSON}`
             return true;
         }
         return false;
@@ -413,13 +436,15 @@ async function initpoin7(){
                 errortext.innerHTML="Eviddence  is required"
                 errortext.classList.remove("hide")
             }else{
-                if(evidence.files.length > 1){
-                    errortext.innerHTML="Eviddence  must be one file only"
-                    errortext.classList.remove("hide")
-                }else{
-                    errortext.classList.add("hide")
-                    modal.show();
-                }
+                errortext.classList.add("hide")
+                modal.show();
+                // if(evidence.files.length > 1){
+                //     errortext.innerHTML="Eviddence  must be one file only"
+                //     errortext.classList.remove("hide")
+                // }else{
+                //     errortext.classList.add("hide")
+                //     modal.show();
+                // }
             }
         });
 
@@ -442,11 +467,14 @@ async function initpoin7(){
             var category_id = localStorage.getItem('category_id');
             var user_id = localStorage.getItem('user_id');
             var details = localStorage.getItem('details');
-            var evidence = document.getElementById("formFileMultiple").files[0];
+            var files = document.getElementById("formFileMultiple").files;
+
+            for (var i = 0; i < files.length; i++) {
+                var evidence = files[i];
+            }
 
             var formData = new FormData();
             formData.append('evidence', evidence);
-
             formData.append('title', title);
             formData.append('details', details);
             formData.append('category_id', category_id);
@@ -456,14 +484,14 @@ async function initpoin7(){
                 url: `${histhost}api/makereport`,
                 method: 'POST',
                 processData: false,
-                contentType: false,
+                contentType: "multipart/form-data",
                 data: formData,
                 success: function (response) {
                     // Handle success response
                     if (response.success) {
-                        localStorage.removeItem('title');
-                        localStorage.removeItem('category_id');
-                        localStorage.removeItem('details');
+                        // localStorage.removeItem('title');
+                        // localStorage.removeItem('category_id');
+                        // localStorage.removeItem('details');
                         window.location.href = "laporanThankyou.html";
                     } else {
                         console.error('Error:', response.message);
