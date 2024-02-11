@@ -18,9 +18,7 @@ async function requestdata(param){
 }
 
 function initpoin() {
-    // alert("jalan 1")
     async function ceknip() {
-        // alert("Jalan 2")
         var inputField = document.getElementById("nipinput");
         var errortext=document.getElementById("errortext")
            
@@ -29,24 +27,28 @@ function initpoin() {
             errortext.classList.remove("hide");
             return false;
         } else {
+
             await requestdata(`checkuser?nip=${inputField.value}`);
             try {
-                // alert("Ga Jelas")
-                nip = alldata.user["nip"];
-                username = alldata.user["name"];
-                localStorage.setItem('username', username);
-                no_telp = alldata.user["no_telp"];
-                localStorage.setItem('no_telp', no_telp);
-                user_id = alldata.user['id'];
-                localStorage.setItem('user_id', user_id);
-                email = alldata.user['email'];
-                localStorage.setItem('email', email);
-                password = alldata.user['password'];
-                localStorage.setItem('password', password);
-                if (inputField.value == nip) {
-                    // errortext.classList.remove("hide");
+                if (alldata.success) {
+                    nip = alldata.user["nip"];
+                    username = alldata.user["name"];
+                    localStorage.setItem('username', username);
+                    no_telp = alldata.user["no_telp"];
+                    localStorage.setItem('no_telp', no_telp);
+                    user_id = alldata.user['id'];
+                    localStorage.setItem('user_id', user_id);
+                    email = alldata.user['email'];
+                    localStorage.setItem('email', email);
+                    password = alldata.user['password'];
+                    localStorage.setItem('password', password);
                     window.location.href = "./sign_up2.html";
-                } 
+                    return true;
+                } else {
+                    errortext.innerHTML = alldata.message;
+                    classList.remove("hide");
+                }
+                
             } catch (error) {
                 errortext.innerHTML = alldata.message;
                 errortext.classList.remove("hide");
@@ -75,7 +77,8 @@ function initpoin2(){
             }
 
             if (inputField.value==phonenumber) {
-                window.location.href="./otp_signup.html"            
+                localStorage.removeItem('no_telp');
+                window.location.href="./otp_signup.html";        
             }else{
                 inputField.value = phoneNumber;
                 errortext.innerHTML="Phone number is not registered, please contact your PIC"
@@ -97,6 +100,7 @@ function initpoin3() {
         var storedEmail = localStorage.getItem('email');
         if (storedEmail !== null) {
             emailInput.value = storedEmail;
+            localStorage.removeItem('email');
         }
     });
 
@@ -176,7 +180,6 @@ function initpoin3() {
             if (password_confirmation.value.trim() === "") {
                 errortext3.innerHTML = "Please input your password confirmation";
                 errortext3.classList.remove("hide");
-                // return false;
             } else {
                 
                 if (password.value !== password_confirmation.value) {
@@ -199,23 +202,15 @@ function initpoin3() {
                             data: formData,
                             success: function (response) {
                                 if (response.success) {
-                                    // localStorage.removeItem('title');
-                                    // localStorage.removeItem('category_id');
-                                    // localStorage.removeItem('details');
                                     window.location.href = "./MainApk/home.html";
                                     return true;
                                 } else {
-                                    console.error('Error:', response.message);
+                                    // console.error('Error:', response.message);
+                                    errortext3.innerHTML = "Error in updating your data!";
+                                    errortext3.classList.remove("hide");
                                 }
                             },
-                            error: function (error) {
-                                // Handle error
-                                console.error('Error:', error);
-                            }
                         });
-                        // await requestdata(`updateProfile?user_id=${localStorage.getItem('user_id')}&email=${email.value}&password=${password.value}`)
-                        // window.location.href = "./MainApk/home.html";
-                        // return true;
                     }
                 
             }
@@ -232,26 +227,23 @@ function initpoin4() {
 
     document.getElementById("submitBtn").addEventListener("click", async function() {
         var password = document.getElementById('passwordinput');
-        var pass = localStorage.getItem('password');
         var errortext=document.getElementById("errortext");     
         
-        
-         if (password.value.trim() === "") {
+        if (password.value.trim() === "") {
                 errortext.innerHTML="Please input your Password"
                 errortext.classList.remove("hide")
             }else{
-                await requestdata(`checkPass?password=${password.value}&pass=${pass}`)
+                await requestdata(`checkPass?password=${password.value}&user_id=${localStorage.getItem('user_id')}`)
 
-                if (alldata[0] === 200) {
-                    errortext.classList.add("hide");
+                if (alldata.success) {
                     window.location.href = "./MainApk/home.html";
                     return true;
                 } else {
-                    errortext.innerHTML = "Password Incorrect";
+                    errortext.innerHTML = alldata.message;
                     errortext.classList.remove("hide");
+                    return false;
                 }
             }
-        return false;
     });
 }
 
@@ -406,11 +398,6 @@ function initpoin6() {
             var detailsJSON = JSON.stringify(details);
             localStorage.setItem('details', detailsJSON);
             window.location.href = "laporanBukti.html";
-            // var title = localStorage.getItem('title');
-            // var category_id = localStorage.getItem('category_id');
-            // var user_id = localStorage.getItem('user_id');
-            // var details = localStorage.getItem('details');
-            // window.location.href = `${histhost}laporanBukti?user_id=${user_id}&category_id=${category_id}&title=${title.value}&details=${detailsJSON}`
             return true;
         }
         return false;
@@ -438,13 +425,6 @@ async function initpoin7(){
             }else{
                 errortext.classList.add("hide")
                 modal.show();
-                // if(evidence.files.length > 1){
-                //     errortext.innerHTML="Eviddence  must be one file only"
-                //     errortext.classList.remove("hide")
-                // }else{
-                //     errortext.classList.add("hide")
-                //     modal.show();
-                // }
             }
         });
 
@@ -469,36 +449,33 @@ async function initpoin7(){
             var details = localStorage.getItem('details');
             var files = document.getElementById("formFileMultiple").files;
 
-            for (var i = 0; i < files.length; i++) {
-                var evidence = files[i];
-            }
-
             var formData = new FormData();
-            formData.append('evidence', evidence);
             formData.append('title', title);
             formData.append('details', details);
             formData.append('category_id', category_id);
             formData.append('user_id', user_id);
 
+            for (var i = 0; i < files.length; i++) {
+                formData.append('evidence[]', files[i]);
+            }
+
             await $.ajax({
                 url: `${histhost}api/makereport`,
                 method: 'POST',
                 processData: false,
-                contentType: "multipart/form-data",
+                contentType: false,
                 data: formData,
                 success: function (response) {
-                    // Handle success response
                     if (response.success) {
-                        // localStorage.removeItem('title');
-                        // localStorage.removeItem('category_id');
-                        // localStorage.removeItem('details');
+                        localStorage.removeItem('title');
+                        localStorage.removeItem('category_id');
+                        localStorage.removeItem('details');
                         window.location.href = "laporanThankyou.html";
                     } else {
                         console.error('Error:', response.message);
                     }
                 },
                 error: function (error) {
-                    // Handle error
                     console.error('Error:', error);
                 }
             });
