@@ -111,7 +111,7 @@
 }
 
 .clicked {
-    background-color: #0099ff; /* Change the background color to red when clicked */
-    color: #ffffff; /* Change the text color to white when clicked */
+    background-color: #a4d5f7; /* Change the background color to red when clicked */
+    color: #000; /* Change the text color to white when clicked */
     /* Add any other styles you want to apply to the clicked element */
 }

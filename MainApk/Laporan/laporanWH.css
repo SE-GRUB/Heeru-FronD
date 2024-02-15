@@ -47,7 +47,7 @@
 
 /* ISI KATEGORI */
 .isikategori{
-    margin: 1rem 1rem 1rem 1rem;
+    margin: 0.8rem;
 }
 
 .judul{
@@ -67,6 +67,15 @@
 
 .tambahan::placeholder{
     color: #d6d6d6 !important;
+}
+
+.translatean{
+    font-size: 13px;
+    color: #b3b3b3;
+}
+
+textarea{
+    resize: none !important;
 }
 
 /* .tanya{
