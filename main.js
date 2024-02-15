@@ -9,7 +9,7 @@ var histhost
 
 histhost='http://127.0.0.1:8000/'
 // histhost='http://47.245.121.87/Heeru-BackD/public/'
-// histhost='https://enp.lahoras.my.id/'
+// histhost='https://dwt.lahoras.my.id/'
 
 async function requestdata(param){
     return fetch(`${histhost}api/${param}`)
@@ -18,9 +18,7 @@ async function requestdata(param){
 }
 
 function initpoin() {
-    // alert("jalan 1")
     async function ceknip() {
-        // alert("Jalan 2")
         var inputField = document.getElementById("nipinput");
         var errortext=document.getElementById("errortext")
            
@@ -29,24 +27,28 @@ function initpoin() {
             errortext.classList.remove("hide");
             return false;
         } else {
+
             await requestdata(`checkuser?nip=${inputField.value}`);
             try {
-                // alert("Ga Jelas")
-                nip = alldata.user["nip"];
-                username = alldata.user["name"];
-                localStorage.setItem('username', username);
-                no_telp = alldata.user["no_telp"];
-                localStorage.setItem('no_telp', no_telp);
-                user_id = alldata.user['id'];
-                localStorage.setItem('user_id', user_id);
-                email = alldata.user['email'];
-                localStorage.setItem('email', email);
-                password = alldata.user['password'];
-                localStorage.setItem('password', password);
-                if (inputField.value == nip) {
-                    // errortext.classList.remove("hide");
+                if (alldata.success) {
+                    nip = alldata.user["nip"];
+                    username = alldata.user["name"];
+                    localStorage.setItem('username', username);
+                    no_telp = alldata.user["no_telp"];
+                    localStorage.setItem('no_telp', no_telp);
+                    user_id = alldata.user['id'];
+                    localStorage.setItem('user_id', user_id);
+                    email = alldata.user['email'];
+                    localStorage.setItem('email', email);
+                    password = alldata.user['password'];
+                    localStorage.setItem('password', password);
                     window.location.href = "./sign_up2.html";
-                } 
+                    return true;
+                } else {
+                    errortext.innerHTML = alldata.message;
+                    classList.remove("hide");
+                }
+                
             } catch (error) {
                 errortext.innerHTML = alldata.message;
                 errortext.classList.remove("hide");
@@ -75,7 +77,8 @@ function initpoin2(){
             }
 
             if (inputField.value==phonenumber) {
-                window.location.href="./otp_signup.html"            
+                localStorage.removeItem('no_telp');
+                window.location.href="./otp_signup.html";        
             }else{
                 inputField.value = phoneNumber;
                 errortext.innerHTML="Phone number is not registered, please contact your PIC"
@@ -97,6 +100,7 @@ function initpoin3() {
         var storedEmail = localStorage.getItem('email');
         if (storedEmail !== null) {
             emailInput.value = storedEmail;
+            localStorage.removeItem('email');
         }
     });
 
@@ -119,13 +123,19 @@ function initpoin3() {
         var email = document.getElementById("emailinput");
         var password = document.getElementById('passwordinput');
         var password_confirmation = document.getElementById('passwordconfirmationinput');
-
+        var profile_pic = document.getElementById('fileInput');
 
         var errortext=document.getElementById("errortext");
         var errortext2=document.getElementById("errortext2");
-        var errortext3=document.getElementById("errortext3");        
+        var errortext3=document.getElementById("errortext3");   
         
-        
+        if(profile_pic.files.length === 0){
+            errortext3.innerHTML="Choose your photo profile"
+            errortext3.classList.remove("hide")
+        }else{
+            errortext3.classList.add("hide")
+        }
+
         if (email.value.trim() === "") {
             errortext.innerHTML = "Please input your email address";
             errortext.classList.remove("hide");
@@ -170,16 +180,37 @@ function initpoin3() {
             if (password_confirmation.value.trim() === "") {
                 errortext3.innerHTML = "Please input your password confirmation";
                 errortext3.classList.remove("hide");
-                // return false;
             } else {
                 
                 if (password.value !== password_confirmation.value) {
                         errortext3.innerHTML = "Your password and password confirmation do not match";
                         errortext3.classList.remove("hide");
                     } else {
-                        await requestdata(`updateProfile?user_id=${localStorage.getItem('user_id')}&email=${email.value}&password=${password.value}`)
-                        window.location.href = "./MainApk/home.html";
-                        return true;
+                        profile_pic = profile_pic.files[0];
+
+                        var formData = new FormData();
+                        formData.append('profile_pic', profile_pic);
+                        formData.append('email', email.value);
+                        formData.append('password', password.value);
+                        formData.append('user_id', localStorage.getItem('user_id'));
+
+                        await $.ajax({
+                            url: `${histhost}api/updateProfile`,
+                            method: 'POST',
+                            processData: false,
+                            contentType: false,
+                            data: formData,
+                            success: function (response) {
+                                if (response.success) {
+                                    window.location.href = "./MainApk/home.html";
+                                    return true;
+                                } else {
+                                    // console.error('Error:', response.message);
+                                    errortext3.innerHTML = "Error in updating your data!";
+                                    errortext3.classList.remove("hide");
+                                }
+                            },
+                        });
                     }
                 
             }
@@ -196,26 +227,23 @@ function initpoin4() {
 
     document.getElementById("submitBtn").addEventListener("click", async function() {
         var password = document.getElementById('passwordinput');
-        var pass = localStorage.getItem('password');
         var errortext=document.getElementById("errortext");     
         
-        
-         if (password.value.trim() === "") {
+        if (password.value.trim() === "") {
                 errortext.innerHTML="Please input your Password"
                 errortext.classList.remove("hide")
             }else{
-                await requestdata(`checkPass?password=${password.value}&pass=${pass}`)
+                await requestdata(`checkPass?password=${password.value}&user_id=${localStorage.getItem('user_id')}`)
 
-                if (alldata[0] === 200) {
-                    errortext.classList.add("hide");
+                if (alldata.success) {
                     window.location.href = "./MainApk/home.html";
                     return true;
                 } else {
-                    errortext.innerHTML = "Password Incorrect";
+                    errortext.innerHTML = alldata.message;
                     errortext.classList.remove("hide");
+                    return false;
                 }
             }
-        return false;
     });
 }
 
@@ -299,6 +327,7 @@ async function initpoin5() {
 
 
 function initpoin6() {
+
     document.getElementById("nextBtn").addEventListener("click", async function() {
         var title = document.getElementById('title');
         var w1 = document.getElementById('w1');
@@ -394,13 +423,8 @@ async function initpoin7(){
                 errortext.innerHTML="Eviddence  is required"
                 errortext.classList.remove("hide")
             }else{
-                if(evidence.files.length > 1){
-                    errortext.innerHTML="Eviddence  must be one file only"
-                    errortext.classList.remove("hide")
-                }else{
-                    errortext.classList.add("hide")
-                    modal.show();
-                }
+                errortext.classList.add("hide")
+                modal.show();
             }
         });
 
@@ -423,15 +447,17 @@ async function initpoin7(){
             var category_id = localStorage.getItem('category_id');
             var user_id = localStorage.getItem('user_id');
             var details = localStorage.getItem('details');
-            var evidence = document.getElementById("formFileMultiple").files[0];
+            var files = document.getElementById("formFileMultiple").files;
 
             var formData = new FormData();
-            formData.append('evidence', evidence);
-
             formData.append('title', title);
             formData.append('details', details);
             formData.append('category_id', category_id);
             formData.append('user_id', user_id);
+
+            for (var i = 0; i < files.length; i++) {
+                formData.append('evidence[]', files[i]);
+            }
 
             await $.ajax({
                 url: `${histhost}api/makereport`,
@@ -440,7 +466,6 @@ async function initpoin7(){
                 contentType: false,
                 data: formData,
                 success: function (response) {
-                    // Handle success response
                     if (response.success) {
                         localStorage.removeItem('title');
                         localStorage.removeItem('category_id');
@@ -451,7 +476,6 @@ async function initpoin7(){
                     }
                 },
                 error: function (error) {
-                    // Handle error
                     console.error('Error:', error);
                 }
             });

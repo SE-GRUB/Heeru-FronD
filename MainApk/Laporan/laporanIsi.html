@@ -13,9 +13,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     
     <!-- CSS -->
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="laporanIsi.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
     <!-- ICON -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
    
@@ -25,7 +25,6 @@
 <body>
     <div class="container">
 
-      <!-- PROGRESSBAR START -->
       <div class="progressBar">
         <div class="garis"></div>
 
@@ -37,69 +36,15 @@
       </div>
 
       <div class="isikategori">
-        <p class="judul">Choose your report category</p>
+        <p class="judul">Choose one of the report categories below to continue</p>
 
-        <div class="containerisi">
-          <div class="row">
-            <div class="col bobot5">
-              <div class="teks">
-                Sexual Harassment
-              </div>
-            </div>
-
-            <div class="col bobot4">
-              <div class="teks">
-                Physical Abuse
-              </div>
-            </div>
-
-            <div class="col bobot4">
-              <div class="teks">
-                Bullying
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col bobot4">
-              <div class="teks">
-                Hate Comment
-              </div>
-            </div>
-
-            <div class="col bobot3">
-              <div class="teks">
-                Fraud
-              </div>
-            </div>
-
-            <div class="col bobot3">
-              <div class="teks">
-                Bad Labor
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col bobot2">
-              <div class="teks">
-                Building & Facility
-              </div>
-            </div>
-
-            <div class="col bobot2">
-              <div class="teks">
-                Food & Beverages
-              </div>
-            </div>
-
-            <div class="col"></div>
-          </div>
+        <div class="containerisi" id="containerisi">
+          
       </div>
 
       <div class="buttonplace">
         <a href="laporanWH.html">
-            <button class="buttonnext">
+            <button class="buttonnext" id ="buttonnext">
                 Next
             </button>
         </a>
@@ -108,40 +53,13 @@
     </div>
     
     
+    
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
     <script src="../../main.js"></script>
     <script>initpoin5()</script>
-
-    <script>
-      var textlist=''
-      var list = [
-        ['Sexual Harassment', 'bobot5'],
-        ['Physical Abuse', 'bobot4'],
-        ['Bullying', 'bobot4'],
-        ['Hate Comment', 'bobot4'],
-        ['Fraud', 'bobot3'],
-        ['Bad Labor', 'bobot3'],
-        ['Building & Facility', 'bobot2'],
-        ['Food & Beverages', 'bobot2']
-      ];
-
-      list.forEach(function(element, index) {
-          textlist+=`
-          <div class="col-4 pw">
-            <div class="col-12 text-start edit ${element[1]} btn btn-primary">
-              ${element[0]}
-            </div>
-          </div>
-          `
-          // console.log("Element " + (index + 1) + ":");
-          // console.log("First value: " + element[0]);
-          // console.log("Second value: " + element[1]);
-      });
-      document.getElementById("tablis").innerHTML=textlist
-    </script>
-
+                                                
   </body>
 
   </html>

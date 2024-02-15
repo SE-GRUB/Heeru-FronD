@@ -36,16 +36,7 @@
 
 /* ISI KATEGORI */
 .isikategori{
-    /* margin: 45px 25px 1px 25px; */
-}
-
-.edit{
-    font-size: 12px;
-    padding: 0.4rem;
-    color: white;
-    height: 6rem;
-    border: 0;
-    /* transform: scale(1); */
+    margin: 45px 25px 1px 25px;
 }
 
 .judul{
@@ -54,26 +45,28 @@
     color: #64A5F9;
 }
 
-/* .row{
+.row{
     margin-top: 10px !important;
-} */
+}
 
-/* .col{
+.col{
     width: 102px;
     height: 102px;
     border-radius: 8px;
     color: white;
     position: relative;
     margin-right: 10px;
+
+    /* Custom col as button */
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 }
 
-/* .teks{
+.teks{
     font-size: 12px;
-    bottom: 0;
-    left: 0;
-    position: absolute;   
-    margin: 8px;
-} */
+    text-align: start;
+}
 
 .bobot5{
     background-color: #245595
@@ -91,28 +84,31 @@
     background-color: #7DB5FF;
 }
 
-.pw{
-    padding: 5px;
-}
-
 
 /* BUTTON */
 
-.tombol{   
-    margin-top: 8rem;
-    border-radius: 50%;
-    color: #64A5F9;
+.buttonplace{
+    display: flex;
+    justify-content: center;
+    margin: 190px 42px 1px 42px;
 }
 
-.bawah{
-    background-color: #64A5F9 !important;
-    font-size: 15px !important;
-    border-radius: 20px !important;
-    border: 0 !important;
+.buttonnext{
+    background-color: #64A5F9;
+    border-radius: 20px;
+    border: 0;
+    width: 291px;
+    height: 41px;
+    color: white;
+    font-size: 15px;
+    font-weight: 400;
+    display: none;
 }
 
 .clicked {
-    background-color: #ADD8E6; /* Change the background color to red when clicked */
+    background-color: #0099ff; /* Change the background color to red when clicked */
     color: #ffffff; /* Change the text color to white when clicked */
     /* Add any other styles you want to apply to the clicked element */
 }
+
+/* comde agus */
