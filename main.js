@@ -480,3 +480,41 @@ async function initpoin7(){
         });
     })
 }
+
+async function initpoin8() {
+    await requestdata('counselorList');
+
+    var ul = document.getElementById('doctors');
+
+
+    for(var i = 0; i < Object.keys(alldata.users).length; i++){
+        console.log(alldata.users[i].user_id);
+        var id = alldata.users[i].user_id;
+        var name = alldata.users[i].name;
+        var no_telp = alldata.users[i].no_telp;
+        var rating = alldata.users[i].rating;
+        var profile_pic = alldata.users[i].profile_pic;
+
+
+        var li = document.createElement('li');
+        li.id = id;
+
+        var img = document.createElement('img');
+        img.src = profile_pic ? `${histhost}${profile_pic}` : `${histhost}Admin/images/profile.jpg`;
+
+
+        var div = document.createElement('div');
+
+        var h3 = document.createElement('h3');
+        h3.textContent = name;
+
+        var p = document.createElement('p');
+        p.textContent = rating
+
+        div.appendChild(h3);
+        div.appendChild(p);
+        li.appendChild(img);
+        li.appendChild(div);
+        ul.appendChild(li);
+    }
+}
