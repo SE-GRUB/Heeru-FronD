@@ -37,6 +37,7 @@
 /* ISI KATEGORI */
 .isikategori{
     margin: 45px 25px 1px 25px;
+    margin: 45px 25px 1px 25px;
 }
 
 .judul{
@@ -46,9 +47,12 @@
 }
 
 .row{
+.row{
     margin-top: 10px !important;
 }
+}
 
+.col{
 .col{
     width: 102px;
     height: 102px;
@@ -61,10 +65,21 @@
     background-color: transparent;
     border: none;
     cursor: pointer;
+
+    /* Custom col as button */
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 }
 
 .teks{
+.teks{
     font-size: 12px;
+    bottom: 0;
+    left: 0;
+    position: absolute;   
+    margin: 8px;
+}
     text-align: start;
 }
 
@@ -91,8 +106,21 @@
     display: flex;
     justify-content: center;
     margin: 190px 42px 1px 42px;
+.buttonplace{
+    display: flex;
+    justify-content: center;
+    margin: 190px 42px 1px 42px;
 }
 
+.buttonnext{
+    background-color: #64A5F9;
+    border-radius: 20px;
+    border: 0;
+    width: 291px;
+    height: 41px;
+    color: white;
+    font-size: 15px;
+    font-weight: 400;
 .buttonnext{
     background-color: #64A5F9;
     border-radius: 20px;
@@ -110,5 +138,7 @@
     color: #ffffff; /* Change the text color to white when clicked */
     /* Add any other styles you want to apply to the clicked element */
 }
+
+/* comde agus */
 
 /* comde agus */

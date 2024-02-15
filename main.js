@@ -149,33 +149,34 @@ function initpoin3() {
             }else{
                 errortext.classList.add('hide');
             }
+        }
 
-            if (password.value.trim() === "") {
-                errortext2.innerHTML="Please input your Password"
-                errortext2.classList.remove("hide")
-            }else{
-                if(!/[A-Z]/.test(password.value)){
-                    errortext2.innerText = "Your password must contain at least one uppercase letter";
+        if (password.value.trim() === "") {
+            errortext2.innerHTML="Please input your Password"
+            errortext2.classList.remove("hide")
+        }else{
+            if(!/[A-Z]/.test(password.value)){
+                errortext2.innerText = "Your password must contain at least one uppercase letter";
+                errortext2.classList.remove("hide");
+            }{
+                if (password.value.length < 8 ) {
+                    errortext2.innerHTML = "Password must be at least 8 characters long";
                     errortext2.classList.remove("hide");
-                }{
-                    if (password.value.length < 8 ) {
-                        errortext2.innerHTML = "Password must be at least 8 characters long";
+                } else {
+                    if(!/[a-z]/.test(password.value)){
+                        errortext2.innerText = "Your password must contain at least one lowercase letter";
                         errortext2.classList.remove("hide");
-                    } else {
-                        if(!/[a-z]/.test(password.value)){
-                            errortext2.innerText = "Your password must contain at least one lowercase letter";
+                    }else{
+                        if(!/\d/.test(password.value)){
+                            errortext2.innerText = "Your password must contain at least one number.";
                             errortext2.classList.remove("hide");
                         }else{
-                            if(!/\d/.test(password.value)){
-                                errortext2.innerText = "Your password must contain at least one number.";
-                                errortext2.classList.remove("hide");
-                            }else{
-                                errortext2.classList.add('hide');
-                            }
+                            errortext2.classList.add('hide');
                         }
                     }
                 }
             }
+        }
 
             if (password_confirmation.value.trim() === "") {
                 errortext3.innerHTML = "Please input your password confirmation";
@@ -214,6 +215,40 @@ function initpoin3() {
                     }
                 
             }
+        if (password_confirmation.value.trim() === "") {
+            errortext3.innerHTML = "Please input your password confirmation";
+            errortext3.classList.remove("hide");
+        } else {
+            if (password.value !== password_confirmation.value) {
+                    errortext3.innerHTML = "Your password and password confirmation do not match";
+                    errortext3.classList.remove("hide");
+                } else {
+                    errortext3.classList.add("hide");
+                    profile_pic = profile_pic.files[0];
+
+                    var formData = new FormData();
+                    formData.append('profile_pic', profile_pic);
+                    formData.append('email', email.value);
+                    formData.append('password', password.value);
+                    formData.append('user_id', localStorage.getItem('user_id'));
+
+                    await $.ajax({
+                        url: `${histhost}api/updateProfile`,
+                        method: 'POST',
+                        processData: false,
+                        contentType: false,
+                        data: formData,
+                        success: function (response) {
+                            if (response.success) {
+                                window.location.href = "./MainApk/home.html";
+                                return true;
+                            } else {
+                                errortext3.innerHTML = "Error in updating your data!";
+                                errortext3.classList.remove("hide");
+                            }
+                        },
+                    });
+                }
         }
         return false;
     });

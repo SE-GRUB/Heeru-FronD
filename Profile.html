@@ -9,7 +9,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Rozha+One&display=swap" rel="stylesheet" />
-
     <link rel="stylesheet" href="Profile.css">
 </head>
 
@@ -17,13 +16,16 @@
 
 <body>
     <div class="container">
+        <div class="bluecontainer">
+            <div id="circle"></div>
             <h1>Set up your profile</h1>
             <p>Update your profile to connect with your doctor with a better impression.</p>
-    </div>
+
+        </div>
 
 
 
-        <p>Personal information</p>
+
         <form>
             <label for="name">Name</label>
             <input type="text" id="name" name="name" value="Nama Ku Bento">
@@ -35,6 +37,27 @@
             <textarea id="addDetails" name="addDetails"></textarea>
             <input type="submit" value="Continue">
         </form>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbarr">
+        <span class="material-symbols-outlined nonactivate">
+            home
+        </span>
+
+        <span class="material-symbols-outlined nonactivate">
+            digital_wellbeing
+        </span>
+
+        <span class="material-symbols-outlined nonactivate">
+            shield_person
+        </span>
+        
+        <span class="material-symbols-outlined active">
+            person
+        </span>
+    </nav>
+    <!-- NAVBAR -->
 </body>
 
 </html>
