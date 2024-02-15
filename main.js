@@ -488,7 +488,7 @@ async function initpoin8() {
 
 
     for(var i = 0; i < Object.keys(alldata.users).length; i++){
-        console.log(alldata.users[i].user_id);
+        // console.log(alldata.users[i].user_id);
         var id = alldata.users[i].user_id;
         var name = alldata.users[i].name;
         var rating = alldata.users[i].rating;
