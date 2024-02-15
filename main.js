@@ -178,6 +178,43 @@ function initpoin3() {
             }
         }
 
+            if (password_confirmation.value.trim() === "") {
+                errortext3.innerHTML = "Please input your password confirmation";
+                errortext3.classList.remove("hide");
+            } else {
+                
+                if (password.value !== password_confirmation.value) {
+                        errortext3.innerHTML = "Your password and password confirmation do not match";
+                        errortext3.classList.remove("hide");
+                    } else {
+                        profile_pic = profile_pic.files[0];
+
+                        var formData = new FormData();
+                        formData.append('profile_pic', profile_pic);
+                        formData.append('email', email.value);
+                        formData.append('password', password.value);
+                        formData.append('user_id', localStorage.getItem('user_id'));
+
+                        await $.ajax({
+                            url: `${histhost}api/updateProfile`,
+                            method: 'POST',
+                            processData: false,
+                            contentType: false,
+                            data: formData,
+                            success: function (response) {
+                                if (response.success) {
+                                    window.location.href = "./MainApk/home.html";
+                                    return true;
+                                } else {
+                                    // console.error('Error:', response.message);
+                                    errortext3.innerHTML = "Error in updating your data!";
+                                    errortext3.classList.remove("hide");
+                                }
+                            },
+                        });
+                    }
+                
+            }
         if (password_confirmation.value.trim() === "") {
             errortext3.innerHTML = "Please input your password confirmation";
             errortext3.classList.remove("hide");

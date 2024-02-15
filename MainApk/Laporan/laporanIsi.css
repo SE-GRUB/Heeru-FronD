@@ -37,6 +37,7 @@
 /* ISI KATEGORI */
 .isikategori{
     margin: 45px 25px 1px 25px;
+    margin: 45px 25px 1px 25px;
 }
 
 .judul{
@@ -69,6 +70,7 @@
     left: 0;
     position: absolute;   
     margin: 8px;
+    text-align: start;
 }
 
 .bobot5{
@@ -105,12 +107,11 @@
     color: white;
     font-size: 15px;
     font-weight: 400;
+    display: none;
 }
 
 .clicked {
-    background-color: #ADD8E6; /* Change the background color to red when clicked */
-    color: #ffffff; /* Change the text color to white when clicked */
+    background-color: #a4d5f7; /* Change the background color to red when clicked */
+    color: #000; /* Change the text color to white when clicked */
     /* Add any other styles you want to apply to the clicked element */
 }
-
-/* comde agus */
