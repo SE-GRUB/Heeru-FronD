@@ -7,13 +7,12 @@ body {
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
-    /* border-radius: 4px; */
+    border-radius: 4px;
     background-color: #fff;
 }
 
-.bluecontainer{
-    background-color: #64A5F9;
-    /* padding: 10px; */
+#bluecontainer{
+ background-color: blue;
 }
 
 h1 {
@@ -60,4 +59,38 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
     background-color: #45a049;
+}
+
+.navbarr{
+    display: flex;   
+    justify-content: center;
+    gap: 50px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 66px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+.nonactivate{
+    font-size: 36px !important;
+    color: #C6D2E2;
+}
+
+.active{
+    font-size: 36px !important;
+    color: #64A5F9;
 }
