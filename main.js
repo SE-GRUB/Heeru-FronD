@@ -491,7 +491,6 @@ async function initpoin8() {
         console.log(alldata.users[i].user_id);
         var id = alldata.users[i].user_id;
         var name = alldata.users[i].name;
-        var no_telp = alldata.users[i].no_telp;
         var rating = alldata.users[i].rating;
         var profile_pic = alldata.users[i].profile_pic;
 
