@@ -1,50 +1,64 @@
+.topnav{
+  /* background-color: #8a2be2; */
+  margin-top: 3dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.topnav input[type=text] {
+  /* background-color: aqua; */
+  border-radius: 100px;
+  width: 90dvw;
+  background-color: #0122;
+}
+
+
 #container {
-  width: 500px;
+  width: 100dvw;
   margin: 0 auto;
   font-family: sans-serif;
 }
 
 h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-#doctors {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-#doctors li {
-  width: 24%;
-  margin-bottom: 20px;
-  background-color: #f2f2f2;
-  border-radius: 5px;
-  overflow: hidden;
-}
-
-#doctors li img {
-  width: 100%;
-  height: auto;
-}
-
-#doctors li div {
-  padding: 10px;
-}
-
-#doctors h3 {
-  margin: 0;
-  margin-bottom: 5px;
-}
-
-#doctors p {
-  margin: 0;
-  font-size: 12px;
-}
-
-#doctors p:last-child {
+  padding-top: 10px;
+  padding-left: 5dvw;
+  /* background-color: red; */
   font-weight: bold;
+  font-size: medium;
+}
+
+h5 {
+  /* background-color: rebeccapurple; */
+  text-align: left;
+  font-weight: bold;
+  font-size: medium;
+}
+
+p {
+  /* background-color: rebeccapurple; */
+  text-align: left;
+  /* font-weight: bold; */
+  font-size: small;
+}
+
+.dct_img{
+  border-radius: 10px 10px 0px 0px;
+}
+
+.card{
+  background-color: red;
+  /* display: inline-block; */
+  /* max-width: 150px; */
+  border-radius: 10px;
+  margin-right: 10px;
+}
+
+.NamaJob{
+  margin-left: 5px;
+}
+
+#carouselExample{
+  /* background-color: purple; */
+  padding-left: 5dvw;
 }
