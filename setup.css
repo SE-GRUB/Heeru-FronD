@@ -25,7 +25,6 @@ p{
 .photoprofile{
     display: flex;
     justify-content: center;
-    
 }
 
 .lingkarannya{
@@ -57,12 +56,39 @@ p{
 }
 
 
-
 .formnya{
     margin-top: 40px;
     display: grid;
     justify-content: center;
 }
+
+/* biar toggle show passwordnya nyatu sama inputnya */
+.input-field {
+    max-width: 380px;
+    width: 100%;
+    background-color: #F1F1F5;
+    margin: 10px 0;
+    height: 55px;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: 15% 85%;
+    padding: 0 0.4rem;
+    position: relative;
+  }
+  
+  .input-field i {
+    text-align: center;
+    line-height: 55px;
+    color: #D6D6D6;
+    transition: 0.5s;
+    font-size: 1.1rem;
+  }
+
+  .input-field input{
+    background: none;
+    outline: none;
+    border: none;
+  }
 
 .mb-3 input[type="number"]{
     width: 291px;
@@ -152,4 +178,16 @@ display: none;
     background-image: radial-gradient(circle at top, rgba(100, 165, 249, 60%),white 45%);
     position: absolute;
     z-index: -1;
+}
+
+.togglePassword {
+    text-align: center;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0 18px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 }

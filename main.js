@@ -6,9 +6,9 @@ let username = "";
 let email = "";
 var histhost;
 
-// histhost='http://127.0.0.1:8000/'
+histhost='http://127.0.0.1:8000/'
 // histhost='http://47.245.121.87/Heeru-BackD/public/'
-histhost='https://enp.lahoras.my.id/'
+// histhost='https://enp.lahoras.my.id/'
 
 async function requestdata(param){
     return fetch(`${histhost}api/${param}`)
@@ -41,6 +41,8 @@ function initpoin() {
                     localStorage.setItem('email', email);
                     password = alldata.user['password'];
                     localStorage.setItem('password', password);
+                    profile_pic = alldata.user['profile_pic'];
+                    localStorage.setItem('profile_pic', profile_pic);
                     window.location.href = "./sign_up2.html";
                     return true;
                 } else {
@@ -101,6 +103,38 @@ function initpoin3() {
             emailInput.value = storedEmail;
             localStorage.removeItem('email');
         }
+
+        var togglePassword = document.getElementById('togglePassword');
+        var togglePassword2 = document.getElementById('togglePassword2');
+        var showPasswordIcon = document.getElementById("showPasswordIcon");
+        var showPasswordIcon2 = document.getElementById("showPasswordIcon2");
+        var password = document.getElementById('passwordinput');
+        var passwordconfirmationinput = document.getElementById('passwordconfirmationinput');
+
+        togglePassword.addEventListener('click', function() {
+            var type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+
+            if (type === 'text') {
+                showPasswordIcon.classList.remove("fa-eye");
+                showPasswordIcon.classList.add("fa-eye-slash");
+            } else {
+                showPasswordIcon.classList.remove("fa-eye-slash");
+                showPasswordIcon.classList.add("fa-eye");
+            }
+        });
+        togglePassword2.addEventListener('click', function() {
+            var type = passwordconfirmationinput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordconfirmationinput.setAttribute('type', type);
+
+            if (type === 'text') {
+                showPasswordIcon2.classList.remove("fa-eye");
+                showPasswordIcon2.classList.add("fa-eye-slash");
+            } else {
+                showPasswordIcon2.classList.remove("fa-eye-slash");
+                showPasswordIcon2.classList.add("fa-eye");
+            }
+        });
     });
 
     document.getElementById('fileInput').addEventListener('change', function (event) {
@@ -177,43 +211,43 @@ function initpoin3() {
             }
         }
 
-            if (password_confirmation.value.trim() === "") {
-                errortext3.innerHTML = "Please input your password confirmation";
-                errortext3.classList.remove("hide");
-            } else {
-                
-                if (password.value !== password_confirmation.value) {
-                        errortext3.innerHTML = "Your password and password confirmation do not match";
-                        errortext3.classList.remove("hide");
-                    } else {
-                        profile_pic = profile_pic.files[0];
+        if (password_confirmation.value.trim() === "") {
+            errortext3.innerHTML = "Please input your password confirmation";
+            errortext3.classList.remove("hide");
+        } else {
+            
+            if (password.value !== password_confirmation.value) {
+                    errortext3.innerHTML = "Your password and password confirmation do not match";
+                    errortext3.classList.remove("hide");
+                } else {
+                    profile_pic = profile_pic.files[0];
 
-                        var formData = new FormData();
-                        formData.append('profile_pic', profile_pic);
-                        formData.append('email', email.value);
-                        formData.append('password', password.value);
-                        formData.append('user_id', localStorage.getItem('user_id'));
+                    var formData = new FormData();
+                    formData.append('profile_pic', profile_pic);
+                    formData.append('email', email.value);
+                    formData.append('password', password.value);
+                    formData.append('user_id', localStorage.getItem('user_id'));
 
-                        await $.ajax({
-                            url: `${histhost}api/updateProfile`,
-                            method: 'POST',
-                            processData: false,
-                            contentType: false,
-                            data: formData,
-                            success: function (response) {
-                                if (response.success) {
-                                    window.location.href = "./MainApk/home.html";
-                                    return true;
-                                } else {
-                                    // console.error('Error:', response.message);
-                                    errortext3.innerHTML = "Error in updating your data!";
-                                    errortext3.classList.remove("hide");
-                                }
-                            },
-                        });
-                    }
-                
-            }
+                    await $.ajax({
+                        url: `${histhost}api/updateProfile`,
+                        method: 'POST',
+                        processData: false,
+                        contentType: false,
+                        data: formData,
+                        success: function (response) {
+                            if (response.success) {
+                                window.location.href = "./MainApk/home.html";
+                                return true;
+                            } else {
+                                // console.error('Error:', response.message);
+                                errortext3.innerHTML = "Error in updating your data!";
+                                errortext3.classList.remove("hide");
+                            }
+                        },
+                    });
+                }
+            
+        }
         if (password_confirmation.value.trim() === "") {
             errortext3.innerHTML = "Please input your password confirmation";
             errortext3.classList.remove("hide");
@@ -254,11 +288,32 @@ function initpoin3() {
 }
 
 function initpoin4() {
+    var profile_pic = localStorage.getItem('profile_pic');
     var names = localStorage.getItem('username');
     var dataNama = document.getElementById("databaseName");
-
+    
+    document.getElementById('profileImage').src= `${histhost}${profile_pic}`;
+    
     dataNama.innerHTML = names;
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        var togglePassword = document.getElementById('togglePassword');
+        var showPasswordIcon = document.getElementById("showPasswordIcon");
+        var password = document.getElementById('passwordinput');
 
+        togglePassword.addEventListener('click', function() {
+            var type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+
+            if (type === 'text') {
+                showPasswordIcon.classList.remove("fa-eye");
+                showPasswordIcon.classList.add("fa-eye-slash");
+            } else {
+                showPasswordIcon.classList.remove("fa-eye-slash");
+                showPasswordIcon.classList.add("fa-eye");
+            }
+        });
+    });
     document.getElementById("submitBtn").addEventListener("click", async function() {
         var password = document.getElementById('passwordinput');
         var errortext=document.getElementById("errortext");     
