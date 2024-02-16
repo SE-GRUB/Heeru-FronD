@@ -521,8 +521,7 @@ async function initpoin7(){
 async function initpoin8() {
     await requestdata('counselorList');
 
-    var ul = document.getElementById('doctors');
-
+    var ul = document.getElementById('carouselExample');
 
     for(var i = 0; i < Object.keys(alldata.users).length; i++){
         // console.log(alldata.users[i].user_id);
@@ -533,24 +532,43 @@ async function initpoin8() {
 
 
         var li = document.createElement('li');
+        li.className = "carousel inner card";
         li.id = id;
 
         var img = document.createElement('img');
+        img.className = "dct_img";
         img.src = profile_pic ? `${histhost}${profile_pic}` : `${histhost}Admin/images/profile.jpg`;
 
-
         var div = document.createElement('div');
+        div.className = "NamaJob";
 
-        var h3 = document.createElement('h3');
-        h3.textContent = name;
+        var h5 = document.createElement('h5');
+        h5.textContent = name;
 
         var p = document.createElement('p');
         p.textContent = rating
 
-        div.appendChild(h3);
+        div.appendChild(h5);
         div.appendChild(p);
         li.appendChild(img);
         li.appendChild(div);
         ul.appendChild(li);
     }
+
+    $('.owl-carousel').owlCarousel({
+        loop:true,
+        margin:10,
+        nav:true,
+        responsive:{
+            0:{
+                items:1.8
+            },
+            600:{
+                items:3.8
+            },
+            1000:{
+                items:5.8
+            }
+        }
+    })
 }
