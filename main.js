@@ -35,7 +35,7 @@ function initpoin() {
                     localStorage.setItem('username', username);
                     no_telp = alldata.user["no_telp"];
                     localStorage.setItem('no_telp', no_telp);
-                    user_id = alldata.user['id'];
+                    user_id = alldata.user['user_id'];
                     localStorage.setItem('user_id', user_id);
                     email = alldata.user['email'];
                     localStorage.setItem('email', email);
@@ -268,7 +268,6 @@ function initpoin4() {
                 errortext.classList.remove("hide")
             }else{
                 await requestdata(`checkPass?password=${password.value}&user_id=${localStorage.getItem('user_id')}`)
-
                 if (alldata.success) {
                     window.location.href = "./MainApk/home.html";
                     return true;
