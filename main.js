@@ -4,12 +4,11 @@ let no_telp = "";
 let user_id = "";
 let username = "";
 let email = "";
+var histhost;
 
-var histhost
-
-histhost='http://127.0.0.1:8000/'
+// histhost='http://127.0.0.1:8000/'
 // histhost='http://47.245.121.87/Heeru-BackD/public/'
-// histhost='https://dwt.lahoras.my.id/'
+histhost='https://dwt.lahoras.my.id/'
 
 async function requestdata(param){
     return fetch(`${histhost}api/${param}`)
