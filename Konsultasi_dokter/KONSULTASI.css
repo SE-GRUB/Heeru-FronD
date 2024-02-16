@@ -1,3 +1,7 @@
+body{
+  background-color: rgba(246, 246, 246, 0.903);
+}
+
 .topnav{
   /* background-color: #8a2be2; */
   margin-top: 3dvh;
@@ -10,7 +14,7 @@
   /* background-color: aqua; */
   border-radius: 100px;
   width: 90dvw;
-  background-color: #0122;
+  background-color: rgba(134, 134, 135, 0.133);
 }
 
 
@@ -47,7 +51,7 @@ p {
 }
 
 .card{
-  background-color: red;
+  background-color: rgb(255, 255, 255);
   /* display: inline-block; */
   /* max-width: 150px; */
   border-radius: 10px;
