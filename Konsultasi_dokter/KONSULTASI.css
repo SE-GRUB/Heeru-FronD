@@ -7,12 +7,14 @@ body{
   display: flex;
   align-items: center;
   justify-content: center;
+  /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.295); */
 }
 
 .topnav input[type=text] {
   border-radius: 100px;
   width: 90dvw;
   background-color: rgba(134, 134, 135, 0.133);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.295);
 }
 
 h2 {
@@ -33,6 +35,8 @@ h5 {
   width: 100dvw;
   margin: 0 auto;
   font-family: sans-serif;
+  /* display: flex;
+  flex-wrap: wrap; */
   /* background-color: brown; */
 }
 
@@ -47,21 +51,17 @@ p {
   /* padding-top: 100%; */
   aspect-ratio: 1/1;
   border-radius: 10px 10px 0px 0px;
+  /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.295); */
 }
 
 .card{
-  /* background-color: rgb(255, 0, 0); */
   background-color: rgb(255, 255, 255);
-  /* display: inline-block; */
-  /* max-width: 150px; */
   border-width: 0px;
   /* border-color: black; */
   border-radius: 15px 15px 15px 15px;
   margin-right: 10px;
-}
-
-.NamaJob{
-  margin-left: 5px;
+  margin-bottom: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.295);
 }
 
 img.gambar{
@@ -69,52 +69,69 @@ img.gambar{
   aspect-ratio: 1/1;
 }
 
-/* #sortdoctor{
-  padding-left: 5dvw;
-  background-color: brown;
-  display: inline-block;
-  vertical-align: middle;
-} */
+.NamaJob{
+  margin-top: 5px;
+  margin-left: 5px;
+}
 
 #carouselExample{
-  /* background-color: purple; */
   padding-left: 5dvw;
 }
 
-.sortdoctor {
-  background-color: red;
-  display: flex;
-  align-items: center;
-  padding: 1rem;
-  /* border-radius: 0.5rem; */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
+
+
+#sortname{
+  margin-top: -5px;
+  margin-bottom: 15px;
+  /* background-color: red; */
 }
 
-.sortdoctor img {
-  width: 80px;
-  height: 80px;
+#sortdoctor{
+  padding-left: 5dvw;
+  /* background-color: red; */
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.sortcard {
+  /* background-color: aqua; */
+  display: flex;
+  flex-wrap: wrap;
+  width: 90dvw;
+  /* min-width: px; */
+  max-width: 670px;
+  align-items: center;
+  margin: auto auto 25px 0px;
+  border-radius: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.295);
+  /* background-color: #fff; */
+}
+
+.sortcard img {
+  width: 100px;
+  aspect-ratio: 1/1;
   border-radius: 50%;
+  margin: 10px;
   margin-right: 1rem;
 }
 
-.sortdoctor-info {
+.sortcard-info {
   flex: 1;
 }
 
-.sortdoctor-info h3 {
+.sortcard-info h3 {
   margin: 0;
   font-size: 1rem;
   font-weight: 600;
 }
 
-.sortdoctor-info p {
+.sortcard-info p {
   margin: 0.5rem 0;
   font-size: 0.875rem;
   color: #666;
 }
 
-.sortdoctor-info span {
+.sortcard-info span {
   font-size: 0.875rem;
   color: #333;
 }
