@@ -109,8 +109,8 @@ button[type="submit"]{
 
 .photoprofile{
     background-color: #D6D6D6;
-    width: 43px;
-    height: 43px;
+    width: 45px;
+    height: 45px;
     border-radius: 100%;
     display: flex;
     align-items: center;
@@ -118,8 +118,19 @@ button[type="submit"]{
 }
 
 .databaseName{
-    margin-left: 10px;
+    margin-left: 0.5rem;
     font-weight: 600;
+}
+
+.waktungepost{
+    color: #D4D4D4;
+    margin-left: 0.5rem;
+    font-weight: 500;
+    font-size: 11px;
+}
+
+.namereply{
+    font-size: 11px;
 }
 
 .isipost{
@@ -131,6 +142,8 @@ button[type="submit"]{
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 10px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 .baglike {
@@ -147,4 +160,18 @@ button[type="submit"]{
     justify-content: center;
 
     color: #64A5F9;
+}
+
+.bioyangkomen{
+    display: inline-block;
+}
+
+.photoprofile2{
+    background-color: #D6D6D6;
+    width: 21px;
+    height: 21px;
+    border-radius: 100%;
+    /* display: flex;
+    /* align-items: center;
+    justify-content: center; */ */
 }
