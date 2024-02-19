@@ -3,7 +3,6 @@ body{
 }
 
 .topnav{
-  /* background-color: #8a2be2; */
   margin-top: 3dvh;
   display: flex;
   align-items: center;
@@ -11,57 +10,53 @@ body{
 }
 
 .topnav input[type=text] {
-  /* background-color: aqua; */
   border-radius: 100px;
   width: 90dvw;
   background-color: rgba(134, 134, 135, 0.133);
 }
 
+h2 {
+  margin-top: 25px;
+  padding-left: 5dvw;
+  font-weight: bold;
+  font-size: medium;
+}
+
+
+h5 {
+  text-align: left;
+  font-weight: bold;
+  font-size: medium;
+}
 
 #container {
   width: 100dvw;
   margin: 0 auto;
   font-family: sans-serif;
-}
-
-h2 {
-  margin-top: 25px;
-  padding-left: 5dvw;
-  /* background-color: red; */
-  font-weight: bold;
-  font-size: medium;
-}
-
-#sortname{
-  /* margin-top: -10px; */
-  /* background-color: tomato; */
-}
-
-h5 {
-  /* background-color: rebeccapurple; */
-  text-align: left;
-  font-weight: bold;
-  font-size: medium;
+  /* background-color: brown; */
 }
 
 p {
-  /* background-color: rebeccapurple; */
   text-align: left;
-  /* font-weight: bold; */
   font-size: small;
 }
 
 .dct_img{
-  width: 174px;
-  height: 174px;
+  /* width: 174px; */
+  /* height: width; */
+  /* padding-top: 100%; */
+  aspect-ratio: 1/1;
   border-radius: 10px 10px 0px 0px;
 }
 
 .card{
+  /* background-color: rgb(255, 0, 0); */
   background-color: rgb(255, 255, 255);
   /* display: inline-block; */
   /* max-width: 150px; */
-  border-radius: 10px;
+  border-width: 0px;
+  /* border-color: black; */
+  border-radius: 15px 15px 15px 15px;
   margin-right: 10px;
 }
 
@@ -69,7 +64,56 @@ p {
   margin-left: 5px;
 }
 
+img.gambar{
+  max-width: 200px;
+  aspect-ratio: 1/1;
+}
+
+/* #sortdoctor{
+  padding-left: 5dvw;
+  background-color: brown;
+  display: inline-block;
+  vertical-align: middle;
+} */
+
+#namadesc{
+  /* display: flex;
+  flex-direction: column; */
+}
+
 #carouselExample{
   /* background-color: purple; */
   padding-left: 5dvw;
+}
+
+
+#sortdoctor {
+  /* margin:10px auto; */
+  padding-left: 5dvw;
+  width:960px;
+
+}
+
+#sortdoctor header img,
+#sortdoctor header h5 {
+  display:inline-block;
+  vertical-align:middle;
+}
+
+#sortdoctor header img {
+width:6em;
+}
+
+#sortdoctor header h5 {
+margin-left:1em;
+}
+
+#sortdoctor p {
+  margin-top:0.5em;
+  margin-left:8em; /* img 6 + padding + h1 margin 1 */
+}
+
+#sortdoctor footer {
+  margin-left:8em;
+  margin-top: 1em;
 }
