@@ -571,16 +571,97 @@ async function initpoin7(){
     })
 }
 
+function formatCurrency(amount) {
+    var parts = amount.toFixed(2).split(".");
+
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+    return "Rp " + parts.join(",");
+}
+
+
 async function initpoin8() {
-    await requestdata('counselorList');
+    await requestdata('counselorList');  
+
+    var sortedUsers = Object.values(alldata.users).sort(function(a, b) {
+        return a.name.localeCompare(b.name);
+    });
+
+    var popularDoctor = document.getElementById('popular-doctor-section');
+
+    function displayFilteredUsers(users) {
+        var ul = document.getElementById('sortdoctor');
+        ul.innerHTML = '';
+
+        users.forEach(function(user) {
+            var id = user.user_id;
+            var name = user.name;
+            var profile_pic = user.profile_pic;
+            var rating = user.rating;
+            var fare = user.fare;
+            var rating = 3.4;
+
+
+            var div = document.createElement('div');
+            div.className = "sortcard";
+            div.id = "card"+id;
+
+            var img = document.createElement('img');
+            img.src = profile_pic ? `${histhost}${profile_pic}` : `${histhost}Admin/images/profile.jpg`;
+
+            var div2 = document.createElement('div');
+            div2.className = "sortcard-info";
+
+            var h3 = document.createElement('h3');
+            h3.textContent = name;
+
+            var ratingDiv = document.createElement('div');
+            ratingDiv.className = "rating"
+
+            var ratingElement = document.createElement('i');
+            ratingElement.setAttribute('data-rating', rating.toString());
+
+            var ratingValueElement = document.createElement('span');
+            ratingValueElement.textContent = rating;
+
+            var fareElement = document.createElement('p')
+            fareElement.innerHTML = formatCurrency(parseFloat(fare));
+
+            div2.appendChild(h3);
+            ratingElement.appendChild(ratingValueElement);
+            ratingDiv.appendChild(ratingElement);
+            div2.appendChild(ratingDiv);
+            div2.appendChild(fareElement);
+            div.appendChild(img);
+            div.appendChild(div2)
+            ul.appendChild(div);
+        });
+    }
+
+    var searchInput = document.getElementById('searchInput');
+
+    searchInput.addEventListener('input', function() {
+        var searchTerm = searchInput.value.toLowerCase();
+        var filteredUsers = sortedUsers.filter(function(user) {
+            return user.name.toLowerCase().includes(searchTerm);
+        });
+
+        if (searchTerm === '') {
+            popularDoctor.style.display = 'block';
+        } else {
+            popularDoctor.style.display = 'none';
+        }
+
+        displayFilteredUsers(filteredUsers);
+    });
 
     var ul = document.getElementById('carouselExample');
 
     for(var i = 0; i < Object.keys(alldata.users).length; i++){
-        // console.log(alldata.users[i].user_id);
         var id = alldata.users[i].user_id;
         var name = alldata.users[i].name;
         var rating = alldata.users[i].rating;
+        var fare = alldata.users[i].fare;
         var profile_pic = alldata.users[i].profile_pic;
 
 
@@ -598,20 +679,81 @@ async function initpoin8() {
         var h5 = document.createElement('h5');
         h5.textContent = name;
 
-        var p = document.createElement('p');
-        p.textContent = rating
+        var rating = 3.4;
+
+        var ratingDiv = document.createElement('div');
+        ratingDiv.className = "rating"
+
+        var ratingElement = document.createElement('i');
+        ratingElement.setAttribute('data-rating', rating.toString());
+
+        var ratingValueElement = document.createElement('span');
+        ratingValueElement.textContent = rating;
+
+        var fareElement = document.createElement('p')
+        fareElement.innerHTML = formatCurrency(parseFloat(fare))
 
         div.appendChild(h5);
-        div.appendChild(p);
+        ratingElement.appendChild(ratingValueElement)
+        ratingDiv.appendChild(ratingElement);
+        div.appendChild(ratingDiv);
+        div.appendChild(fareElement);
         li.appendChild(img);
         li.appendChild(div);
         ul.appendChild(li);
-    }
+    }  
+
+    var ul = document.getElementById('sortdoctor');
+
+    for(var i = 0; i < sortedUsers.length; i++){
+        var user = sortedUsers[i];
+        var id = user.user_id;
+        var name = user.name;
+        var profile_pic = user.profile_pic;
+        var rating = user.rating;
+        var fare = user.fare;
+        var rating = 3.4;
+
+
+        var div = document.createElement('div');
+        div.className = "sortcard";
+        div.id = "card"+id;
+
+        var img = document.createElement('img');
+        img.src = profile_pic ? `${histhost}${profile_pic}` : `${histhost}Admin/images/profile.jpg`;
+
+        var div2 = document.createElement('div');
+        div2.className = "sortcard-info";
+
+        var h3 = document.createElement('h3');
+        h3.textContent = name;
+
+        var ratingDiv = document.createElement('div');
+        ratingDiv.className = "rating"
+
+        var ratingElement = document.createElement('i');
+        ratingElement.setAttribute('data-rating', rating.toString());
+
+        var ratingValueElement = document.createElement('span');
+        ratingValueElement.textContent = rating;
+
+        var fareElement = document.createElement('p')
+        fareElement.innerHTML = formatCurrency(parseFloat(fare));
+
+        div2.appendChild(h3);
+        ratingElement.appendChild(ratingValueElement);
+        ratingDiv.appendChild(ratingElement);
+        div2.appendChild(ratingDiv);
+        div2.appendChild(fareElement);
+        div.appendChild(img);
+        div.appendChild(div2)
+        ul.appendChild(div);
+    }  
 
     $('.owl-carousel').owlCarousel({
         loop:true,
         margin:10,
-        // nav:true,
+        nav:false,
         responsive:{
             0:{
                 items:1.8
