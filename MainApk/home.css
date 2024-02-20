@@ -85,12 +85,11 @@ button[type="submit"]{
 
 /* HOME - POST */
 .badanpost{
-    display: grid;   
+    display: flex;  
+    flex-wrap: wrap; 
     justify-content: center;
     background-color: #fff;
-    margin-top: 20px;
-    margin-left: 12px;
-    margin-right: 12px;
+    margin: 1.25rem 0.75rem 1.25rem 0.75rem;
 }
 
 .kotakpost{
@@ -100,6 +99,7 @@ button[type="submit"]{
     border-radius: 5px;
     padding: 10px 15px 10px 15px;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.25rem;
 }
 
 .bioyangpost{
@@ -118,7 +118,6 @@ button[type="submit"]{
 }
 
 .databaseName{
-    margin-left: 0.5rem;
     font-weight: 600;
 }
 
@@ -129,21 +128,22 @@ button[type="submit"]{
     font-size: 11px;
 }
 
-.namereply{
-    font-size: 11px;
+.namepost{
+    font-size: 12px;
+    margin-left: 0.5rem;
 }
 
 .isipost{
     margin-top: 9px;
-
+    font-size: 12px;
 }
 
 .actionpost{
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 10px;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
 }
 
 .baglike {
@@ -162,16 +162,29 @@ button[type="submit"]{
     color: #64A5F9;
 }
 
+/* KOMEN */
+
+.garis{
+    background: #d3d3d35a;
+    height: 0.02rem;
+    margin-bottom: 0.8rem;
+}
+
 .bioyangkomen{
-    display: inline-block;
+    display: flex;
 }
 
 .photoprofile2{
     background-color: #D6D6D6;
-    width: 21px;
-    height: 21px;
-    border-radius: 100%;
-    /* display: flex;
-    /* align-items: center;
-    justify-content: center; */ */
+    width: 22px;
+    height: 22px;
+}
+
+.namekomen{
+    font-size: 12px;
+    margin-right: 0.3rem;
+}
+
+.isikomen{
+    font-size: 12px;
 }
