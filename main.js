@@ -6,9 +6,9 @@ let username = "";
 let email = "";
 var histhost;
 
-// histhost='http://127.0.0.1:8000/'
+histhost='http://127.0.0.1:8000/'
 // histhost='http://47.245.121.87/Heeru-BackD/public/'
-histhost='https://enp.lahoras.my.id/'
+// histhost='https://enp.lahoras.my.id/'
 
 async function requestdata(param){
     return fetch(`${histhost}api/${param}`)
@@ -599,8 +599,6 @@ async function initpoin8() {
             var profile_pic = user.profile_pic;
             var rating = user.rating;
             var fare = user.fare;
-            var rating = 3.4;
-
 
             var div = document.createElement('div');
             div.className = "sortcard";
@@ -679,8 +677,6 @@ async function initpoin8() {
         var h5 = document.createElement('h5');
         h5.textContent = name;
 
-        var rating = 3.4;
-
         var ratingDiv = document.createElement('div');
         ratingDiv.className = "rating"
 
@@ -712,8 +708,6 @@ async function initpoin8() {
         var profile_pic = user.profile_pic;
         var rating = user.rating;
         var fare = user.fare;
-        var rating = 3.4;
-
 
         var div = document.createElement('div');
         div.className = "sortcard";
@@ -768,85 +762,8 @@ async function initpoin8() {
     })
 }
 
-
-
-
-// =========================================================
-
 async function initpoin9() {
     await requestdata('counselorList');  
-
-    var sortedUsers = Object.values(alldata.users).sort(function(a, b) {
-        return a.name.localeCompare(b.name);
-    });
-
-    var popularDoctor = document.getElementById('popular-doctor-section');
-
-    function displayFilteredUsers(users) {
-        var ul = document.getElementById('sortdoctor');
-        ul.innerHTML = '';
-
-        users.forEach(function(user) {
-            var id = user.user_id;
-            var name = user.name;
-            var profile_pic = user.profile_pic;
-            var rating = user.rating;
-            var fare = user.fare;
-            var rating = 3.4;
-
-
-            var div = document.createElement('div');
-            div.className = "sortcard";
-            div.id = "card"+id;
-
-            var img = document.createElement('img');
-            img.src = profile_pic ? `${histhost}${profile_pic}` : `${histhost}Admin/images/profile.jpg`;
-
-            var div2 = document.createElement('div');
-            div2.className = "sortcard-info";
-
-            var h3 = document.createElement('h3');
-            h3.textContent = name;
-
-            var ratingDiv = document.createElement('div');
-            ratingDiv.className = "rating"
-
-            var ratingElement = document.createElement('i');
-            ratingElement.setAttribute('data-rating', rating.toString());
-
-            var ratingValueElement = document.createElement('span');
-            ratingValueElement.textContent = rating;
-
-            var fareElement = document.createElement('p')
-            fareElement.innerHTML = formatCurrency(parseFloat(fare));
-
-            div2.appendChild(h3);
-            ratingElement.appendChild(ratingValueElement);
-            ratingDiv.appendChild(ratingElement);
-            div2.appendChild(ratingDiv);
-            div2.appendChild(fareElement);
-            div.appendChild(img);
-            div.appendChild(div2)
-            ul.appendChild(div);
-        });
-    }
-
-    var searchInput = document.getElementById('searchInput');
-
-    searchInput.addEventListener('input', function() {
-        var searchTerm = searchInput.value.toLowerCase();
-        var filteredUsers = sortedUsers.filter(function(user) {
-            return user.name.toLowerCase().includes(searchTerm);
-        });
-
-        if (searchTerm === '') {
-            popularDoctor.style.display = 'block';
-        } else {
-            popularDoctor.style.display = 'none';
-        }
-
-        displayFilteredUsers(filteredUsers);
-    });
 
     var ul = document.getElementById('carouselExample');
 
@@ -856,7 +773,6 @@ async function initpoin9() {
         var rating = alldata.users[i].rating;
         var fare = alldata.users[i].fare;
         var profile_pic = alldata.users[i].profile_pic;
-
 
         var li = document.createElement('li');
         li.className = "carousel inner card";
