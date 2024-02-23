@@ -39,17 +39,14 @@ h5 {
 }
 
 .container {
-  margin-top: 3dvh;
-  width: 100%;
+  /* background-color: blue; */
+  margin-top: 10px;
+  /* width: 85dvw; */
+  margin-left: 0px;
+  margin-right:0px;
   /* width: 100dvw; */
   /* margin: 0 auto; */
   font-family: sans-serif;
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
-  /* flex-wrap: wrap; */
-  /* background-color: brown; */
-  /* padding: 15px; */
 }
 
 p {
@@ -89,6 +86,8 @@ img.gambar {
 
 #carouselExample {
   padding-left: 5dvw;
+  width: 85dvw;
+  /* background-color: #ff8c00; */
 }
 
 #sortname {
@@ -111,13 +110,13 @@ img.gambar {
 }
 
 .sortcard {
-  /* background-color: aqua; */
+  background-color: white;
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
+  width: 80dvw;
   /* width: 90dvw; */
   /* min-width: px; */
-  max-width: 670px;
+  max-width: 650px;
   align-items: center;
   margin: auto auto 25px 0px;
   border-radius: 15px;

@@ -690,7 +690,7 @@ async function initpoin8() {
                 items:1.8
             },
             600:{
-                items:3.8
+                items:3.6
             },
             1000:{
                 items:5.8
