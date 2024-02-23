@@ -16,6 +16,15 @@ async function requestdata(param){
         .then(data => alldata = data)
 }
 
+function formatCurrency(amount) {
+    var parts = amount.toFixed(2).split(".");
+
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+    return "Rp " + parts.join(",");
+}
+
+
 function initpoin() {
     async function ceknip() {
         var inputField = document.getElementById("nipinput");
@@ -335,85 +344,6 @@ function initpoin4() {
     });
 }
 
-
-async function initpoin5() {
-    await requestdata('categoryName');
-
-    var container = document.getElementById('containerisi');
-
-
-    for(var i = 0; i < Object.keys(alldata.report_categories).length; i+=3){
-        var row = document.createElement('div');
-        row.className = 'row';
-        for(var j = 0; j < 3 && (i + j) < Object.keys(alldata.report_categories).length; j++){
-            var weight = alldata.report_categories[i + j].weight;
-            var category_name = alldata.report_categories[i + j].category_name;
-            var category_id = alldata.report_categories[i + j].id;
-
-
-            var colElement = document.createElement('button');
-            colElement.className = 'col bobot' + weight;
-            colElement.id = category_id;
-
-            var teksElement = document.createElement('div');
-            teksElement.className = 'teks';
-            teksElement.id = 'col bobot' + weight;
-            teksElement.textContent = category_name;
-
-            colElement.appendChild(teksElement);
-            row.appendChild(colElement);
-        }
-        container.appendChild(row);
-    }
-
-    
-    for (var i = 0; i < Object.keys(alldata.report_categories).length; i++) {
-        var categoryId = alldata.report_categories[i].id;
-        
-        // console.log("Get Element by ID : " + categoryId);
-    
-        document.getElementById(categoryId).addEventListener("click", createClickListener(categoryId));
-    }
-
-    var currentClickedCategoryId = null;
-
-    function createClickListener(categoryId) {
-        return function () {
-            var buttonNext = document.getElementById('buttonnext');
-            var element = document.getElementById(categoryId);
-
-            if (currentClickedCategoryId !== null) {
-                // Remove 'clicked' class from the previously clicked element
-                var previousClickedElement = document.getElementById(currentClickedCategoryId);
-                previousClickedElement.classList.remove('clicked');
-    
-                // Reset localStorage and hide the button if the same element is clicked again
-                if (currentClickedCategoryId === categoryId) {
-                    localStorage.removeItem('category_id');
-                    buttonNext.style.display = 'none';
-                    currentClickedCategoryId = null;
-                    return;
-                }
-            }
-
-           // Store categoryId in localStorage
-            localStorage.setItem('category_id', categoryId);
-            // console.log(localStorage.getItem('category_id'));
-
-            // Add 'clicked' class to the clicked element
-            element.classList.add('clicked');
-
-            // Toggle the display of the 'buttonnext' element
-            buttonNext.style.display = buttonNext.style.display === 'none' ? 'block' : 'none';
-
-            // Update currentClickedCategoryId
-            currentClickedCategoryId = categoryId;
-        };
-    }
-}
-    
-
-
 function initpoin6() {
 
     document.getElementById("nextBtn").addEventListener("click", async function() {
@@ -490,6 +420,82 @@ function initpoin6() {
         }
         return false;
     });
+}
+
+async function initpoin5() {
+    await requestdata('categoryName');
+
+    var container = document.getElementById('containerisi');
+
+
+    for(var i = 0; i < Object.keys(alldata.report_categories).length; i+=3){
+        var row = document.createElement('div');
+        row.className = 'row';
+        for(var j = 0; j < 3 && (i + j) < Object.keys(alldata.report_categories).length; j++){
+            var weight = alldata.report_categories[i + j].weight;
+            var category_name = alldata.report_categories[i + j].category_name;
+            var category_id = alldata.report_categories[i + j].id;
+
+
+            var colElement = document.createElement('button');
+            colElement.className = 'col bobot' + weight;
+            colElement.id = category_id;
+
+            var teksElement = document.createElement('div');
+            teksElement.className = 'teks';
+            teksElement.id = 'col bobot' + weight;
+            teksElement.textContent = category_name;
+
+            colElement.appendChild(teksElement);
+            row.appendChild(colElement);
+        }
+        container.appendChild(row);
+    }
+
+    
+    for (var i = 0; i < Object.keys(alldata.report_categories).length; i++) {
+        var categoryId = alldata.report_categories[i].id;
+        
+        // console.log("Get Element by ID : " + categoryId);
+    
+        document.getElementById(categoryId).addEventListener("click", createClickListener(categoryId));
+    }
+
+    var currentClickedCategoryId = null;
+
+    function createClickListener(categoryId) {
+        return function () {
+            var buttonNext = document.getElementById('buttonnext');
+            var element = document.getElementById(categoryId);
+
+            if (currentClickedCategoryId !== null) {
+                // Remove 'clicked' class from the previously clicked element
+                var previousClickedElement = document.getElementById(currentClickedCategoryId);
+                previousClickedElement.classList.remove('clicked');
+    
+                // Reset localStorage and hide the button if the same element is clicked again
+                if (currentClickedCategoryId === categoryId) {
+                    localStorage.removeItem('category_id');
+                    buttonNext.style.display = 'none';
+                    currentClickedCategoryId = null;
+                    return;
+                }
+            }
+
+           // Store categoryId in localStorage
+            localStorage.setItem('category_id', categoryId);
+            // console.log(localStorage.getItem('category_id'));
+
+            // Add 'clicked' class to the clicked element
+            element.classList.add('clicked');
+
+            // Toggle the display of the 'buttonnext' element
+            buttonNext.style.display = buttonNext.style.display === 'none' ? 'block' : 'none';
+
+            // Update currentClickedCategoryId
+            currentClickedCategoryId = categoryId;
+        };
+    }
 }
 
 async function initpoin7(){
@@ -571,178 +577,109 @@ async function initpoin7(){
     })
 }
 
-function formatCurrency(amount) {
-    var parts = amount.toFixed(2).split(".");
-
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-
-    return "Rp " + parts.join(",");
-}
-
-
 async function initpoin8() {
-    await requestdata('counselorList');  
 
+    // inisiasi globla variable
+    await requestdata('counselorList');      
     var sortedUsers = Object.values(alldata.users).sort(function(a, b) {
         return a.name.localeCompare(b.name);
     });
 
-    var popularDoctor = document.getElementById('popular-doctor-section');
-
-    function displayFilteredUsers(users) {
-        var ul = document.getElementById('sortdoctor');
-        ul.innerHTML = '';
-
-        users.forEach(function(user) {
-            var id = user.user_id;
-            var name = user.name;
-            var profile_pic = user.profile_pic;
-            var rating = user.rating;
-            var fare = user.fare;
-
-            var div = document.createElement('div');
-            div.className = "sortcard";
-            div.id = "card"+id;
-
-            var img = document.createElement('img');
-            img.src = profile_pic ? `${histhost}${profile_pic}` : `${histhost}Admin/images/profile.jpg`;
-
-            var div2 = document.createElement('div');
-            div2.className = "sortcard-info";
-
-            var h3 = document.createElement('h3');
-            h3.textContent = name;
-
-            var ratingDiv = document.createElement('div');
-            ratingDiv.className = "rating"
-
-            var ratingElement = document.createElement('i');
-            ratingElement.setAttribute('data-rating', rating.toString());
-
-            var ratingValueElement = document.createElement('span');
-            ratingValueElement.textContent = rating;
-
-            var fareElement = document.createElement('p')
-            fareElement.innerHTML = formatCurrency(parseFloat(fare));
-
-            div2.appendChild(h3);
-            ratingElement.appendChild(ratingValueElement);
-            ratingDiv.appendChild(ratingElement);
-            div2.appendChild(ratingDiv);
-            div2.appendChild(fareElement);
-            div.appendChild(img);
-            div.appendChild(div2)
-            ul.appendChild(div);
+    // untuk menggunakan pencarian
+    function pencarian() {
+        var searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('change', function() {
+            var valuenya=this.value.toLowerCase();
+            var filteredUsers
+            if(valuenya){
+                filteredUsers = sortedUsers.filter(function(user) {
+                    return user.name.toLowerCase().includes(valuenya);
+                });
+            }else{
+                filteredUsers = sortedUsers;
+            }
+            listdokter(filteredUsers);
         });
     }
 
-    var searchInput = document.getElementById('searchInput');
-
-    searchInput.addEventListener('input', function() {
-        var searchTerm = searchInput.value.toLowerCase();
-        var filteredUsers = sortedUsers.filter(function(user) {
-            return user.name.toLowerCase().includes(searchTerm);
+    // list dokter dari counsellorList    
+    function listdokterowl() {
+        var ul = document.getElementById('carouselExample');
+        var template = ''; 
+        alldata.users.forEach(index => {
+            console.log(index)
+            var id = index.user_id;
+            var name = index.name;
+            var rating = index.rating;
+            var fare = index.fare;
+            var profile_pic = index.profile_pic;
+            profile_pic=profile_pic ? histhost+profile_pic: histhost+'Admin/images/profile.jpg'
+            template += `
+            <li class="carousel inner card dpilist" id="${id}">
+                <img class="dct_img" src="${profile_pic}">
+                <div class="NamaJob">
+                    <h5>${name}</h5>
+                    <div class="rating">
+                    <i data-rating="${rating}">
+                        <span>${rating}</span>
+                    </i>
+                    </div>
+                    <p>${formatCurrency(parseFloat(fare))}</p>
+                </div>
+            </li>
+            `
         });
-
-        if (searchTerm === '') {
-            popularDoctor.style.display = 'block';
-        } else {
-            popularDoctor.style.display = 'none';
+        ul.innerHTML = template;
+        var dpilist = document.getElementsByClassName('dpilist');  
+        for (var i = 0; i < dpilist.length; i++) {
+            dpilist[i].addEventListener('click', function(e) {
+                var id = this.id
+                sessionStorage.setItem('dokter_id', id);
+                window.location.href = `./detail_dokter.html?id=${id}`;
+            });
         }
+    }
 
-        displayFilteredUsers(filteredUsers);
-    });
+    // show dokter yang di sort 
+    function listdokter(sortedUsers) {
+        var ul = document.getElementById('sortdoctor');
+        var template = '';
 
-    var ul = document.getElementById('carouselExample');
+        sortedUsers.forEach(user => {
+            var id = user.user_id;
+            var name = user.name;
+            var rating = user.rating;
+            var fare = user.fare;
+            var profile_pic = user.profile_pic;
+            profile_pic=profile_pic ? histhost+profile_pic: histhost+'Admin/images/profile.jpg'
 
-    for(var i = 0; i < Object.keys(alldata.users).length; i++){
-        var id = alldata.users[i].user_id;
-        var name = alldata.users[i].name;
-        var rating = alldata.users[i].rating;
-        var fare = alldata.users[i].fare;
-        var profile_pic = alldata.users[i].profile_pic;
+            template += `
+            <div class="sortcard ndv" id="${id}">
+                <img src="${profile_pic}" alt="Doctor avatar">
+                <div class="sortcard-info">
+                    <h3>${name}</h3>
+                    <p>${formatCurrency(parseFloat(fare))}</p>
+                    <span>${rating.toString()} bintang</span>
+                </div>
+            </div>
+            `
+        });
+        ul.innerHTML = template;
+        
+         // add event listener to each card
+         var ndv = document.getElementsByClassName('ndv'); 
+         for (var i = 0; i < ndv.length; i++) {
+             ndv[i].addEventListener('click', function(e) {
+                 var id = this.id
+                 sessionStorage.setItem('dokter_id', id);
+                 window.location.href = `./detail_dokter.html?id=${id}`;
+             });
+         }
+    }
 
-
-        var li = document.createElement('li');
-        li.className = "carousel inner card";
-        li.id = id;
-
-        var img = document.createElement('img');
-        img.className = "dct_img";
-        img.src = profile_pic ? `${histhost}${profile_pic}` : `${histhost}Admin/images/profile.jpg`;
-
-        var div = document.createElement('div');
-        div.className = "NamaJob";
-
-        var h5 = document.createElement('h5');
-        h5.textContent = name;
-
-        var ratingDiv = document.createElement('div');
-        ratingDiv.className = "rating"
-
-        var ratingElement = document.createElement('i');
-        ratingElement.setAttribute('data-rating', rating.toString());
-
-        var ratingValueElement = document.createElement('span');
-        ratingValueElement.textContent = rating;
-
-        var fareElement = document.createElement('p')
-        fareElement.innerHTML = formatCurrency(parseFloat(fare))
-
-        div.appendChild(h5);
-        ratingElement.appendChild(ratingValueElement)
-        ratingDiv.appendChild(ratingElement);
-        div.appendChild(ratingDiv);
-        div.appendChild(fareElement);
-        li.appendChild(img);
-        li.appendChild(div);
-        ul.appendChild(li);
-    }  
-
-    var ul = document.getElementById('sortdoctor');
-
-    for(var i = 0; i < sortedUsers.length; i++){
-        var user = sortedUsers[i];
-        var id = user.user_id;
-        var name = user.name;
-        var profile_pic = user.profile_pic;
-        var rating = user.rating;
-        var fare = user.fare;
-
-        var div = document.createElement('div');
-        div.className = "sortcard";
-        div.id = "card"+id;
-
-        var img = document.createElement('img');
-        img.src = profile_pic ? `${histhost}${profile_pic}` : `${histhost}Admin/images/profile.jpg`;
-
-        var div2 = document.createElement('div');
-        div2.className = "sortcard-info";
-
-        var h3 = document.createElement('h3');
-        h3.textContent = name;
-
-        var ratingDiv = document.createElement('div');
-        ratingDiv.className = "rating"
-
-        var ratingElement = document.createElement('i');
-        ratingElement.setAttribute('data-rating', rating.toString());
-
-        var ratingValueElement = document.createElement('span');
-        ratingValueElement.textContent = rating;
-
-        var fareElement = document.createElement('p')
-        fareElement.innerHTML = formatCurrency(parseFloat(fare));
-
-        div2.appendChild(h3);
-        ratingElement.appendChild(ratingValueElement);
-        ratingDiv.appendChild(ratingElement);
-        div2.appendChild(ratingDiv);
-        div2.appendChild(fareElement);
-        div.appendChild(img);
-        div.appendChild(div2)
-        ul.appendChild(div);
-    }  
+    listdokter(sortedUsers);
+    listdokterowl();
+    pencarian();
 
     $('.owl-carousel').owlCarousel({
         loop:true,
