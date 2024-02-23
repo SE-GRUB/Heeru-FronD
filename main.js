@@ -829,3 +829,148 @@ async function initpoin9() {
         }
     })
 }
+
+async function initpoin10(){
+    await requestdata('postList');  
+    var badanpost = document.getElementById('badanpost')
+
+    // console.log(alldata.comments)
+
+    for(var i = 0; i < Object.keys(alldata.posts).length; i++){
+        var id = alldata.posts[i].post_id;
+        var post_body = alldata.posts[i].post_body;
+        var poster = alldata.posts[i].poster;
+        var like = alldata.posts[i].like;
+        var created_at = alldata.posts[i].created_at;
+
+        var profile_pic = alldata.users[i].profile_pic;
+        var name = alldata.users[i].name;
+
+        var kotakpostdiv = document.createElement('div');
+        kotakpostdiv.className = 'kotakpost';
+        kotakpostdiv.id = id;
+
+        var biodiv = document.createElement('div');
+        biodiv.className = 'bioyangpost';
+
+        var photodiv = document.createElement('div');
+        photodiv.className = 'photoprofile';
+
+        var bagtextdiv = document.createElement('div');
+        bagtextdiv.className = 'bagtext';
+
+        var namepostdiv = document.createElement('span');
+        namepostdiv.className = 'databaseName namepost';
+        namepostdiv.textContent = name;
+
+        var waktungepostdiv = document.createElement('span');
+        waktungepostdiv.className = 'waktungepost';
+        waktungepostdiv.textContent = created_at;
+
+        var brBagText = document.createElement('br');
+
+        var isipostdiv = document.createElement('div');
+        isipostdiv.className = 'isipost';
+        isipostdiv.textContent = post_body;
+
+        var actionpostdiv = document.createElement('div');
+        actionpostdiv.className = 'actionpost';
+
+        var baglikediv = document.createElement('div');
+        baglikediv.className = 'baglike';
+
+        var materialspan = document.createElement('span');
+        materialspan.className = 'material-symbols-outlined';
+        materialspan.textContent = ' favorite '
+
+        var likespan = document.createElement('span');
+        likespan.className = 'databaseJumlahLike';
+        likespan.textContent = like;
+
+        var bagreplydiv = document.createElement('div');
+        bagreplydiv.className = 'bagreply';
+
+        var replyspan = document.createElement('span');
+        replyspan.className = 'material-symbols-outlined';
+        replyspan.textContent = ' reply '
+
+        var jumlahreplyspan = document.createElement('span');
+        jumlahreplyspan.textContent = Object.keys(alldata.comments).length;
+
+        var baglikediv = document.createElement('div');
+        baglikediv.className = 'baglike';
+
+        var garisDiv = document.createElement('div');
+        garisDiv.className = 'garis';
+
+        biodiv.appendChild(photodiv);
+        bagtextdiv.appendChild(namepostdiv);
+        bagtextdiv.appendChild(brBagText);
+        bagtextdiv.appendChild(waktungepostdiv);
+        biodiv.appendChild(bagtextdiv);
+        kotakpostdiv.appendChild(biodiv);
+        kotakpostdiv.appendChild(isipostdiv);
+        baglikediv.appendChild(materialspan);
+        baglikediv.appendChild(likespan);
+        actionpostdiv.appendChild(baglikediv);
+        bagreplydiv.appendChild(replyspan);
+        bagreplydiv.appendChild(jumlahreplyspan);
+        actionpostdiv.appendChild(bagreplydiv);
+        kotakpostdiv.appendChild(actionpostdiv);
+        // kotakpostdiv.appendChild(garisDiv);
+        // kotakpostdiv.appendChild(biokomendiv);
+        // var bioyangkomendiv = document.getElementById('komenField'+id);
+        
+        
+        for(var j = 0; j < Object.keys(alldata.comments).length; j++){ 
+            kotakpostdiv.appendChild(garisDiv);
+            var comment = alldata.comments[j].comment;
+            var namacomment = alldata.comments[j].user;
+            var profilkomen = alldata.comments[j].profilkomen;
+
+            var biokomendiv = document.createElement('div');
+            biokomendiv.className = 'bioyangkomen row ';
+
+            var garisdiv = document.createElement('div');
+            garisdiv.className = 'garis';
+            // biokomendiv.id = 'komenField' + id;
+   
+            var coldiv = document.createElement('div');
+            coldiv.className = 'col-1';
+
+            var photoprofile2div = document.createElement('div');
+            photoprofile2div.className = 'photoprofile2  rounded-circle';
+            
+            var bagiantextdiv = document.createElement('div');
+            bagiantextdiv.className = 'bagiantext col-11';
+            
+            var isikomendiv = document.createElement('span');
+            isikomendiv.className = 'isikomen';
+            // isikomendiv.textContent = comment ;
+            
+            var namekomenspan = document.createElement('span');
+            namekomenspan.className = 'databaseName namekomen ';
+            namekomenspan.textContent = namacomment ;
+    
+            isikomendiv.appendChild(namekomenspan); // Append the author's name
+            isikomendiv.appendChild(document.createTextNode(comment)); // Append the comment text
+
+            // Append elements to the comment container
+            coldiv.appendChild(photoprofile2div);
+            bagiantextdiv.appendChild(isikomendiv);
+
+            // Append elements to the comment container
+            if(j !== Object.keys(alldata.comments).length-1){
+                biokomendiv.appendChild(garisdiv); 
+            }
+            biokomendiv.appendChild(coldiv); // Append the profile picture container
+            biokomendiv.appendChild(bagiantextdiv); // Append the comment text container
+
+            // Append the comment container to the post container
+            kotakpostdiv.appendChild(biokomendiv);
+        }
+        
+        badanpost.appendChild(kotakpostdiv);
+    }
+    
+}

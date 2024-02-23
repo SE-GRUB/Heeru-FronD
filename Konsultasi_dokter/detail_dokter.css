@@ -66,6 +66,8 @@ header button:hover{background-color:rgb(237, 237, 237);}
 }
 
 .sortcard-info h2 {
+    margin-left: 10px;
+    /* background-color: #007bff; */
     margin-top: 15px;
     /* margin-bottom: auto; */
     /* font-size: 1rem; */
@@ -73,6 +75,7 @@ header button:hover{background-color:rgb(237, 237, 237);}
 }
 
 .sortcard-info h3 {
+    margin-left: 10px;
     margin-top: auto;
     margin-bottom: auto;
     font-weight: 300;
@@ -147,9 +150,27 @@ header button:hover{background-color:rgb(237, 237, 237);}
 }
 
 .services{
-    background-color: red;
+    /* background-color: red; */
     width: 85dvw;
     margin-left: 5dvw;
+}
+
+.services h2{
+    /* margin-top: 25px; */
+    margin-left: 0px;
+    margin-bottom: 0px;
+    font-weight: bold;
+}
+
+.services li{
+    /* margin-left: 10px; */
+    list-style-type: none;
+    font-size: large;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    border-bottom: 3px outset #007bff;
+    /* padding-top: 10px; */
+    padding-left: 10px;
 }
 
 h2 {
@@ -157,7 +178,12 @@ h2 {
     margin-left: 5dvw;
     font-weight: bold;
     /* font-size: medium; */
-  }
+}
+
+header h2{
+    /* background-color: #007bff; */
+    margin-left: 10px;
+}
 
 #container {
     width: 100dvw;

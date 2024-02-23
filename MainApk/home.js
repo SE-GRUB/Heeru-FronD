@@ -16,7 +16,7 @@ datareply.innerHTML = sumreply;
 var container = document.getElementById("badanpost");
 var box = document.getElementById("kotakpost");
 
-for (var i = 0; i < 10; i++) {
+for (var i = 0; i < 2; i++) {
     container.appendChild(box.cloneNode(true));
 }
 
