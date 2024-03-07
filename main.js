@@ -700,71 +700,41 @@ async function initpoin8() {
 }
 
 async function initpoin9() {
-    await requestdata('counselorList');  
+    await requestdata('counselorShow?user_id='+sessionStorage.getItem('dokter_id'));  
+
+    console.log(alldata.users.name)
 
     var ul = document.getElementById('carouselExample');
+    data = {
+        namedoctor: alldata.users.name,
+        jobpoin: alldata.users.rating+" bintang",
+        start: alldata.users.rating+" bintang",
+        Harga: "Rp. "+alldata.users.fare,
+        success: "0",
+        ongoing: "1,2k",
+        totalpatien: "1,2k",
+        listbit: ["Psikolog", "Psikiater", "Psikiater"],
+        imghip: alldata.users.profile_pic?histhost+alldata.users.profile_pic:histhost+'Admin/images/profile.jpg'
+      };
 
-    for(var i = 0; i < Object.keys(alldata.users).length; i++){
-        var id = alldata.users[i].user_id;
-        var name = alldata.users[i].name;
-        var rating = alldata.users[i].rating;
-        var fare = alldata.users[i].fare;
-        var profile_pic = alldata.users[i].profile_pic;
+      console.log(data)
 
-        var li = document.createElement('li');
-        li.className = "carousel inner card";
-        li.id = id;
+      data = JSON.stringify(data);
 
-        var img = document.createElement('img');
-        img.className = "dct_img";
-        img.src = profile_pic ? `${histhost}${profile_pic}` : `${histhost}Admin/images/profile.jpg`;
-
-        var div = document.createElement('div');
-        div.className = "NamaJob";
-
-        var h5 = document.createElement('h5');
-        h5.textContent = name;
-
-        var rating = 3.4;
-
-        var ratingDiv = document.createElement('div');
-        ratingDiv.className = "rating"
-
-        var ratingElement = document.createElement('i');
-        ratingElement.setAttribute('data-rating', rating.toString());
-
-        var ratingValueElement = document.createElement('span');
-        ratingValueElement.textContent = rating;
-
-        var fareElement = document.createElement('p')
-        fareElement.innerHTML = formatCurrency(parseFloat(fare))
-
-        div.appendChild(h5);
-        ratingElement.appendChild(ratingValueElement)
-        ratingDiv.appendChild(ratingElement);
-        div.appendChild(ratingDiv);
-        div.appendChild(fareElement);
-        li.appendChild(img);
-        li.appendChild(div);
-        ul.appendChild(li);
-    }  
-
-    $('.owl-carousel').owlCarousel({
-        loop:true,
-        margin:10,
-        nav:false,
-        responsive:{
-            0:{
-                items:1.8
-            },
-            600:{
-                items:3.8
-            },
-            1000:{
-                items:5.8
-            }
-        }
-    })
+      function initdokter(data) {
+        document.getElementById("namedoctor").innerHTML = data.namedoctor;
+        document.getElementById("jobpoin").innerHTML = data.jobpoin;
+        document.getElementById("start").innerHTML = data.start;
+        document.getElementById("Harga").innerHTML = data.Harga;
+        document.getElementById("success").innerHTML = data.success;
+        document.getElementById("ongoing").innerHTML = data.ongoing;
+        document.getElementById("totalpatien").innerHTML = data.totalpatien;
+        data.listbit.forEach((element) => {
+          document.getElementById("listbit").innerHTML += `<li>${element}</li>`;
+        });
+        document.getElementById("imghip").src = data.imghip;
+      }
+      initdokter(JSON.parse(data));
 }
 
 async function initpoin10(){

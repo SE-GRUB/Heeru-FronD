@@ -835,7 +835,7 @@ function initpoin8() {
                 items: 1.8
               },
               600: {
-                items: 3.8
+                items: 3.6
               },
               1000: {
                 items: 5.8
@@ -852,70 +852,47 @@ function initpoin8() {
 }
 
 function initpoin9() {
-  var ul, i, id, name, rating, fare, profile_pic, li, img, div, h5, ratingDiv, ratingElement, ratingValueElement, fareElement;
+  var ul, initdokter;
   return regeneratorRuntime.async(function initpoin9$(_context12) {
     while (1) {
       switch (_context12.prev = _context12.next) {
         case 0:
-          _context12.next = 2;
-          return regeneratorRuntime.awrap(requestdata('counselorList'));
+          initdokter = function _ref5(data) {
+            document.getElementById("namedoctor").innerHTML = data.namedoctor;
+            document.getElementById("jobpoin").innerHTML = data.jobpoin;
+            document.getElementById("start").innerHTML = data.start;
+            document.getElementById("Harga").innerHTML = data.Harga;
+            document.getElementById("success").innerHTML = data.success;
+            document.getElementById("ongoing").innerHTML = data.ongoing;
+            document.getElementById("totalpatien").innerHTML = data.totalpatien;
+            data.listbit.forEach(function (element) {
+              document.getElementById("listbit").innerHTML += "<li>".concat(element, "</li>");
+            });
+            document.getElementById("imghip").src = data.imghip;
+          };
 
-        case 2:
+          _context12.next = 3;
+          return regeneratorRuntime.awrap(requestdata('counselorShow?user_id=' + sessionStorage.getItem('dokter_id')));
+
+        case 3:
+          console.log(alldata.users.name);
           ul = document.getElementById('carouselExample');
+          data = {
+            namedoctor: alldata.users.name,
+            jobpoin: alldata.users.rating + " bintang",
+            start: alldata.users.rating + " bintang",
+            Harga: "Rp. " + alldata.users.fare,
+            success: "0",
+            ongoing: "1,2k",
+            totalpatien: "1,2k",
+            listbit: ["Psikolog", "Psikiater", "Psikiater"],
+            imghip: alldata.users.profile_pic ? histhost + alldata.users.profile_pic : histhost + 'Admin/images/profile.jpg'
+          };
+          console.log(data);
+          data = JSON.stringify(data);
+          initdokter(JSON.parse(data));
 
-          for (i = 0; i < Object.keys(alldata.users).length; i++) {
-            id = alldata.users[i].user_id;
-            name = alldata.users[i].name;
-            rating = alldata.users[i].rating;
-            fare = alldata.users[i].fare;
-            profile_pic = alldata.users[i].profile_pic;
-            li = document.createElement('li');
-            li.className = "carousel inner card";
-            li.id = id;
-            img = document.createElement('img');
-            img.className = "dct_img";
-            img.src = profile_pic ? "".concat(histhost).concat(profile_pic) : "".concat(histhost, "Admin/images/profile.jpg");
-            div = document.createElement('div');
-            div.className = "NamaJob";
-            h5 = document.createElement('h5');
-            h5.textContent = name;
-            rating = 3.4;
-            ratingDiv = document.createElement('div');
-            ratingDiv.className = "rating";
-            ratingElement = document.createElement('i');
-            ratingElement.setAttribute('data-rating', rating.toString());
-            ratingValueElement = document.createElement('span');
-            ratingValueElement.textContent = rating;
-            fareElement = document.createElement('p');
-            fareElement.innerHTML = formatCurrency(parseFloat(fare));
-            div.appendChild(h5);
-            ratingElement.appendChild(ratingValueElement);
-            ratingDiv.appendChild(ratingElement);
-            div.appendChild(ratingDiv);
-            div.appendChild(fareElement);
-            li.appendChild(img);
-            li.appendChild(div);
-            ul.appendChild(li);
-          }
-
-          $('.owl-carousel').owlCarousel({
-            loop: true,
-            margin: 10,
-            nav: false,
-            responsive: {
-              0: {
-                items: 1.8
-              },
-              600: {
-                items: 3.8
-              },
-              1000: {
-                items: 5.8
-              }
-            }
-          });
-
-        case 5:
+        case 9:
         case "end":
           return _context12.stop();
       }
