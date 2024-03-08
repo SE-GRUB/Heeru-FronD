@@ -903,8 +903,16 @@ function initpoin9() {
                     };
                     time = document.getElementById("Test_DatetimeLocal").value;
                     notav = [];
-                    response = fetch("https://enp.lahoras.my.id/avp?time=".concat(time));
-                    data = response.json();
+                    _context12.next = 5;
+                    return regeneratorRuntime.awrap(fetch("https://enp.lahoras.my.id/avp?time=".concat(time)));
+
+                  case 5:
+                    response = _context12.sent;
+                    _context12.next = 8;
+                    return regeneratorRuntime.awrap(response.json());
+
+                  case 8:
+                    data = _context12.sent;
                     notav = data.map(function (item) {
                       return parseInt(item.duration);
                     });
@@ -920,7 +928,7 @@ function initpoin9() {
                       }
                     }
 
-                  case 10:
+                  case 14:
                   case "end":
                     return _context12.stop();
                 }

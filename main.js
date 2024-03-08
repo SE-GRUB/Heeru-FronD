@@ -742,8 +742,8 @@ async function initpoin9() {
         };
         var time = document.getElementById("Test_DatetimeLocal").value;
         var notav = [];
-        var response = fetch(`https://enp.lahoras.my.id/avp?time=${time}`);
-        var data = response.json();
+        var response = await fetch(`https://enp.lahoras.my.id/avp?time=${time}`);
+        var data = await response.json();
         notav = data.map(item => parseInt(item.duration));
         notav.forEach((duration) => {
             delete jadwal[duration];
