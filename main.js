@@ -742,8 +742,8 @@ async function initpoin9() {
         };
         var time = document.getElementById("Test_DatetimeLocal").value;
         var notav = [];
-        var response = await fetch(`https://enp.lahoras.my.id/avp?time=${time}`);
-        var data = await response.json();
+        var response = fetch(`https://enp.lahoras.my.id/avp?time=${time}`);
+        var data = response.json();
         notav = data.map(item => parseInt(item.duration));
         notav.forEach((duration) => {
             delete jadwal[duration];
@@ -758,10 +758,35 @@ async function initpoin9() {
         }
     }
 
+    function generatepaymend(){
+        var iddokter = sessionStorage.getItem('dokter_id');
+        var idpasien = localStorage.getItem('user_id');
+        var waktu = document.getElementById("Test_DatetimeLocal").value;
+        var jam = document.getElementById("selectopt").value;
+        var data = {
+            iddokter: iddokter, //id si dokter
+            idpasien: idpasien, //id si pasien
+            waktu: waktu, //tanggal
+            jam: jam //slot jam
+        };
+
+        // request to server
+        var response = fetch(`https://enp.lahoras.my.id/pay?iddokter=${iddokter}&idpasien=${idpasien}&waktu=${waktu}&jam=${jam}`);
+        var data = response.json();
+        try {
+            if (data.success) {
+                window.location.href = data.urlpaymend;
+            }
+        } catch (error) {
+            alert("Error in generating payment");            
+        }
+    }
+
     initskj(); // Call initskj once when the page loads
 
     // Add event listener to Test_DatetimeLocal
     document.getElementById("Test_DatetimeLocal").addEventListener("change", initskj);
+    document.getElementById("orderpay").addEventListener("click", generatepaymend);
 
     initdokter(data);
 }

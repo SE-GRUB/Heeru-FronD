@@ -851,11 +851,39 @@ function initpoin8() {
 }
 
 function initpoin9() {
-  var ul, data, initdokter, initskj;
+  var ul, data, initdokter, initskj, generatepaymend;
   return regeneratorRuntime.async(function initpoin9$(_context13) {
     while (1) {
       switch (_context13.prev = _context13.next) {
         case 0:
+          generatepaymend = function _ref7() {
+            var iddokter = sessionStorage.getItem('dokter_id');
+            var idpasien = localStorage.getItem('user_id');
+            var waktu = document.getElementById("Test_DatetimeLocal").value;
+            var jam = document.getElementById("selectopt").value;
+            var data = {
+              iddokter: iddokter,
+              //id si dokter
+              idpasien: idpasien,
+              //id si pasien
+              waktu: waktu,
+              //tanggal
+              jam: jam //slot jam
+
+            }; // request to server
+
+            var response = fetch("https://enp.lahoras.my.id/pay?iddokter=".concat(iddokter, "&idpasien=").concat(idpasien, "&waktu=").concat(waktu, "&jam=").concat(jam));
+            var data = response.json();
+
+            try {
+              if (data.success) {
+                window.location.href = data.urlpaymend;
+              }
+            } catch (error) {
+              alert("Error in generating payment");
+            }
+          };
+
           initskj = function _ref6() {
             var jadwal, time, notav, response, data, selectopt, key;
             return regeneratorRuntime.async(function initskj$(_context12) {
@@ -875,16 +903,8 @@ function initpoin9() {
                     };
                     time = document.getElementById("Test_DatetimeLocal").value;
                     notav = [];
-                    _context12.next = 5;
-                    return regeneratorRuntime.awrap(fetch("https://enp.lahoras.my.id/avp?time=".concat(time)));
-
-                  case 5:
-                    response = _context12.sent;
-                    _context12.next = 8;
-                    return regeneratorRuntime.awrap(response.json());
-
-                  case 8:
-                    data = _context12.sent;
+                    response = fetch("https://enp.lahoras.my.id/avp?time=".concat(time));
+                    data = response.json();
                     notav = data.map(function (item) {
                       return parseInt(item.duration);
                     });
@@ -900,7 +920,7 @@ function initpoin9() {
                       }
                     }
 
-                  case 14:
+                  case 10:
                   case "end":
                     return _context12.stop();
                 }
@@ -920,10 +940,10 @@ function initpoin9() {
             document.getElementById("imghip").src = data.imghip;
           };
 
-          _context13.next = 4;
+          _context13.next = 5;
           return regeneratorRuntime.awrap(requestdata('counselorShow?user_id=' + sessionStorage.getItem('dokter_id')));
 
-        case 4:
+        case 5:
           console.log(alldata.users.name);
           ul = document.getElementById('carouselExample');
           data = {
@@ -942,9 +962,10 @@ function initpoin9() {
           // Add event listener to Test_DatetimeLocal
 
           document.getElementById("Test_DatetimeLocal").addEventListener("change", initskj);
+          document.getElementById("orderpay").addEventListener("click", generatepaymend);
           initdokter(data);
 
-        case 11:
+        case 13:
         case "end":
           return _context13.stop();
       }
