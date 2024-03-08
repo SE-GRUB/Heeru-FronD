@@ -602,8 +602,7 @@ function initpoin5() {
           }
 
           for (i = 0; i < Object.keys(alldata.report_categories).length; i++) {
-            categoryId = alldata.report_categories[i].id; // console.log("Get Element by ID : " + categoryId);
-
+            categoryId = alldata.report_categories[i].id;
             document.getElementById(categoryId).addEventListener("click", createClickListener(categoryId));
           }
 
@@ -953,8 +952,28 @@ function initpoin9() {
   });
 }
 
+function timeAgo(dateString) {
+  var previousDate = new Date(dateString);
+  var currentDate = new Date();
+  var timeDifference = currentDate - previousDate;
+  var seconds = Math.floor(timeDifference / 1000);
+  var minutes = Math.floor(seconds / 60);
+  var hours = Math.floor(minutes / 60);
+  var days = Math.floor(hours / 24);
+
+  if (days > 0) {
+    return days + " days ago";
+  } else if (hours > 0) {
+    return hours + " hours ago";
+  } else if (minutes > 0) {
+    return minutes + " minutes ago";
+  } else {
+    return seconds + " seconds ago";
+  }
+}
+
 function initpoin10() {
-  var badanpost, i, id, post_body, poster, like, created_at, profile_pic, name, kotakpostdiv, biodiv, photodiv, bagtextdiv, namepostdiv, waktungepostdiv, brBagText, isipostdiv, actionpostdiv, baglikediv, materialspan, likespan, bagreplydiv, replyspan, jumlahreplyspan, garisDiv, j, comment, namacomment, profilkomen, biokomendiv, garisdiv, coldiv, photoprofile2div, bagiantextdiv, isikomendiv, namekomenspan;
+  var badanpost, i, id, post_body, poster, like, created_at, profile_pic, name, kotakpostdiv, biodiv, photodiv, fotonya, bagtextdiv, namepostdiv, waktungepostdiv, brBagText, isipostdiv, actionpostdiv, baglikediv, materialspan, likespan, bagreplydiv, replyspan, jumlahreplyspan, garisDiv, j, comment, namacomment, profilkomen, biokomendiv, garisdiv, coldiv, photoprofile2div, fotonyakomen, bagiantextdiv, isikomendiv, namekomenspan;
   return regeneratorRuntime.async(function initpoin10$(_context14) {
     while (1) {
       switch (_context14.prev = _context14.next) {
@@ -972,6 +991,7 @@ function initpoin10() {
             like = alldata.posts[i].like;
             created_at = alldata.posts[i].created_at;
             profile_pic = alldata.users[i].profile_pic;
+            profile_pic = profile_pic ? histhost + profile_pic : histhost + 'Admin/images/profile.jpg';
             name = alldata.users[i].name;
             kotakpostdiv = document.createElement('div');
             kotakpostdiv.className = 'kotakpost';
@@ -980,6 +1000,9 @@ function initpoin10() {
             biodiv.className = 'bioyangpost';
             photodiv = document.createElement('div');
             photodiv.className = 'photoprofile';
+            fotonya = document.createElement('img');
+            fotonya.className = 'photoprofile rounded-circle';
+            fotonya.src = profile_pic;
             bagtextdiv = document.createElement('div');
             bagtextdiv.className = 'bagtext';
             namepostdiv = document.createElement('span');
@@ -987,7 +1010,7 @@ function initpoin10() {
             namepostdiv.textContent = name;
             waktungepostdiv = document.createElement('span');
             waktungepostdiv.className = 'waktungepost';
-            waktungepostdiv.textContent = created_at;
+            waktungepostdiv.textContent = timeAgo(created_at);
             brBagText = document.createElement('br');
             isipostdiv = document.createElement('div');
             isipostdiv.className = 'isipost';
@@ -1013,6 +1036,7 @@ function initpoin10() {
             baglikediv.className = 'baglike';
             garisDiv = document.createElement('div');
             garisDiv.className = 'garis';
+            photodiv.appendChild(fotonya);
             biodiv.appendChild(photodiv);
             bagtextdiv.appendChild(namepostdiv);
             bagtextdiv.appendChild(brBagText);
@@ -1035,6 +1059,7 @@ function initpoin10() {
               comment = alldata.comments[j].comment;
               namacomment = alldata.comments[j].user;
               profilkomen = alldata.comments[j].profilkomen;
+              profilkomen = profilkomen ? histhost + profilkomen : histhost + 'Admin/images/profile.jpg';
               biokomendiv = document.createElement('div');
               biokomendiv.className = 'bioyangkomen row ';
               garisdiv = document.createElement('div');
@@ -1044,6 +1069,9 @@ function initpoin10() {
               coldiv.className = 'col-1';
               photoprofile2div = document.createElement('div');
               photoprofile2div.className = 'photoprofile2  rounded-circle';
+              fotonyakomen = document.createElement('img');
+              fotonyakomen.className = 'photoprofile2 rounded-circle';
+              fotonyakomen.src = profile_pic;
               bagiantextdiv = document.createElement('div');
               bagiantextdiv.className = 'bagiantext col-11';
               isikomendiv = document.createElement('span');
@@ -1052,23 +1080,18 @@ function initpoin10() {
               namekomenspan = document.createElement('span');
               namekomenspan.className = 'databaseName namekomen ';
               namekomenspan.textContent = namacomment;
-              isikomendiv.appendChild(namekomenspan); // Append the author's name
-
-              isikomendiv.appendChild(document.createTextNode(comment)); // Append the comment text
-              // Append elements to the comment container
-
+              isikomendiv.appendChild(namekomenspan);
+              isikomendiv.appendChild(document.createTextNode(comment));
+              photoprofile2div.appendChild(fotonyakomen);
               coldiv.appendChild(photoprofile2div);
-              bagiantextdiv.appendChild(isikomendiv); // Append elements to the comment container
+              bagiantextdiv.appendChild(isikomendiv);
 
               if (j !== Object.keys(alldata.comments).length - 1) {
                 biokomendiv.appendChild(garisdiv);
               }
 
-              biokomendiv.appendChild(coldiv); // Append the profile picture container
-
-              biokomendiv.appendChild(bagiantextdiv); // Append the comment text container
-              // Append the comment container to the post container
-
+              biokomendiv.appendChild(coldiv);
+              biokomendiv.appendChild(bagiantextdiv);
               kotakpostdiv.appendChild(biokomendiv);
             }
 
