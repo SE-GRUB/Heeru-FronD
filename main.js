@@ -682,46 +682,44 @@ async function initpoin8() {
     pencarian();
 
     $('.owl-carousel').owlCarousel({
-        loop:true,
-        margin:10,
+        loop:false,
+        margin:5,
         nav:false,
         responsive:{
             0:{
-                items:1.8
+                items:2.3
             },
             600:{
-                items:3.6
+                items:3
             },
             1000:{
-                items:5.8
+                items:3
             }
         }
     })
 }
 
 async function initpoin9() {
-    await requestdata('counselorShow?user_id='+sessionStorage.getItem('dokter_id'));  
+    await requestdata('counselorShow?user_id=' + sessionStorage.getItem('dokter_id'));
 
-    console.log(alldata.users.name)
+    console.log(alldata.users.name);
 
     var ul = document.getElementById('carouselExample');
-    data = {
+    var data = {
         namedoctor: alldata.users.name,
-        jobpoin: alldata.users.rating+" bintang",
-        start: alldata.users.rating+" bintang",
-        Harga: "Rp. "+alldata.users.fare,
+        jobpoin: alldata.users.rating + " bintang",
+        start: alldata.users.rating + " bintang",
+        Harga: "Rp. " + alldata.users.fare,
         success: "0",
         ongoing: "1,2k",
         totalpatien: "1,2k",
-        listbit: ["Psikolog", "Psikiater", "Psikiater"],
-        imghip: alldata.users.profile_pic?histhost+alldata.users.profile_pic:histhost+'Admin/images/profile.jpg'
-      };
+        listbit: alldata.users.description,
+        imghip: alldata.users.profile_pic ? histhost + alldata.users.profile_pic : histhost + 'Admin/images/profile.jpg'
+    };
 
-      console.log(data)
+    console.log(data);
 
-      data = JSON.stringify(data);
-
-      function initdokter(data) {
+    function initdokter(data) {
         document.getElementById("namedoctor").innerHTML = data.namedoctor;
         document.getElementById("jobpoin").innerHTML = data.jobpoin;
         document.getElementById("start").innerHTML = data.start;
@@ -729,13 +727,48 @@ async function initpoin9() {
         document.getElementById("success").innerHTML = data.success;
         document.getElementById("ongoing").innerHTML = data.ongoing;
         document.getElementById("totalpatien").innerHTML = data.totalpatien;
-        data.listbit.forEach((element) => {
-          document.getElementById("listbit").innerHTML += `<li>${element}</li>`;
-        });
+        document.getElementById("listbit").innerHTML = data.listbit;
         document.getElementById("imghip").src = data.imghip;
-      }
-      initdokter(JSON.parse(data));
+    }
+
+    async function initskj() {
+        var jadwal = {
+            1: "08:00-09:00",
+            2: "09:00-10:00",
+            3: "10:00-11:00",
+            4: "11:00-12:00",
+            5: "13:00-14:00",
+            6: "14:00-15:00",
+            7: "15:00-16:00",
+            8: "16:00-17:00",
+            9: "17:00-18:00"
+        };
+        var time = document.getElementById("Test_DatetimeLocal").value;
+        var notav = [];
+        var response = await fetch(`https://enp.lahoras.my.id/avp?time=${time}`);
+        var data = await response.json();
+        notav = data.map(item => parseInt(item.duration));
+        notav.forEach((duration) => {
+            delete jadwal[duration];
+        });
+
+        var selectopt = document.getElementById("selectopt");
+        selectopt.innerHTML = ""; // Clear options before appending
+        for (var key in jadwal) {
+            if (jadwal.hasOwnProperty(key)) {
+                selectopt.innerHTML += `<option value="${key}">${jadwal[key]}</option>`;
+            }
+        }
+    }
+
+    initskj(); // Call initskj once when the page loads
+
+    // Add event listener to Test_DatetimeLocal
+    document.getElementById("Test_DatetimeLocal").addEventListener("change", initskj);
+
+    initdokter(data);
 }
+
 
 async function initpoin10(){
     await requestdata('postList');  
