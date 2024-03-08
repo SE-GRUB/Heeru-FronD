@@ -456,8 +456,6 @@ async function initpoin5() {
     for (var i = 0; i < Object.keys(alldata.report_categories).length; i++) {
         var categoryId = alldata.report_categories[i].id;
         
-        // console.log("Get Element by ID : " + categoryId);
-    
         document.getElementById(categoryId).addEventListener("click", createClickListener(categoryId));
     }
 
@@ -512,7 +510,6 @@ async function initpoin7(){
                 document.getElementById('whistleblowers').innerHTML = username;
             }
             
-
             if(evidence.files.length === 0){
                 errortext.innerHTML="Eviddence  is required"
                 errortext.classList.remove("hide")
@@ -770,6 +767,26 @@ async function initpoin9() {
 }
 
 
+function timeAgo(dateString) {
+    const previousDate = new Date(dateString);
+    const currentDate = new Date();
+    const timeDifference = currentDate - previousDate;
+    const seconds = Math.floor(timeDifference / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (days > 0) {
+        return days + " days ago";
+    } else if (hours > 0) {
+        return hours + " hours ago";
+    } else if (minutes > 0) {
+        return minutes + " minutes ago";
+    } else {
+        return seconds + " seconds ago";
+    }
+}
+
 async function initpoin10(){
     await requestdata('postList');  
     var badanpost = document.getElementById('badanpost')
@@ -782,8 +799,8 @@ async function initpoin10(){
         var poster = alldata.posts[i].poster;
         var like = alldata.posts[i].like;
         var created_at = alldata.posts[i].created_at;
-
         var profile_pic = alldata.users[i].profile_pic;
+        profile_pic=profile_pic ? histhost+profile_pic: histhost+'Admin/images/profile.jpg'
         var name = alldata.users[i].name;
 
         var kotakpostdiv = document.createElement('div');
@@ -796,6 +813,10 @@ async function initpoin10(){
         var photodiv = document.createElement('div');
         photodiv.className = 'photoprofile';
 
+        var fotonya = document.createElement('img');
+        fotonya.className = 'photoprofile rounded-circle';
+        fotonya.src = profile_pic;
+
         var bagtextdiv = document.createElement('div');
         bagtextdiv.className = 'bagtext';
 
@@ -805,7 +826,7 @@ async function initpoin10(){
 
         var waktungepostdiv = document.createElement('span');
         waktungepostdiv.className = 'waktungepost';
-        waktungepostdiv.textContent = created_at;
+        waktungepostdiv.textContent = timeAgo(created_at);
 
         var brBagText = document.createElement('br');
 
@@ -843,6 +864,7 @@ async function initpoin10(){
         var garisDiv = document.createElement('div');
         garisDiv.className = 'garis';
 
+        photodiv.appendChild(fotonya);
         biodiv.appendChild(photodiv);
         bagtextdiv.appendChild(namepostdiv);
         bagtextdiv.appendChild(brBagText);
@@ -867,6 +889,7 @@ async function initpoin10(){
             var comment = alldata.comments[j].comment;
             var namacomment = alldata.comments[j].user;
             var profilkomen = alldata.comments[j].profilkomen;
+            profilkomen=profilkomen ? histhost+profilkomen: histhost+'Admin/images/profile.jpg'
 
             var biokomendiv = document.createElement('div');
             biokomendiv.className = 'bioyangkomen row ';
@@ -880,6 +903,10 @@ async function initpoin10(){
 
             var photoprofile2div = document.createElement('div');
             photoprofile2div.className = 'photoprofile2  rounded-circle';
+
+            var fotonyakomen = document.createElement('img');
+            fotonyakomen.className = 'photoprofile2 rounded-circle';
+            fotonyakomen.src = profile_pic;
             
             var bagiantextdiv = document.createElement('div');
             bagiantextdiv.className = 'bagiantext col-11';
@@ -892,21 +919,19 @@ async function initpoin10(){
             namekomenspan.className = 'databaseName namekomen ';
             namekomenspan.textContent = namacomment ;
     
-            isikomendiv.appendChild(namekomenspan); // Append the author's name
-            isikomendiv.appendChild(document.createTextNode(comment)); // Append the comment text
+            isikomendiv.appendChild(namekomenspan);
+            isikomendiv.appendChild(document.createTextNode(comment));
 
-            // Append elements to the comment container
+            photoprofile2div.appendChild(fotonyakomen);
             coldiv.appendChild(photoprofile2div);
             bagiantextdiv.appendChild(isikomendiv);
 
-            // Append elements to the comment container
             if(j !== Object.keys(alldata.comments).length-1){
                 biokomendiv.appendChild(garisdiv); 
             }
-            biokomendiv.appendChild(coldiv); // Append the profile picture container
-            biokomendiv.appendChild(bagiantextdiv); // Append the comment text container
+            biokomendiv.appendChild(coldiv);
+            biokomendiv.appendChild(bagiantextdiv);
 
-            // Append the comment container to the post container
             kotakpostdiv.appendChild(biokomendiv);
         }
         
