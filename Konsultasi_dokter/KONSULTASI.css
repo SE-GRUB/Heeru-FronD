@@ -1,5 +1,6 @@
 body {
-  background-color: rgba(246, 246, 246, 0.903);
+  /* background-color: rgba(255, 255, 255); */
+  background-color: #ffffff;
   overflow-x: hidden;
 }
 
@@ -14,6 +15,7 @@ body {
 }
 
 .nyari{
+  /* font-size: larger; */
   border: 0;
   border-radius: 20px;
   background-color: #F2F2F2;
@@ -24,9 +26,10 @@ body {
   
 }
 
-  .nyari[type="search"]::placeholder{
-      color: #D6D6D6;
-  }
+.nyari[type="search"]::placeholder{
+  
+    color: rgb(0, 0, 0);
+}
 
 .ikonnyari{
   vertical-align: middle;
@@ -63,10 +66,15 @@ button[type="submit"]{
 } */
 
 h2 {
+  /* font-size: larger; */
   margin-top: 25px;
   margin-left: 5dvw;
-  font-weight: bold;
+  font-weight: bolder;
   font-size: medium;
+}
+
+#popdoc{
+  font-size: larger;
 }
 
 
@@ -134,6 +142,8 @@ img.gambar {
 }
 
 #sortname {
+  font-size: larger;
+  font-weight: bolder;
   margin-top: -5px;
   margin-bottom: 15px;
   /* background-color: red; */
@@ -142,27 +152,29 @@ img.gambar {
   width: 100%;
   max-width: 670px;
   align-items: center;
-  color: #333;
+  color: #000000;
 }
 
 #sortdoctor {
-  padding-left: 5dvw;
+  width: 100%;
+  padding-left: 0dvw;
   /* background-color: red; */
   display: flex;
   flex-wrap: wrap;
 }
 
 .sortcard {
+  /* margin-left: 0px; */
   background-color: white;
   display: flex;
   flex-wrap: wrap;
-  width: 80dvw;
+  width: 100%;
   /* width: 90dvw; */
   /* min-width: px; */
-  max-width: 650px;
+  /* max-width: 650px; */
   align-items: center;
-  margin: auto auto 25px 0px;
-  border-radius: 15px;
+  margin: 0px 0px 10px 0px;
+  border-radius: 20px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.295);
   /* background-color: #fff; */
 }
@@ -196,9 +208,44 @@ img.gambar {
   color: #333;
 }
 
+.navbarr{
+    display: flex;   
+    justify-content: center;
+    gap: 50px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 66px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+.nonactivate{
+    font-size: 36px !important;
+    color: #C6D2E2;
+}
+
+.navbarr .active{
+    font-size: 36px !important;
+    color: #64A5F9;
+}
+
 .rating {
   display: inline-block;
   position: relative;
+  /* font-size: 15px; */
 }
 
 [data-rating] {
