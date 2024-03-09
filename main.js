@@ -6,9 +6,9 @@ let username = "";
 let email = "";
 var histhost;
 
-// histhost='http://127.0.0.1:8000/'
+histhost='http://127.0.0.1:8000/'
 // histhost='http://47.245.121.87/Heeru-BackD/public/'
-histhost='https://enp.lahoras.my.id/'
+// histhost='https://enp.lahoras.my.id/'
 
 async function requestdata(param){
     return fetch(`${histhost}api/${param}`)
@@ -816,8 +816,6 @@ async function initpoin10(){
     await requestdata('postList');  
     var badanpost = document.getElementById('badanpost')
 
-    // console.log(alldata.comments)
-
     var kotakposts = ''; // Initialize kotakposts as an empty string outside the loop
 
     for(var i = 0; i < Object.keys(alldata.posts).length; i++){
@@ -968,8 +966,105 @@ async function initpoin10(){
         
         badanpost.appendChild(kotakpostdiv);
     }
+}
 
-    
+async function info() {
+    await requestdata('showInfografis');
+    console.log(alldata);
+    var badanpost = document.getElementById('badanpost');
+
+    for (var i = 0; i < Object.keys(alldata.infographics).length; i++) {
+        var boxinfografis = document.createElement('div');
+        boxinfografis.className = 'boxinfografis';
+        boxinfografis.id = `boxinfo${i}`;
+
+        var carouselExampleIndicators = document.createElement('div');
+        carouselExampleIndicators.className = 'carousel slide';
+        carouselExampleIndicators.dataset.bsTouch = false;
+        carouselExampleIndicators.id = `carouselExampleIndicators${i}`;
+
+        var carouselIndicators = document.createElement('div');
+        carouselIndicators.className = 'carousel-indicators';
+        carouselIndicators.id = `indicator${i}`;
+
+        var carouselInner = document.createElement('div');
+        carouselInner.className = 'carousel-inner';
+        carouselInner.id = `inner${i}`;
+
+        var carouselPrevButton = document.createElement('button');
+        carouselPrevButton.className = 'carousel-control-prev';
+        carouselPrevButton.type = 'button';
+        carouselPrevButton.dataset.bsTarget = `#carouselExampleIndicators${i}`;
+        carouselPrevButton.dataset.bsSlide = 'prev';
+
+        var carouselPrevIcon = document.createElement('span');
+        carouselPrevIcon.className = 'carousel-control-prev-icon';
+        carouselPrevIcon.setAttribute('aria-hidden', true);
+
+        var carouselPrevSpan = document.createElement('span');
+        carouselPrevSpan.className = 'visually-hidden';
+        carouselPrevSpan.textContent = 'Previous';
+
+        carouselPrevButton.appendChild(carouselPrevIcon);
+        carouselPrevButton.appendChild(carouselPrevSpan);
+
+        var carouselNextButton = document.createElement('button');
+        carouselNextButton.className = 'carousel-control-next';
+        carouselNextButton.type = 'button';
+        carouselNextButton.dataset.bsTarget = `#carouselExampleIndicators${i}`;
+        carouselNextButton.dataset.bsSlide = 'next';
+
+        var carouselNextIcon = document.createElement('span');
+        carouselNextIcon.className = 'carousel-control-next-icon';
+        carouselNextIcon.setAttribute('aria-hidden', true);
+
+        var carouselNextSpan = document.createElement('span');
+        carouselNextSpan.className = 'visually-hidden';
+        carouselNextSpan.textContent = 'Next';
+
+        carouselNextButton.appendChild(carouselNextIcon);
+        carouselNextButton.appendChild(carouselNextSpan);
+
+        carouselExampleIndicators.appendChild(carouselIndicators);
+        carouselExampleIndicators.appendChild(carouselInner);
+        carouselExampleIndicators.appendChild(carouselPrevButton);
+        carouselExampleIndicators.appendChild(carouselNextButton);
+
+        boxinfografis.appendChild(carouselExampleIndicators);
+        badanpost.appendChild(boxinfografis);
+
+        var carouselIndicatorsElement = document.getElementById(`indicator${i}`);
+        var carouselInnerElement = document.getElementById(`inner${i}`);
+
+        for (var j = 0; j < Object.keys(alldata.infographics[i].images).length; j++) {
+            var indicatorButton = document.createElement('button');
+            indicatorButton.type = 'button';
+            indicatorButton.dataset.bsTarget = `#carouselExampleIndicators${i}`;
+            indicatorButton.dataset.bsSlideTo = j;
+            if (j === 0) {
+                indicatorButton.className = 'active buletin';
+            }else{
+                indicatorButton.className = 'buletin';
+            }
+            indicatorButton.setAttribute('aria-label', `Slide ${j + 1}`);
+            carouselIndicatorsElement.appendChild(indicatorButton);
+
+            var imageItem = document.createElement('div');
+            if (j === 0) {
+                imageItem.className = 'carousel-item active';
+            }else{
+                imageItem.className = 'carousel-item';
+            }
+
+            var img = document.createElement('img');
+            img.src = `${histhost + alldata.infographics[i].images[j].image_path}`;
+            img.className = 'd-block', 'w-100', 'kustom';
+            img.alt = '...';
+
+            imageItem.appendChild(img);
+            carouselInnerElement.appendChild(imageItem);
+        }
+    }
 }
 
 function initPost(){
