@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>
+      <a href="#" class="hitblas" onclick="loca('pk1')">Masuk Sebagai Dokter</a>
+    </h2>
+    <h2>
+      <a href="#" class="hitblas" onclick="loca('dh1')">Masuk Sebagai Pasien</a>
+    </h2>
+
+    <code>
+      perhatiin di bagian uid <br />
+      Pasien selalu : <strong>dh1</strong> <br />
+      Dokter selalu : <strong>pk1</strong> <br />
+      <hr />
+      untuk melakukan vc triger dengan
+      <code>
+        <strong>CometChatWidget.callUser("uid_tarder"); </strong>
+      </code>
+    </code>
+
+    <script>
+      function loca(uid) {
+        sessionStorage.setItem("uid", uid);
+        window.location.href = "Last.html";
+      }
+    </script>
+  </body>
+</html>

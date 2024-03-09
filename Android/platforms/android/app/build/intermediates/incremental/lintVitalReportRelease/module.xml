@@ -1,0 +1,18 @@
+<lint-module
+    format="1"
+    dir="/home/lgarin211/Documents/Heeru-FronD/Android/platforms/android/app"
+    name=":app"
+    type="APP"
+    maven="Herru:app:"
+    gradle="7.4.2"
+    buildFolder="build"
+    bootClassPath="/media/lgarin211/DATA/LINUXPOIN/platforms/android-33/android.jar:/media/lgarin211/DATA/LINUXPOIN/build-tools/33.0.2/core-lambda-stubs.jar"
+    javaSourceLevel="1.8"
+    compileTarget="android-33"
+    neverShrinking="true">
+  <lintOptions
+      absolutePaths="true"
+      checkReleaseBuilds="true"
+      explainIssues="true"/>
+  <variant name="release"/>
+</lint-module>

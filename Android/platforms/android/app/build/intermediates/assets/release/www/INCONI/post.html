@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bootstrap demo</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/Buttons/2.0.0/css/buttons.min.css"
+      integrity="sha512-x8eU2Yx8Pd8XjWOTv+S/2jXGe586o6Ow722EaqGwG+4hkWaW1ZSAIMYUAY5QDyMglc9fPT0E1kZRIBwsdggtqg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <style>
+      .hidden {
+        display: none;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeOut {
+        from {
+          opacity: 1;
+        }
+        to {
+          opacity: 0;
+        }
+      }
+
+      .fadeInAnimation {
+        animation: fadeIn 0.5s ease forwards;
+      }
+
+      .fadeOutAnimation {
+        animation: fadeOut 0.5s ease forwards;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-fluid" id="qui" style="width: 100dvw; height: 100dvw">
+      <div class="row justify-content-end container">
+        <button class="btn btn-primary col-3" id = "postButton">POST</button>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-3">
+          <img
+            src="https://static.promediateknologi.id/crop/0x0:0x0/750x500/webp/photo/2022/10/19/3524347492.jpg"
+            alt=""
+            class="img-fluid rounded-circle"
+            style="width: 5rem; object-fit: cover"
+          />
+        </div>
+        <div class="col-9"></div>
+        <div class="col-12 mt-2">
+          <textarea
+            class="col-12 form-control"
+            style="height: 60dvh; border: none"
+            id = "post_body"
+          >
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam omnis eius labore. Explicabo in eaque voluptatum accusantium distinctio ab dolor illum architecto amet alias est reiciendis et iusto dignissimos reprehenderit aut sapiente tempora aliquam quod similique accusamus, eius molestias ipsam. Aperiam recusandae dolorum repellendus officia asperiores, a, officiis distinctio iure quae aut tempore nostrum eaque non numquam, culpa quidem quod enim quis. Possimus fugiat ipsum tempora sequi voluptates? Officia enim corrupti ducimus, accusantium deserunt accusamus eius, nisi, voluptatum repudiandae consequatur doloribus qui. Cumque possimus hic accusantium cum iste rerum animi architecto cupiditate explicabo. Et sunt repellendus modi debitis laudantium laboriosam? Dolore, asperiores cum quo esse vero deserunt quia temporibus itaque aspernatur atque dolorem harum ea accusamus doloremque eius voluptas fugiat omnis deleniti possimus ad tempore.
+      </textarea
+          >
+        </div>
+        <div class="col-3"></div>
+        <div class="col-9 row justify-content-center fixed-bottom">
+          <button
+            class="col-4 btn btn-danger rounded-circle hipo hidden fadeInAnimation"
+          >
+            FE
+          </button>
+          <button
+            class="col-4 btn btn-danger rounded-circle hipo hidden fadeInAnimation"
+          >
+            FO
+          </button>
+          <div class="hipo col-4"></div>
+          <div class="hipo col-4"></div>
+          <button
+            class="col-4 button button-primary button-circle btn btn-lg button-longshadow"
+            onclick="fipo()"
+          >
+            H
+          </button>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      function fipo() {
+        var b = document.getElementsByClassName("hipo");
+        for (var i = 0; i < b.length; i++) {
+          b[i].classList.toggle("hidden");
+          if (!b[i].classList.contains("hidden")) {
+            b[i].classList.add("fadeInAnimation");
+            b[i].classList.remove("fadeOutAnimation");
+          } else {
+            b[i].classList.remove("fadeInAnimation");
+            b[i].classList.add("fadeOutAnimation");
+          }
+        }
+      }
+    </script>
+    <script>initPost</script>
+  </body>
+</html>

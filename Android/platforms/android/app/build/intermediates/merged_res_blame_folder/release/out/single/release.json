@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "kalima.heeru.cloud.app-merged_res-24:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "kalima.heeru.cloud.app-main-25:/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "kalima.heeru.cloud.app-merged_res-24:/drawable-nodpi_ic_cdv_splashscreen.png.flat",
+        "source": "kalima.heeru.cloud.app-main-25:/drawable-nodpi/ic_cdv_splashscreen.png"
+    },
+    {
+        "merged": "/home/lgarin211/.gradle/daemon/7.6/kalima.heeru.cloud.app-merged_res-24:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "/home/lgarin211/.gradle/daemon/7.6/kalima.heeru.cloud.app-main-25:/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/home/lgarin211/.gradle/daemon/7.6/kalima.heeru.cloud.app-merged_res-24:/xml_config.xml.flat",
+        "source": "/home/lgarin211/.gradle/daemon/7.6/kalima.heeru.cloud.app-main-25:/xml/config.xml"
+    },
+    {
+        "merged": "/home/lgarin211/.gradle/daemon/7.6/kalima.heeru.cloud.app-merged_res-24:/drawable-nodpi_ic_cdv_splashscreen.png.flat",
+        "source": "/home/lgarin211/.gradle/daemon/7.6/kalima.heeru.cloud.app-main-25:/drawable-nodpi/ic_cdv_splashscreen.png"
+    }
+]
