@@ -957,5 +957,44 @@ async function initpoin10(){
         
         badanpost.appendChild(kotakpostdiv);
     }
+
+    
+}
+
+function initPost(){
+    $(document).ready(async function(){
+        document.getElementById("errortext1").classList.remove("hide");
+        var modal = new bootstrap.Modal(document.getElementById("qui"));
+        var user_id = new document.getElementById("user_id");
+        var post_body = new document.getElementById("post_body");
+        var poster = new document.getElementById("poster");
+        document.getElementById("postButton").addEventListener("click", async function() {
+            var formData = new FormData();
+            formData.append('user_id', title);
+            formData.append('post_body', post_body);
+            formData.append('poster', poster);
+        });
+
+        await $.ajax({
+            url: `${histhost}api/createPost`,
+            method: 'POST',
+            processData: false,
+            contentType: false,
+            data: formData,
+            success: function (response) {
+                if (response.success) {
+                    localStorage.removeItem('user_id');
+                    localStorage.removeItem('post_body');
+                    localStorage.removeItem('poster');
+                    window.location.href = "home.html";
+                } else {
+                    console.error('Error:', response.message);
+                }
+            },
+            error: function (error) {
+                console.error('Error:', error);
+            }
+        });
+    });
     
 }
