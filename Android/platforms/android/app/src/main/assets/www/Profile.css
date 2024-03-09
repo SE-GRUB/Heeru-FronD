@@ -1,0 +1,96 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+#bluecontainer{
+ background-color: blue;
+}
+
+h1 {
+    text-align: center;
+}
+
+label {
+    display: block;
+    margin-top: 20px;
+}
+
+input[type="text"],
+input[type="tel"],
+input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 5px;
+}
+
+textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 5px;
+    height: 100px;
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 8px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.navbarr{
+    display: flex;   
+    justify-content: center;
+    gap: 50px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 66px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+.nonactivate{
+    font-size: 36px !important;
+    color: #C6D2E2;
+}
+
+.active{
+    font-size: 36px !important;
+    color: #64A5F9;
+}
