@@ -30,27 +30,30 @@
   </head>
 
   <body>
-    <div class="container">
-      <!-- NAVBAR -->
-      <nav class="navbarr">
-        <span class="material-symbols-outlined active"> home </span>
+    
+     <!-- NAVBAR -->
+     <nav class="navbarr">
+      <span class="material-symbols-outlined active"> home </span>
 
+      <span class="material-symbols-outlined nonactivate">
+        digital_wellbeing
+      </span>
+
+      <a href="./Laporan/laporanHome.html">
         <span class="material-symbols-outlined nonactivate">
-          digital_wellbeing
+          shield_person
         </span>
+      </a>
 
-        <a href="./Laporan/laporanHome.html">
-          <span class="material-symbols-outlined nonactivate">
-            shield_person
-          </span>
-        </a>
-
-        <a href="./Profile/profile.html">
-          <span class="material-symbols-outlined nonactivate"> person </span>
-        </a>
-      </nav>
-      <!-- NAVBAR -->
-
+      <a href="./Profile/profile.html">
+        <span class="material-symbols-outlined nonactivate">
+          person
+        </span>
+      </a>
+    </nav>
+    <!-- NAVBAR -->
+    
+    <div class="container">
       <div class="searchbar">
         <input
           type="search"
@@ -163,57 +166,60 @@
 
         </div>
       </div>
-    </div>
-    <div class="row justify-content-end fixed-bottom">
-      <button
-        type="button"
-        class="btn btn-primary col-3"
-        data-bs-toggle="modal"
-        data-bs-target="#newpostnow"
-        style="margin-bottom: 5rem"
+
+      <div class="row justify-content-end fixed-bottom bikinpost">
+        <button
+          type="button"
+          class="btn btn-primary col-3"
+          data-bs-toggle="modal"
+          data-bs-target="#newpostnow"
+        >
+          tulis sesuatu
+        </button>
+      </div>
+      <div
+        class="modal fade"
+        id="newpostnow"
+        tabindex="-1"
+        aria-labelledby="newpostnowLabel"
+        aria-hidden="true"
       >
-        tulis sesuatu
-      </button>
-    </div>
-    <div
-      class="modal fade"
-      id="newpostnow"
-      tabindex="-1"
-      aria-labelledby="newpostnowLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header" style="display: none">
-            <h1 class="modal-title fs-5" id="newpostnowLabel">Post</h1>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body" id="isi">
-            <iframe
-              src="../INCONI/post.html"
-              frameborder="0"
-              style="width: 100%; height: 80dvh"
-              class="col-12"
-            ></iframe>
-          </div>
-          <div class="modal-footer" style="display: none">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header" style="display: none">
+              <h1 class="modal-title fs-5" id="newpostnowLabel">Post</h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body" id="isi">
+              <iframe
+                src="../INCONI/post.html"
+                frameborder="0"
+                style="width: 100%; height: 80dvh"
+                class="col-12"
+              ></iframe>
+            </div>
+            <div class="modal-footer" style="display: none">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
           </div>
         </div>
       </div>
+
     </div>
+    
+    
 
     <!-- JS -->
     <script
