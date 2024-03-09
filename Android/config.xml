@@ -6,7 +6,7 @@
     <author email="lagustinus211@gmail.com" href="https://heeru.cloud">
         
     </author>
-    <content src="hello.html" />
+    <content src="index.html" />
     <allow-navigation href="https://*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
