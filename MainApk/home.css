@@ -188,3 +188,25 @@ button[type="submit"]{
 .isikomen{
     font-size: 12px;
 }
+
+
+/* INFOGRAFIS */
+.boxinfografis{
+    background-color: white;
+    width: 100%;
+    height: fit-content;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.25rem;
+}
+
+.buletin{
+    width: 6px !important;
+    height: 6px !important;
+    border-radius: 50%;
+}
+
+.kustom{
+    border-radius: 2.5px;
+}
