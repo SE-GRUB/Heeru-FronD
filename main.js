@@ -6,9 +6,9 @@ let username = "";
 let email = "";
 var histhost;
 
-// histhost='http://127.0.0.1:8000/'
+histhost='http://127.0.0.1:8000/'
 // histhost='http://47.245.121.87/Heeru-BackD/public/'
-histhost='https://enp.lahoras.my.id/'
+// histhost='https://enp.lahoras.my.id/'
 
 async function requestdata(param){
     return fetch(`${histhost}api/${param}`)
@@ -818,6 +818,8 @@ async function initpoin10(){
 
     // console.log(alldata.comments)
 
+    var kotakposts = ''; // Initialize kotakposts as an empty string outside the loop
+
     for(var i = 0; i < Object.keys(alldata.posts).length; i++){
         var id = alldata.posts[i].post_id;
         var post_body = alldata.posts[i].post_body;
@@ -838,10 +840,6 @@ async function initpoin10(){
         var photodiv = document.createElement('div');
         photodiv.className = 'photoprofile';
 
-        var fotonya = document.createElement('img');
-        fotonya.className = 'photoprofile rounded-circle';
-        fotonya.src = profile_pic;
-
         var bagtextdiv = document.createElement('div');
         bagtextdiv.className = 'bagtext';
 
@@ -851,7 +849,7 @@ async function initpoin10(){
 
         var waktungepostdiv = document.createElement('span');
         waktungepostdiv.className = 'waktungepost';
-        waktungepostdiv.textContent = timeAgo(created_at);
+        waktungepostdiv.textContent = created_at;
 
         var brBagText = document.createElement('br');
 
@@ -889,7 +887,6 @@ async function initpoin10(){
         var garisDiv = document.createElement('div');
         garisDiv.className = 'garis';
 
-        photodiv.appendChild(fotonya);
         biodiv.appendChild(photodiv);
         bagtextdiv.appendChild(namepostdiv);
         bagtextdiv.appendChild(brBagText);
@@ -928,10 +925,6 @@ async function initpoin10(){
 
             var photoprofile2div = document.createElement('div');
             photoprofile2div.className = 'photoprofile2  rounded-circle';
-
-            var fotonyakomen = document.createElement('img');
-            fotonyakomen.className = 'photoprofile2 rounded-circle';
-            fotonyakomen.src = profile_pic;
             
             var bagiantextdiv = document.createElement('div');
             bagiantextdiv.className = 'bagiantext col-11';
@@ -944,23 +937,64 @@ async function initpoin10(){
             namekomenspan.className = 'databaseName namekomen ';
             namekomenspan.textContent = namacomment ;
     
-            isikomendiv.appendChild(namekomenspan);
-            isikomendiv.appendChild(document.createTextNode(comment));
+            isikomendiv.appendChild(namekomenspan); // Append the author's name
+            isikomendiv.appendChild(document.createTextNode(comment)); // Append the comment text
 
-            photoprofile2div.appendChild(fotonyakomen);
+            // Append elements to the comment container
             coldiv.appendChild(photoprofile2div);
             bagiantextdiv.appendChild(isikomendiv);
 
+            // Append elements to the comment container
             if(j !== Object.keys(alldata.comments).length-1){
                 biokomendiv.appendChild(garisdiv); 
             }
-            biokomendiv.appendChild(coldiv);
-            biokomendiv.appendChild(bagiantextdiv);
+            biokomendiv.appendChild(coldiv); // Append the profile picture container
+            biokomendiv.appendChild(bagiantextdiv); // Append the comment text container
 
+            // Append the comment container to the post container
             kotakpostdiv.appendChild(biokomendiv);
         }
         
         badanpost.appendChild(kotakpostdiv);
     }
+
+    
+}
+
+function initPost(){
+    $(document).ready(async function(){
+        document.getElementById("errortext1").classList.remove("hide");
+        var modal = new bootstrap.Modal(document.getElementById("qui"));
+        var user_id = new document.getElementById("user_id");
+        var post_body = new document.getElementById("post_body");
+        var poster = new document.getElementById("poster");
+        document.getElementById("postButton").addEventListener("click", async function() {
+            var formData = new FormData();
+            formData.append('user_id', title);
+            formData.append('post_body', post_body);
+            formData.append('poster', poster);
+        });
+
+        await $.ajax({
+            url: `${histhost}api/createPost`,
+            method: 'POST',
+            processData: false,
+            contentType: false,
+            data: formData,
+            success: function (response) {
+                if (response.success) {
+                    localStorage.removeItem('user_id');
+                    localStorage.removeItem('post_body');
+                    localStorage.removeItem('poster');
+                    window.location.href = "home.html";
+                } else {
+                    console.error('Error:', response.message);
+                }
+            },
+            error: function (error) {
+                console.error('Error:', error);
+            }
+        });
+    });
     
 }
