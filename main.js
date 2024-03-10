@@ -6,9 +6,9 @@ let username = "";
 let email = "";
 var histhost;
 
-histhost='http://127.0.0.1:8000/'
+// histhost='http://127.0.0.1:8000/'
 // histhost='http://47.245.121.87/Heeru-BackD/public/'
-// histhost='https://enp.lahoras.my.id/'
+histhost='https://enp.lahoras.my.id/'
 
 async function requestdata(param){
     return fetch(`${histhost}api/${param}`)
@@ -970,7 +970,7 @@ async function initpoin10(){
 
 async function info() {
     await requestdata('showInfografis');
-    console.log(alldata);
+    // console.log(alldata);
     var badanpost = document.getElementById('badanpost');
 
     for (var i = 0; i < Object.keys(alldata.infographics).length; i++) {
@@ -1067,6 +1067,19 @@ async function info() {
     }
 }
 
+async function initpoin11() {
+    var user_id = localStorage.getItem('user_id');
+    await requestdata(`userProfile?user_id=${user_id}`);
+    console.log(alldata.user);
+    var pp = alldata.user.profile_pic;
+    pp=pp ? histhost+pp : histhost+'Admin/images/profile.jpg'
+    document.getElementById('profileImage').src = pp
+    document.getElementById("username").textContent = alldata.user.name;
+    document.getElementById("profNama").textContent = alldata.user.name;
+    document.getElementById("profNoTelp").textContent = alldata.user.no_telp;
+    document.getElementById("profEmail").textContent = alldata.user.email;
+}
+
 function initPost(){
     $(document).ready(async function(){
         document.getElementById("errortext1").classList.remove("hide");
@@ -1089,7 +1102,6 @@ function initPost(){
             data: formData,
             success: function (response) {
                 if (response.success) {
-                    localStorage.removeItem('user_id');
                     localStorage.removeItem('post_body');
                     localStorage.removeItem('poster');
                     window.location.href = "home.html";
