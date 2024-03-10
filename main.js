@@ -1049,7 +1049,7 @@ async function info() {
 
             var img = document.createElement('img');
             img.src = `${histhost + alldata.infographics[i].images[j].image_path}`;
-            img.className = 'd-block', 'w-100', 'kustom';
+            img.className = 'd-block w-100 kustom';
             img.alt = '...';
 
             imageItem.appendChild(img);
