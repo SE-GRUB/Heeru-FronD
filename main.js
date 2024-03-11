@@ -6,14 +6,27 @@ let username = "";
 let email = "";
 var histhost;
 
-// histhost='http://127.0.0.1:8000/'
-// histhost='http://47.245.121.87/Heeru-BackD/public/'
-histhost='https://enp.lahoras.my.id/'
 
-async function requestdata(param){
-    return fetch(`${histhost}api/${param}`)
-        .then(response => response.json())
-        .then(data => alldata = data)
+
+
+histhost='http://127.0.0.1:8000/'
+// histhost='http://47.245.121.87/Heeru-BackD/public/'
+// histhost='https://enp.lahoras.my.id/'
+
+async function requestdata(param) {
+    try {
+        const response = await fetch(`${histhost}api/${param}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        alldata = data;
+        return data;
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+        throw error; // Rethrow the error to handle it where the function is called
+    }
+    return false;
 }
 
 function formatCurrency(amount) {
@@ -25,18 +38,17 @@ function formatCurrency(amount) {
 }
 
 
-function initpoin() {
+async function initpoin() {
     async function ceknip() {
         var inputField = document.getElementById("nipinput");
-        var errortext=document.getElementById("errortext")
+        var errortext = document.getElementById("errortext");
            
         if (inputField.value.trim() === "") {
             errortext.innerHTML = "Please input your NIP";
             errortext.classList.remove("hide");
             return false;
         } else {
-
-            await requestdata(`checkuser?nip=${inputField.value}`);
+            alldata = await requestdata(`checkuser?nip=${inputField.value}`);
             try {
                 if (alldata.success) {
                     nip = alldata.user["nip"];
@@ -48,15 +60,12 @@ function initpoin() {
                     localStorage.setItem('user_id', user_id);
                     email = alldata.user['email'];
                     localStorage.setItem('email', email);
-                    password = alldata.user['password'];
-                    localStorage.setItem('password', password);
-                    profile_pic = alldata.user['profile_pic'];
-                    localStorage.setItem('profile_pic', profile_pic);
                     window.location.href = "./sign_up2.html";
                     return true;
-                } else {
+                }
+                else {
                     errortext.innerHTML = alldata.message;
-                    classList.remove("hide");
+                    errortext.classList.remove("hide");
                 }
                 
             } catch (error) {
@@ -66,7 +75,7 @@ function initpoin() {
         }
     }
     
-    document.getElementById("submitBtn").addEventListener("click",ceknip);
+    document.getElementById("submitBtn").addEventListener("click", ceknip);
 }
 
 function initpoin2(){
@@ -811,11 +820,14 @@ function timeAgo(dateString) {
 }
 
 async function initpoin10(){
-    await requestdata('postList');  
     var badanpost = document.getElementById('badanpost')
 
     var kotakposts = ''; 
-    for(var i = 0; i < Object.keys(alldata.posts).length; i++){
+    var infopoin = '';
+    
+    async function loadpostingan(params) {
+        await requestdata('postList');  
+        for(var i = 0; i < Object.keys(alldata.posts).length; i++){
         var id = alldata.posts[i].post_id;
         var post_body = alldata.posts[i].post_body;
         var poster = alldata.posts[i].poster;
@@ -955,105 +967,116 @@ async function initpoin10(){
         
         badanpost.appendChild(kotakpostdiv);
     }
-}
+    } 
 
-async function info() {
-    await requestdata('showInfografis');
-    // console.log(alldata);
-    var badanpost = document.getElementById('badanpost');
+    async function loadpostingan2(param) {
+        await requestdata('postList');  
+        var posting = alldata.posts
+        
+    }
+    
 
-    for (var i = 0; i < Object.keys(alldata.infographics).length; i++) {
-        var boxinfografis = document.createElement('div');
-        boxinfografis.className = 'boxinfografis';
-        boxinfografis.id = `boxinfo${i}`;
+    async function info() {
+        await requestdata('showInfografis');
+        // console.log(alldata);
+        var badanpost = document.getElementById('badanpost');
 
-        var carouselExampleIndicators = document.createElement('div');
-        carouselExampleIndicators.className = 'carousel slide';
-        carouselExampleIndicators.dataset.bsTouch = false;
-        carouselExampleIndicators.id = `carouselExampleIndicators${i}`;
+        for (var i = 0; i < Object.keys(alldata.infographics).length; i++) {
+            var boxinfografis = document.createElement('div');
+            boxinfografis.className = 'boxinfografis';
+            boxinfografis.id = `boxinfo${i}`;
 
-        var carouselIndicators = document.createElement('div');
-        carouselIndicators.className = 'carousel-indicators';
-        carouselIndicators.id = `indicator${i}`;
+            var carouselExampleIndicators = document.createElement('div');
+            carouselExampleIndicators.className = 'carousel slide';
+            carouselExampleIndicators.dataset.bsTouch = false;
+            carouselExampleIndicators.id = `carouselExampleIndicators${i}`;
 
-        var carouselInner = document.createElement('div');
-        carouselInner.className = 'carousel-inner';
-        carouselInner.id = `inner${i}`;
+            var carouselIndicators = document.createElement('div');
+            carouselIndicators.className = 'carousel-indicators';
+            carouselIndicators.id = `indicator${i}`;
 
-        var carouselPrevButton = document.createElement('button');
-        carouselPrevButton.className = 'carousel-control-prev';
-        carouselPrevButton.type = 'button';
-        carouselPrevButton.dataset.bsTarget = `#carouselExampleIndicators${i}`;
-        carouselPrevButton.dataset.bsSlide = 'prev';
+            var carouselInner = document.createElement('div');
+            carouselInner.className = 'carousel-inner';
+            carouselInner.id = `inner${i}`;
 
-        var carouselPrevIcon = document.createElement('span');
-        carouselPrevIcon.className = 'carousel-control-prev-icon';
-        carouselPrevIcon.setAttribute('aria-hidden', true);
+            var carouselPrevButton = document.createElement('button');
+            carouselPrevButton.className = 'carousel-control-prev';
+            carouselPrevButton.type = 'button';
+            carouselPrevButton.dataset.bsTarget = `#carouselExampleIndicators${i}`;
+            carouselPrevButton.dataset.bsSlide = 'prev';
 
-        var carouselPrevSpan = document.createElement('span');
-        carouselPrevSpan.className = 'visually-hidden';
-        carouselPrevSpan.textContent = 'Previous';
+            var carouselPrevIcon = document.createElement('span');
+            carouselPrevIcon.className = 'carousel-control-prev-icon';
+            carouselPrevIcon.setAttribute('aria-hidden', true);
 
-        carouselPrevButton.appendChild(carouselPrevIcon);
-        carouselPrevButton.appendChild(carouselPrevSpan);
+            var carouselPrevSpan = document.createElement('span');
+            carouselPrevSpan.className = 'visually-hidden';
+            carouselPrevSpan.textContent = 'Previous';
 
-        var carouselNextButton = document.createElement('button');
-        carouselNextButton.className = 'carousel-control-next';
-        carouselNextButton.type = 'button';
-        carouselNextButton.dataset.bsTarget = `#carouselExampleIndicators${i}`;
-        carouselNextButton.dataset.bsSlide = 'next';
+            carouselPrevButton.appendChild(carouselPrevIcon);
+            carouselPrevButton.appendChild(carouselPrevSpan);
 
-        var carouselNextIcon = document.createElement('span');
-        carouselNextIcon.className = 'carousel-control-next-icon';
-        carouselNextIcon.setAttribute('aria-hidden', true);
+            var carouselNextButton = document.createElement('button');
+            carouselNextButton.className = 'carousel-control-next';
+            carouselNextButton.type = 'button';
+            carouselNextButton.dataset.bsTarget = `#carouselExampleIndicators${i}`;
+            carouselNextButton.dataset.bsSlide = 'next';
 
-        var carouselNextSpan = document.createElement('span');
-        carouselNextSpan.className = 'visually-hidden';
-        carouselNextSpan.textContent = 'Next';
+            var carouselNextIcon = document.createElement('span');
+            carouselNextIcon.className = 'carousel-control-next-icon';
+            carouselNextIcon.setAttribute('aria-hidden', true);
 
-        carouselNextButton.appendChild(carouselNextIcon);
-        carouselNextButton.appendChild(carouselNextSpan);
+            var carouselNextSpan = document.createElement('span');
+            carouselNextSpan.className = 'visually-hidden';
+            carouselNextSpan.textContent = 'Next';
 
-        carouselExampleIndicators.appendChild(carouselIndicators);
-        carouselExampleIndicators.appendChild(carouselInner);
-        carouselExampleIndicators.appendChild(carouselPrevButton);
-        carouselExampleIndicators.appendChild(carouselNextButton);
+            carouselNextButton.appendChild(carouselNextIcon);
+            carouselNextButton.appendChild(carouselNextSpan);
 
-        boxinfografis.appendChild(carouselExampleIndicators);
-        badanpost.appendChild(boxinfografis);
+            carouselExampleIndicators.appendChild(carouselIndicators);
+            carouselExampleIndicators.appendChild(carouselInner);
+            carouselExampleIndicators.appendChild(carouselPrevButton);
+            carouselExampleIndicators.appendChild(carouselNextButton);
 
-        var carouselIndicatorsElement = document.getElementById(`indicator${i}`);
-        var carouselInnerElement = document.getElementById(`inner${i}`);
+            boxinfografis.appendChild(carouselExampleIndicators);
+            badanpost.appendChild(boxinfografis);
 
-        for (var j = 0; j < Object.keys(alldata.infographics[i].images).length; j++) {
-            var indicatorButton = document.createElement('button');
-            indicatorButton.type = 'button';
-            indicatorButton.dataset.bsTarget = `#carouselExampleIndicators${i}`;
-            indicatorButton.dataset.bsSlideTo = j;
-            if (j === 0) {
-                indicatorButton.className = 'active buletin';
-            }else{
-                indicatorButton.className = 'buletin';
+            var carouselIndicatorsElement = document.getElementById(`indicator${i}`);
+            var carouselInnerElement = document.getElementById(`inner${i}`);
+
+            for (var j = 0; j < Object.keys(alldata.infographics[i].images).length; j++) {
+                var indicatorButton = document.createElement('button');
+                indicatorButton.type = 'button';
+                indicatorButton.dataset.bsTarget = `#carouselExampleIndicators${i}`;
+                indicatorButton.dataset.bsSlideTo = j;
+                if (j === 0) {
+                    indicatorButton.className = 'active buletin';
+                }else{
+                    indicatorButton.className = 'buletin';
+                }
+                indicatorButton.setAttribute('aria-label', `Slide ${j + 1}`);
+                carouselIndicatorsElement.appendChild(indicatorButton);
+
+                var imageItem = document.createElement('div');
+                if (j === 0) {
+                    imageItem.className = 'carousel-item active';
+                }else{
+                    imageItem.className = 'carousel-item';
+                }
+
+                var img = document.createElement('img');
+                img.src = `${histhost + alldata.infographics[i].images[j].image_path}`;
+                img.className = 'd-block w-100 kustom';
+                img.alt = '...';
+
+                imageItem.appendChild(img);
+                carouselInnerElement.appendChild(imageItem);
             }
-            indicatorButton.setAttribute('aria-label', `Slide ${j + 1}`);
-            carouselIndicatorsElement.appendChild(indicatorButton);
-
-            var imageItem = document.createElement('div');
-            if (j === 0) {
-                imageItem.className = 'carousel-item active';
-            }else{
-                imageItem.className = 'carousel-item';
-            }
-
-            var img = document.createElement('img');
-            img.src = `${histhost + alldata.infographics[i].images[j].image_path}`;
-            img.className = 'd-block w-100 kustom';
-            img.alt = '...';
-
-            imageItem.appendChild(img);
-            carouselInnerElement.appendChild(imageItem);
         }
     }
+
+    // info();
+    loadpostingan2();
 }
 
 async function initpoin11() {
