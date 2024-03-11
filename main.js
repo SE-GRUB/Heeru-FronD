@@ -24,7 +24,7 @@ async function requestdata(param) {
         return data;
     } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
-        throw error; // Rethrow the error to handle it where the function is called
+        throw error;
     }
     return false;
 }
@@ -37,6 +37,34 @@ function formatCurrency(amount) {
     return "Rp " + parts.join(",");
 }
 
+
+function timeAgo(dateString) {
+    const previousDate = new Date(dateString);
+    const currentDate = new Date();
+    const timeDifference = currentDate - previousDate;
+    const seconds = Math.floor(timeDifference / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if (days > 0) {
+        return days + " days ago";
+    } else if (hours > 0) {
+        return hours + " hours ago";
+    } else if (minutes > 0) {
+        return minutes + " minutes ago";
+    } else {
+        return seconds + " seconds ago";
+    }
+}
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
 
 async function initpoin() {
     async function ceknip() {
@@ -672,7 +700,6 @@ async function initpoin8() {
         });
         ul.innerHTML = template;
         
-         // add event listener to each card
          var ndv = document.getElementsByClassName('ndv'); 
          for (var i = 0; i < ndv.length; i++) {
              ndv[i].addEventListener('click', function(e) {
@@ -788,8 +815,7 @@ async function initpoin9() {
             alert("Error in generating payment");            
         }
     }
-
-    initskj(); // Call initskj once when the page loads
+    initskj();
 
     // Add event listener to Test_DatetimeLocal
     document.getElementById("Test_DatetimeLocal").addEventListener("change", initskj);
@@ -798,286 +824,153 @@ async function initpoin9() {
     initdokter(data);
 }
 
+async function initpoin10() {
+    var badanpost = document.getElementById('badanpost');
+    var kotp = [];
+    var inp = [];
 
-function timeAgo(dateString) {
-    const previousDate = new Date(dateString);
-    const currentDate = new Date();
-    const timeDifference = currentDate - previousDate;
-    const seconds = Math.floor(timeDifference / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
-
-    if (days > 0) {
-        return days + " days ago";
-    } else if (hours > 0) {
-        return hours + " hours ago";
-    } else if (minutes > 0) {
-        return minutes + " minutes ago";
-    } else {
-        return seconds + " seconds ago";
+    function loadcomend(datacomend) {
+        return datacomend.map(oneonone => {
+            var comment = oneonone.comment;
+            var namacomment = oneonone.user;
+            var profilkomen = oneonone.profilkomen ? histhost + oneonone.profilkomen : histhost + 'Admin/images/profile.jpg';
+            return `
+                <span class="row">
+                    <div class="garis"></div>
+                    <div class="col-1">
+                        <div class="containerfoto">
+                            <img id="profileImage" class="photoprofile2 rounded-circle" src="${profilkomen}" alt="">
+                        </div>
+                    </div>
+                    <div class="bagiantext col-11">
+                        <span id="isikomen" class="isikomen">
+                            <span id="databaseName" class="databaseName namekomen">${namacomment}</span>
+                            ${comment}
+                        </span>
+                    </div>
+                </span>`;
+        }).join('');
     }
-}
 
-async function initpoin10(){
-    var badanpost = document.getElementById('badanpost')
+    async function loadpostingan2(hit, limit) {
+        await requestdata('postList');
+        var posting = alldata.posts;
 
-    var kotakposts = ''; 
-    var infopoin = '';
-    
-    async function loadpostingan(params) {
-        await requestdata('postList');  
-        for(var i = 0; i < Object.keys(alldata.posts).length; i++){
-        var id = alldata.posts[i].post_id;
-        var post_body = alldata.posts[i].post_body;
-        var poster = alldata.posts[i].poster;
-        var like = alldata.posts[i].like;
-        var created_at = alldata.posts[i].created_at;
-        var profile_pic = alldata.posts[i].profile_pic;
-        profile_pic=profile_pic ? histhost+profile_pic: histhost+'Admin/images/profile.jpg'
-        var name = alldata.posts[i].name;
+        for (const singgaldatapost of posting) {
+            var id = singgaldatapost.post_id;
+            var post_body = singgaldatapost.post_body;
+            var poster = singgaldatapost.poster;
+            var like = singgaldatapost.like;
+            var created_at = singgaldatapost.created_at;
+            var profile_pic = singgaldatapost.profile_pic ? histhost + singgaldatapost.profile_pic : histhost + 'Admin/images/profile.jpg';
+            var timelib = timeAgo(created_at);
+            var name = singgaldatapost.name;
+            var totalcomend = singgaldatapost.totalcomments;
+            var comment = loadcomend(singgaldatapost.comments);
 
-        var kotakpostdiv = document.createElement('div');
-        kotakpostdiv.className = 'kotakpost';
-        kotakpostdiv.id = id;
-
-        var biodiv = document.createElement('div');
-        biodiv.className = 'bioyangpost';
-
-        var photodiv = document.createElement('div');
-        photodiv.className = 'photoprofile';
-
-        var fotonya = document.createElement('img');
-        fotonya.className = 'photoprofile rounded-circle';
-        fotonya.src = profile_pic;
-
-        var bagtextdiv = document.createElement('div');
-        bagtextdiv.className = 'bagtext';
-
-        var namepostdiv = document.createElement('span');
-        namepostdiv.className = 'databaseName namepost';
-        namepostdiv.textContent = name;
-
-        var waktungepostdiv = document.createElement('span');
-        waktungepostdiv.className = 'waktungepost';
-        waktungepostdiv.textContent = timeAgo(created_at);
-
-        var brBagText = document.createElement('br');
-
-        var isipostdiv = document.createElement('div');
-        isipostdiv.className = 'isipost';
-        isipostdiv.textContent = post_body;
-
-        var actionpostdiv = document.createElement('div');
-        actionpostdiv.className = 'actionpost';
-
-        var baglikediv = document.createElement('div');
-        baglikediv.className = 'baglike';
-
-        var materialspan = document.createElement('span');
-        materialspan.className = 'material-symbols-outlined';
-        materialspan.textContent = ' favorite '
-
-        var likespan = document.createElement('span');
-        likespan.className = 'databaseJumlahLike';
-        likespan.textContent = like;
-
-        var bagreplydiv = document.createElement('div');
-        bagreplydiv.className = 'bagreply';
-
-        var replyspan = document.createElement('span');
-        replyspan.className = 'material-symbols-outlined';
-        replyspan.textContent = ' reply '
-
-        var jumlahreplyspan = document.createElement('span');
-        jumlahreplyspan.textContent = Object.keys(alldata.posts[i].comments).length;
-
-        var baglikediv = document.createElement('div');
-        baglikediv.className = 'baglike';
-
-        var garisDiv = document.createElement('div');
-        garisDiv.className = 'garis';
-
-        photodiv.appendChild(fotonya);
-        biodiv.appendChild(photodiv);
-        bagtextdiv.appendChild(namepostdiv);
-        bagtextdiv.appendChild(brBagText);
-        bagtextdiv.appendChild(waktungepostdiv);
-        biodiv.appendChild(bagtextdiv);
-        kotakpostdiv.appendChild(biodiv);
-        kotakpostdiv.appendChild(isipostdiv);
-        baglikediv.appendChild(materialspan);
-        baglikediv.appendChild(likespan);
-        actionpostdiv.appendChild(baglikediv);
-        bagreplydiv.appendChild(replyspan);
-        bagreplydiv.appendChild(jumlahreplyspan);
-        actionpostdiv.appendChild(bagreplydiv);
-        kotakpostdiv.appendChild(actionpostdiv);
-        
-        
-        for(var j = 0; j < Object.keys(alldata.posts[i].comments).length; j++){ 
-            kotakpostdiv.appendChild(garisDiv);
-            var comment = alldata.posts[i].comments[j].comment;
-            var namacomment = alldata.posts[i].comments[j].user;
-            var profilkomen = alldata.posts[i].comments[j].profilkomen;
-            profilkomen=profilkomen ? histhost+profilkomen: histhost+'Admin/images/profile.jpg'
-
-            var biokomendiv = document.createElement('div');
-            biokomendiv.className = 'bioyangkomen row ';
-
-            var garisdiv = document.createElement('div');
-            garisdiv.className = 'garis';
-   
-            var coldiv = document.createElement('div');
-            coldiv.className = 'col-1';
-
-            var photoprofile2div = document.createElement('div');
-            photoprofile2div.className = 'photoprofile2  rounded-circle';
-
-            var fotonyakomen = document.createElement('img');
-            fotonyakomen.className = 'photoprofile2 rounded-circle';
-            fotonyakomen.src = profilkomen;
-
-            photoprofile2div.appendChild(fotonyakomen);
-            
-            var bagiantextdiv = document.createElement('div');
-            bagiantextdiv.className = 'bagiantext col-11';
-            
-            var isikomendiv = document.createElement('span');
-            isikomendiv.className = 'isikomen';
-            
-            var namekomenspan = document.createElement('span');
-            namekomenspan.className = 'databaseName namekomen ';
-            namekomenspan.textContent = namacomment ;
-    
-            isikomendiv.appendChild(namekomenspan);
-            isikomendiv.appendChild(document.createTextNode(comment));
-
-            coldiv.appendChild(photoprofile2div);
-            bagiantextdiv.appendChild(isikomendiv);
-
-            if(j !== Object.keys(alldata.posts[i].comments).length-1){
-                biokomendiv.appendChild(garisdiv); 
-            }
-            biokomendiv.appendChild(coldiv);
-            biokomendiv.appendChild(bagiantextdiv);
-
-            kotakpostdiv.appendChild(biokomendiv);
+            var loadkonten = `
+                <div class="kotakpost" id="kotakpost${id}">
+                    <div class="bioyangpost">
+                        <div class="containerfoto">
+                            <img id="profileImage${id}" class="photoprofile rounded-circle" src="${profile_pic}" alt="">
+                        </div>
+                        <div class="bagtext">
+                            <span id="databaseName${id}" class="databaseName namepost">${name}</span><br>
+                            <span id="waktungepost${id}" class="waktungepost">${timelib}</span>
+                        </div>
+                    </div>
+                    <div class="isipost" id="isipost${id}">
+                        ${post_body}
+                    </div>
+                    <div class="actionpost">
+                        <div class="baglike">
+                            <span class="material-symbols-outlined"> favorite </span>
+                            <span id="databaseJumlahLike${id}" class="databaseJumlahLike">${like}</span>
+                        </div>
+                        <div class="bagreply">
+                            <span class="material-symbols-outlined"> reply </span>
+                            <span id="databaseJumlahReply${id}" class="databaseJumlahReply">${totalcomend}</span>
+                        </div>
+                    </div>
+                    <div class="bioyangkomen row" id="komenField${id}">
+                        ${comment}
+                    </div>
+                </div>`;
+            kotp.push(loadkonten);
         }
-        
-        badanpost.appendChild(kotakpostdiv);
+        badanpost.innerHTML += kotp.join('');
     }
-    } 
 
-    async function loadpostingan2(param) {
-        await requestdata('postList');  
-        var posting = alldata.posts
-        
-    }
-    
-
-    async function info() {
-        await requestdata('showInfografis');
-        // console.log(alldata);
-        var badanpost = document.getElementById('badanpost');
-
-        for (var i = 0; i < Object.keys(alldata.infographics).length; i++) {
-            var boxinfografis = document.createElement('div');
-            boxinfografis.className = 'boxinfografis';
-            boxinfografis.id = `boxinfo${i}`;
-
-            var carouselExampleIndicators = document.createElement('div');
-            carouselExampleIndicators.className = 'carousel slide';
-            carouselExampleIndicators.dataset.bsTouch = false;
-            carouselExampleIndicators.id = `carouselExampleIndicators${i}`;
-
-            var carouselIndicators = document.createElement('div');
-            carouselIndicators.className = 'carousel-indicators';
-            carouselIndicators.id = `indicator${i}`;
-
-            var carouselInner = document.createElement('div');
-            carouselInner.className = 'carousel-inner';
-            carouselInner.id = `inner${i}`;
-
-            var carouselPrevButton = document.createElement('button');
-            carouselPrevButton.className = 'carousel-control-prev';
-            carouselPrevButton.type = 'button';
-            carouselPrevButton.dataset.bsTarget = `#carouselExampleIndicators${i}`;
-            carouselPrevButton.dataset.bsSlide = 'prev';
-
-            var carouselPrevIcon = document.createElement('span');
-            carouselPrevIcon.className = 'carousel-control-prev-icon';
-            carouselPrevIcon.setAttribute('aria-hidden', true);
-
-            var carouselPrevSpan = document.createElement('span');
-            carouselPrevSpan.className = 'visually-hidden';
-            carouselPrevSpan.textContent = 'Previous';
-
-            carouselPrevButton.appendChild(carouselPrevIcon);
-            carouselPrevButton.appendChild(carouselPrevSpan);
-
-            var carouselNextButton = document.createElement('button');
-            carouselNextButton.className = 'carousel-control-next';
-            carouselNextButton.type = 'button';
-            carouselNextButton.dataset.bsTarget = `#carouselExampleIndicators${i}`;
-            carouselNextButton.dataset.bsSlide = 'next';
-
-            var carouselNextIcon = document.createElement('span');
-            carouselNextIcon.className = 'carousel-control-next-icon';
-            carouselNextIcon.setAttribute('aria-hidden', true);
-
-            var carouselNextSpan = document.createElement('span');
-            carouselNextSpan.className = 'visually-hidden';
-            carouselNextSpan.textContent = 'Next';
-
-            carouselNextButton.appendChild(carouselNextIcon);
-            carouselNextButton.appendChild(carouselNextSpan);
-
-            carouselExampleIndicators.appendChild(carouselIndicators);
-            carouselExampleIndicators.appendChild(carouselInner);
-            carouselExampleIndicators.appendChild(carouselPrevButton);
-            carouselExampleIndicators.appendChild(carouselNextButton);
-
-            boxinfografis.appendChild(carouselExampleIndicators);
-            badanpost.appendChild(boxinfografis);
-
-            var carouselIndicatorsElement = document.getElementById(`indicator${i}`);
-            var carouselInnerElement = document.getElementById(`inner${i}`);
-
-            for (var j = 0; j < Object.keys(alldata.infographics[i].images).length; j++) {
-                var indicatorButton = document.createElement('button');
-                indicatorButton.type = 'button';
-                indicatorButton.dataset.bsTarget = `#carouselExampleIndicators${i}`;
-                indicatorButton.dataset.bsSlideTo = j;
-                if (j === 0) {
-                    indicatorButton.className = 'active buletin';
-                }else{
-                    indicatorButton.className = 'buletin';
-                }
-                indicatorButton.setAttribute('aria-label', `Slide ${j + 1}`);
-                carouselIndicatorsElement.appendChild(indicatorButton);
-
-                var imageItem = document.createElement('div');
-                if (j === 0) {
-                    imageItem.className = 'carousel-item active';
-                }else{
-                    imageItem.className = 'carousel-item';
-                }
-
-                var img = document.createElement('img');
-                img.src = `${histhost + alldata.infographics[i].images[j].image_path}`;
-                img.className = 'd-block w-100 kustom';
-                img.alt = '...';
-
-                imageItem.appendChild(img);
-                carouselInnerElement.appendChild(imageItem);
+    async function info2(hit, limit) {
+        try {
+            await requestdata('showInfografis');
+            if (!alldata.infographics) {
+                throw new Error('Data infografis tidak tersedia');
             }
+            alldata.infographics.forEach((singgaldatainfo) => {
+                const id = singgaldatainfo.id;
+                const list = singgaldatainfo.images;
+
+                let buttonsHTML = '';
+                let carouselItemsHTML = '';
+
+                list.forEach((image, index) => {
+                    const activeClass = index === 0 ? 'active' : '';
+                    buttonsHTML += `<button type="button" data-bs-target="#carouselExampleIndicators${id}" data-bs-slide-to="${index}" class="${activeClass} buletin" aria-label="Slide ${index + 1}"></button>`;
+                    carouselItemsHTML += `<div class="carousel-item ${activeClass}">
+                                            <img src="${histhost + image.image_path}" class="d-block w-100 kustom" alt="...">
+                                          </div>`;
+                });
+
+                const template = `
+                    <div class="boxinfografis">
+                        <div id="carouselExampleIndicators${id}" class="carousel slide" data-bs-touch="false">
+                            <div class="carousel-indicators">
+                                ${buttonsHTML}
+                            </div>
+                            <div class="carousel-inner">
+                                ${carouselItemsHTML}
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators${id}" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators${id}" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </div>`;
+                inp.push(template);
+            });
+        } catch (error) {
+            console.error(error);
         }
     }
 
-    // info();
-    loadpostingan2();
+    async function allpost() {
+        var hit = 1;
+        var limit = 10;
+        var allpost = [];
+
+        if (sessionStorage.getItem('hitpost')) {
+            hit = parseInt(sessionStorage.getItem('post')) + 1;
+            limit = hit * 10;
+            allpost = JSON.parse(sessionStorage.getItem('allpost'));
+        } else {
+            await info2(hit, limit);
+            await loadpostingan2(hit, limit);
+            allpost = kotp.concat(inp);
+            sessionStorage.setItem('hitpost', hit);
+            sessionStorage.setItem('allpost', JSON.stringify(allpost));
+        }
+
+        allpost = shuffleArray(allpost);
+        badanpost.innerHTML += allpost.join('');
+    }
+    await allpost();
 }
+
 
 async function initpoin11() {
     var user_id = localStorage.getItem('user_id');
