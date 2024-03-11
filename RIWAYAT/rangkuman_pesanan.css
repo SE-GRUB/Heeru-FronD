@@ -4,26 +4,20 @@ body {
     padding: 0;
 }
 
-button {
-    background-color: #868686;
-    color: white;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
+
 
 header {
     position: fixed;
     left: 0;
     right: 0;
     top: 0;
-    background-color: #4d4d4d;
-    padding: 10px;
+    background-color: #dddddd;
+    padding: 10px 10px 0px 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
+    z-index: 1;
+    /* align-items: center; */
 }
 
 .header-content {
@@ -32,19 +26,55 @@ header {
 }
 
 .backnav {
-    background-color: red;
+    /* background-color: red; */
+    height: 40px;
     display: flex;
+    align-items: center;
+}
+
+.backnav h3{
+    margin-left: 15px;
+}
+
+button {
+    background-color: #868686;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    height: 40px;
 }
 
 .headernya{
-    background-color: orange;
+    font-weight: bolder;
+    font-size: small;
+    /* background-color: orange; */
     display: grid;
     grid-template-columns: auto auto;
-    /* padding: 10px; */
+    padding: 10px 0px 10px 0px;
+}
+
+#tanggal, #nomor{
+    font-weight: lighter;
 }
 
 .terimakasih{
-    background-color: turquoise;
+    background-color: rgb(71, 166, 255);
+    align-items: center;
+    margin-left: -10px;
+    width: 100dvw;
+    /* left: 0; */
+    /* right: 0; */
+    /* justify-content: center ; */
+    text-align: center;
+    font-weight: bold;
+    padding: 0px 0px 0px 0px;
+}
+
+.terimakasih h5{
+    /* padding: 10px; */
+    font-weight: lighter;
 }
 
 /* ================================================================== */
@@ -54,13 +84,27 @@ header {
 /* ================================================================== */
 
 .konten{
-    padding-top: 30dvh;
-    padding-bottom: 30dvh;
+    padding-top: 27.3dvh;
+    padding-bottom: 60px;
     /* height: ; */
 }
 
 .kasihrate{
-    background-color: #4CAF50;
+    /* align-items: center;
+    justify-content: center;
+    justify-items: center; */
+    /* background-color: #4CAF50; */
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgb(116, 116, 116);
+}
+
+#kasihrating{
+
+    text-align: center;
+    padding-top: 10px;
+    margin-bottom: -5px;
+    /* justify-content: center; */
+    /* align-items: center; */
 }
 
 .rating {
@@ -85,6 +129,7 @@ header {
 .rating>label::before {
     content: "\2605";
     position: absolute;
+    z-index: 0;
     opacity: 0
 }
 
@@ -111,16 +156,26 @@ header {
 	color: #fff;
 }
 
-
+/* ========================================================== */
 
 .doktornya{
+    padding: 10px 15px 10px 15px;
     display: flex;
-    background-color: purple;
+    border-bottom: 1px solid rgb(116, 116, 116);
+}
+.doktornya img{
+    max-width: 100px;
+    aspect-ratio: 1/1;
+    margin-right: 15px;
+    object-fit: cover;
+    border-radius: 50%;
 }
 
 .hasil{
+    padding: 0px 15px 0px 15px;
     /* display: flex; */
-    background-color: yellow;
+    /* background-color: yellow; */
+    border-bottom: 1px solid rgb(116, 116, 116);
 }
 
 /* .pembayaran{
@@ -135,6 +190,9 @@ header {
 /* .item4 { grid-area: right; }
 .item5 { grid-area: footer; } */
 
+
+
+
 .pembayaran{
   display: grid;
   grid-template-areas:
@@ -142,7 +200,7 @@ header {
     'menu main main main right right'
     'menu footer footer footer footer footer';
   gap: 10px;
-  background-color: #2196F3;
+  /* background-color: #2196F3; */
   padding: 10px;
 }
 
