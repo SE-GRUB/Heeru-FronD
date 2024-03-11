@@ -4,14 +4,33 @@ let no_telp = "";
 let user_id = "";
 let username = "";
 let email = "";
+let profile_pic = "";
 var histhost;
 
+var datasession = [];
+// tanggal expired 1 bulan dari sekarang
+var histhost = 'http://127.0.0.1:8000/';
+// var histhost = 'http://47.245.121.87/Heeru-BackD/public/';
+// var histhost = 'https://enp.lahoras.my.id/';
 
-
-
-histhost='http://127.0.0.1:8000/'
-// histhost='http://47.245.121.87/Heeru-BackD/public/'
-// histhost='https://enp.lahoras.my.id/'
+function poinexp() {
+    try {
+        var expired = sessionStorage.getItem('timeout');
+        // alert(expired);
+        if (expired === null || new Date() > new Date(expired)) {
+            document.getElementById("wep").innerHTML = "Your session has expired, please login again";
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.href = 'input_nip.html';
+        } else {
+            expired = new Date(new Date().setMonth(new Date().getMonth() + 1)).toString();
+            sessionStorage.setItem('timeout', expired);
+            window.location.href = 'login.html';
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
 
 async function requestdata(param) {
     try {
@@ -36,7 +55,6 @@ function formatCurrency(amount) {
 
     return "Rp " + parts.join(",");
 }
-
 
 function timeAgo(dateString) {
     const previousDate = new Date(dateString);
@@ -88,6 +106,8 @@ async function initpoin() {
                     localStorage.setItem('user_id', user_id);
                     email = alldata.user['email'];
                     localStorage.setItem('email', email);
+                    profile_pic = alldata.user['profile_pic'];
+                    localStorage.setItem('profile_pic', profile_pic);
                     window.location.href = "./sign_up2.html";
                     return true;
                 }
@@ -333,53 +353,61 @@ function initpoin3() {
     });
 }
 
+
+
 function initpoin4() {
-    var profile_pic = localStorage.getItem('profile_pic');
-    var names = localStorage.getItem('username');
-    var dataNama = document.getElementById("databaseName");
+
+    expired = new Date(new Date().setMonth(new Date().getMonth() + 1)).toString();
+    sessionStorage.setItem('timeout', expired);
     
-    document.getElementById('profileImage').src= `${histhost}${profile_pic}`;
-    
+    const profile_pic = localStorage.getItem('profile_pic');
+    const names = localStorage.getItem('username');
+    const dataNama = document.getElementById("databaseName");
+    const profileImage = document.getElementById('profileImage');
+    const togglePassword = document.getElementById('togglePassword');
+    const password = document.getElementById('passwordinput');
+    const errortext = document.getElementById("errortext");
+    const submitBtn = document.getElementById("submitBtn");
+    const showPasswordIcon = document.getElementById("showPasswordIcon");
+
+    profileImage.src = `${histhost}${profile_pic}`;
     dataNama.innerHTML = names;
-    
-    document.addEventListener("DOMContentLoaded", function() {
-        var togglePassword = document.getElementById('togglePassword');
-        var showPasswordIcon = document.getElementById("showPasswordIcon");
-        var password = document.getElementById('passwordinput');
 
-        togglePassword.addEventListener('click', function() {
-            var type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-            password.setAttribute('type', type);
-
-            if (type === 'text') {
-                showPasswordIcon.classList.remove("fa-eye");
-                showPasswordIcon.classList.add("fa-eye-slash");
-            } else {
-                showPasswordIcon.classList.remove("fa-eye-slash");
-                showPasswordIcon.classList.add("fa-eye");
-            }
-        });
+    togglePassword.addEventListener('click', function() {
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        showPasswordIcon.classList.toggle("fa-eye");
+        showPasswordIcon.classList.toggle("fa-eye-slash");
     });
-    document.getElementById("submitBtn").addEventListener("click", async function() {
-        var password = document.getElementById('passwordinput');
-        var errortext=document.getElementById("errortext");     
+
+    submitBtn.addEventListener("click", async function() {
+        const passwordValue = password.value.trim();
         
-        if (password.value.trim() === "") {
-                errortext.innerHTML="Please input your Password"
-                errortext.classList.remove("hide")
-            }else{
-                await requestdata(`checkPass?password=${password.value}&user_id=${localStorage.getItem('user_id')}`)
-                if (alldata.success) {
+        if (passwordValue === "") {
+            errortext.innerHTML = "Please input your Password";
+            errortext.classList.remove("hide");
+        } else {
+            try {
+                const requestData = await requestdata(`checkPass?password=${passwordValue}&user_id=${localStorage.getItem('user_id')}`);
+                
+                if (requestData.success) {
                     window.location.href = "./MainApk/home.html";
                     return true;
                 } else {
-                    errortext.innerHTML = alldata.message;
+                    errortext.innerHTML = requestData.message;
                     errortext.classList.remove("hide");
                     return false;
                 }
+            } catch (error) {
+                console.error(error);
+                return false;
             }
+        }
     });
+
+    // 
 }
+
 
 function initpoin6() {
 
