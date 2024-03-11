@@ -722,8 +722,6 @@ async function initpoin9() {
         document.getElementById("start").innerHTML = data.start;
         document.getElementById("Harga").innerHTML = data.Harga;
         document.getElementById("success").innerHTML = data.success;
-        document.getElementById("ongoing").innerHTML = data.ongoing;
-        document.getElementById("totalpatien").innerHTML = data.totalpatien;
         document.getElementById("listbit").innerHTML = data.listbit;
         document.getElementById("imghip").src = data.imghip;
     }
@@ -1105,5 +1103,13 @@ function initPost(){
             }
         });
     });
+    
+}
+
+async function initpoin13(){
+    const result = await requestdata('getResult');
+    document.getElementById('tanggal').innerText = result.consultation_date;
+    document.getElementById('nomor').innerText = 'Pesanan ' + result.consultation_id;
+    document.getElementById('note').innerText = result.note;
     
 }
