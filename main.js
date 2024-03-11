@@ -408,7 +408,6 @@ function initpoin4() {
     // 
 }
 
-
 function initpoin6() {
 
     document.getElementById("nextBtn").addEventListener("click", async function() {
@@ -785,7 +784,7 @@ async function initpoin9() {
         document.getElementById("jobpoin").innerHTML = data.jobpoin;
         document.getElementById("start").innerHTML = data.start;
         document.getElementById("Harga").innerHTML = data.Harga;
-        document.getElementById("success").innerHTML = data.success;
+        // document.getElementById("success").innerHTML = data.success;
         document.getElementById("listbit").innerHTML = data.listbit;
         document.getElementById("imghip").src = data.imghip;
     }
@@ -804,50 +803,71 @@ async function initpoin9() {
         };
         var time = document.getElementById("Test_DatetimeLocal").value;
         var notav = [];
-        var response = await fetch(`https://enp.lahoras.my.id/avp?time=${time}`);
-        var data = await response.json();
-        notav = data.map(item => parseInt(item.duration));
-        notav.forEach((duration) => {
-            delete jadwal[duration];
-        });
 
-        var selectopt = document.getElementById("selectopt");
-        selectopt.innerHTML = ""; // Clear options before appending
-        for (var key in jadwal) {
-            if (jadwal.hasOwnProperty(key)) {
-                selectopt.innerHTML += `<option value="${key}">${jadwal[key]}</option>`;
-            }
-        }
-    }
-
-    function generatepaymend(){
-        var iddokter = sessionStorage.getItem('dokter_id');
-        var idpasien = localStorage.getItem('user_id');
-        var waktu = document.getElementById("Test_DatetimeLocal").value;
-        var jam = document.getElementById("selectopt").value;
-        var data = {
-            iddokter: iddokter, //id si dokter
-            idpasien: idpasien, //id si pasien
-            waktu: waktu, //tanggal
-            jam: jam //slot jam
-        };
-
-        // request to server
-        var response = fetch(`https://enp.lahoras.my.id/pay?iddokter=${iddokter}&idpasien=${idpasien}&waktu=${waktu}&jam=${jam}`);
-        var data = response.json();
         try {
-            if (data.success) {
-                window.location.href = data.urlpaymend;
+            var response = await fetch(`${histhost}api/counSlot?time=${time}`);
+            var data = await response.json();
+            console.log(data.time);
+            data=data.time;
+            notav = data.map(item => parseInt(item.duration));
+            notav.forEach((duration) => {
+                delete jadwal[duration];
+            });
+
+            var selectopt = document.getElementById("selectopt");
+            selectopt.innerHTML = ""; // Clear options before appending
+            for (var key in jadwal) {
+                if (jadwal.hasOwnProperty(key)) {
+                    var option = document.createElement("option");
+                    option.value = key;
+                    option.textContent = jadwal[key];
+                    selectopt.appendChild(option);
+                }
             }
         } catch (error) {
-            alert("Error in generating payment");            
+            console.error("Error fetching or parsing data:", error);
+            // Handle error here, such as displaying a message to the user
         }
     }
-    initskj();
 
+
+
+    async function generatepaymend() {
+    var iddokter = sessionStorage.getItem('dokter_id');
+    var idpasien = localStorage.getItem('user_id');
+    var waktu = document.getElementById("Test_DatetimeLocal").value;
+    var jam = document.getElementById("selectopt").value;
+    var uri=window.location.href
+    var data = {
+        iddokter: iddokter, //id of the doctor
+        idpasien: idpasien, //id of the patient
+        waktu: waktu, //date
+        jam: jam, //time slot
+        success: '"'+uri+'"',
+    };
+
+    try {
+        var response = await fetch(`${histhost}pembayaran?student_id=${idpasien}&counselor_id=${iddokter}&consultation_date=${waktu}&duration=${jam}&success=${uri}`);
+        var responseData = await response.json();
+        
+        // console.log();
+        
+        if (responseData['url']) {
+            window.location.href=responseData['url'];
+        } else {
+            console.error("Error in generating payment:", responseData.error);
+            // alert("Error in generating payment: " + responseData.error);
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Error in generating payment");
+    }
+}
+
+    await initskj();
     // Add event listener to Test_DatetimeLocal
-    document.getElementById("Test_DatetimeLocal").addEventListener("change", initskj);
-    document.getElementById("orderpay").addEventListener("click", generatepaymend);
+    document.getElementById("Test_DatetimeLocal").addEventListener("change", await initskj);
+    document.getElementById("orderpay").addEventListener("click", await generatepaymend);
 
     initdokter(data);
 }
