@@ -1000,7 +1000,7 @@ async function initpoin10() {
         var allpost = [];
 
         if (sessionStorage.getItem('hitpost')) {
-            hit = parseInt(sessionStorage.getItem('post')) + 1;
+            hit = parseInt(sessionStorage.getItem('post')) + 1; //1-10 /2 11-20
             limit = hit * 10;
             allpost = JSON.parse(sessionStorage.getItem('allpost'));
         } else {
@@ -1014,6 +1014,9 @@ async function initpoin10() {
         allpost = shuffleArray(allpost);
         badanpost.innerHTML += allpost.join('');
     }
+
+    
+    
     await allpost();
 }
 
