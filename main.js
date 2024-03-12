@@ -9,9 +9,9 @@ var histhost;
 
 var datasession = [];
 // tanggal expired 1 bulan dari sekarang
-// var histhost = 'http://127.0.0.1:8000/';
+var histhost = 'http://127.0.0.1:8000/';
 // var histhost = 'http://47.245.121.87/Heeru-BackD/public/';
-var histhost = 'https://enp.lahoras.my.id/';
+// var histhost = 'https://enp.lahoras.my.id/';
 
 function poinexp() {
     try {
@@ -875,8 +875,8 @@ async function initpoin10() {
     var kotp = [];
     var inp = [];
 
-    function loadcomend(datacomend) {
-        return datacomend.map(oneonone => {
+    function loadComments(dataComment) {
+        return dataComment.map(oneonone => {
             var comment = oneonone.comment;
             var namacomment = oneonone.user;
             var profilkomen = oneonone.profilkomen ? histhost + oneonone.profilkomen : histhost + 'Admin/images/profile.jpg';
@@ -898,8 +898,8 @@ async function initpoin10() {
         }).join('');
     }
 
-    async function loadpostingan2(hit, limit) {
-        await requestdata('postList');
+    async function loadMorePosts(currentPage) {
+        await requestdata('postList?page=' + currentPage); // Include page parameter in the request
         var posting = alldata.posts;
 
         for (const singgaldatapost of posting) {
@@ -912,7 +912,7 @@ async function initpoin10() {
             var timelib = timeAgo(created_at);
             var name = singgaldatapost.name;
             var totalcomend = singgaldatapost.totalcomments;
-            var comment = loadcomend(singgaldatapost.comments);
+            var comment = loadComments(singgaldatapost.comments);
 
             var loadkonten = `
                 <div class="kotakpost" id="kotakpost${id}">
@@ -994,26 +994,48 @@ async function initpoin10() {
         }
     }
 
+    // async function allpost() {
+    //     var hit = 1;
+    //     var limit = 10;
+    //     var allpost = [];
+
+    //     if (sessionStorage.getItem('hitpost')) {
+    //         hit = parseInt(sessionStorage.getItem('post')) + 1;
+    //         limit = hit * 10;
+    //         allpost = JSON.parse(sessionStorage.getItem('allpost'));
+    //     } else {
+    //         await info2(hit, limit);
+    //         await loadPostingan2(hit, limit);
+    //         allpost = kotp.concat(inp);
+    //         sessionStorage.setItem('hitpost', hit);
+    //         sessionStorage.setItem('allpost', JSON.stringify(allpost));
+    //     }
+
+    //     allpost = shuffleArray(allpost);
+    //     badanpost.innerHTML += allpost.join('');
+    // }
     async function allpost() {
-        var hit = 1;
-        var limit = 10;
-        var allpost = [];
-
-        if (sessionStorage.getItem('hitpost')) {
-            hit = parseInt(sessionStorage.getItem('post')) + 1;
-            limit = hit * 10;
-            allpost = JSON.parse(sessionStorage.getItem('allpost'));
-        } else {
-            await info2(hit, limit);
-            await loadpostingan2(hit, limit);
-            allpost = kotp.concat(inp);
-            sessionStorage.setItem('hitpost', hit);
-            sessionStorage.setItem('allpost', JSON.stringify(allpost));
-        }
-
+        var currentPage = 1;
+        await info2();
+        await loadMorePosts(currentPage);
+        var allpost = kotp.concat(inp);
+        
         allpost = shuffleArray(allpost);
-        badanpost.innerHTML += allpost.join('');
+    
+        allpost.forEach(element => {
+            badanpost.innerHTML += element;
+        });
+
+        currentPage++;
     }
+    
+
+    $(window).scroll(function() {
+        if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+            loadMorePosts();
+        }
+    });
+
     await allpost();
 }
 
