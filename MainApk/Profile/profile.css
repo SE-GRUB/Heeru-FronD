@@ -111,13 +111,29 @@
     padding-left: 1.5rem;
 }
 
-.buatedit{
+.tombolnya{
     display: flex;
     justify-content: center;
     margin-top: 5rem;
 }
 
-.tombolnya{
+.tombolnya2{
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.buatlogout{
+    background-color: white;
+    border: 1px solid #64A5F9;
+    color: #64A5F9;
+    width:80%;
+    height: 2rem;
+    border-radius: 10px;
+    font-size: 15px;
+}
+
+.buatedit{
     background-color: #64A5F9;
     color: white;
     width:80%;
@@ -125,5 +141,12 @@
     border-radius: 10px;
     font-size: 15px;
     border: none;
+    text-align: center;
+}
+
+.copyright{
+    text-align: center;
+    margin-top: 1rem;
+    opacity: 50%;
 }
 
