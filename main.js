@@ -9,9 +9,9 @@ var histhost;
 
 var datasession = [];
 // tanggal expired 1 bulan dari sekarang
-// var histhost = 'http://127.0.0.1:8000/';
+var histhost = 'http://127.0.0.1:8000/';
 // var histhost = 'http://47.245.121.87/Heeru-BackD/public/';
-var histhost = 'https://enp.lahoras.my.id/';
+// var histhost = 'https://enp.lahoras.my.id/';
 
 function poinexp() {
     try {
@@ -835,7 +835,7 @@ async function initpoin9() {
     var idpasien = localStorage.getItem('user_id');
     var waktu = document.getElementById("Test_DatetimeLocal").value;
     var jam = document.getElementById("selectopt").value;
-    var uri=window.location.href
+    var uri='http://'+window.location.hostname+':5500/Konsultasi_dokter/list.html'
     var data = {
         iddokter: iddokter, //id of the doctor
         idpasien: idpasien, //id of the patient
@@ -1017,7 +1017,6 @@ async function initpoin10() {
     await allpost();
 }
 
-
 async function initpoin11() {
     var user_id = localStorage.getItem('user_id');
     await requestdata(`userProfile?user_id=${user_id}`);
@@ -1074,4 +1073,43 @@ async function initpoin13(){
     document.getElementById('nomor').innerText = 'Pesanan ' + result.consultation_id;
     document.getElementById('note').innerText = result.note;
     
+}
+
+async function initpoin14() {
+    var template = document.getElementById("histopat").innerHTML;
+
+    async function loadhisto() {
+        await requestdata("myconsultation?id=" + localStorage.getItem('user_id'));
+        var addpoin = '';
+
+        // Loop through consultation data
+        alldata.consultation.forEach(item => {
+            var date = new Date(item.consultation_date);
+            var buttonHTML = (new Date().getTime() > date.getTime()) ?
+                '<a  href="#"  class="btn btn-primary col-2 loca" data-uid="' + 'dh1' + '">Harap bersiap</a>' :
+                '<a href="../RIWAYAT/rangkuman_pesanan.html"class="btn btn-success col-2">Lihat Riwayat</a>';
+
+            addpoin += `
+                <li class="list-group-item">
+                    <span class="row">
+                        <span class="col-10">Dr. ${item.dokter_name}-${item.consultation_date}-${item.duration} jam</span>
+                        ${buttonHTML}
+                    </span>
+                </li>
+            `;
+        });
+
+        // Set HTML content
+        document.getElementById("histopat").innerHTML = addpoin;
+
+        // Add event listener to all loca buttons
+        var locaButtons = document.querySelectorAll(".loca");
+        locaButtons.forEach(button => {
+            button.addEventListener("click", function() {
+                sessionStorage.setItem("uid", this.dataset.uid);
+                window.location.href = "../CHAT/Last.html";
+            });
+        });
+    }
+    loadhisto();
 }
