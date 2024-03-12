@@ -9,9 +9,9 @@ var histhost;
 
 var datasession = [];
 // tanggal expired 1 bulan dari sekarang
-var histhost = 'http://127.0.0.1:8000/';
+// var histhost = 'http://127.0.0.1:8000/';
 // var histhost = 'http://47.245.121.87/Heeru-BackD/public/';
-// var histhost = 'https://enp.lahoras.my.id/';
+var histhost = 'https://enp.lahoras.my.id/';
 
 function poinexp() {
     try {
@@ -352,8 +352,6 @@ function initpoin3() {
         return false;
     });
 }
-
-
 
 function initpoin4() {
 
