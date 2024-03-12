@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Setup</title>
+    <title>Confirm Password</title>
 
     <!-- FONT -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -13,7 +13,7 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="changePw.css">
+    <link rel="stylesheet" href="confirmPw.css">
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -23,52 +23,49 @@
   </head>
 
   <body>
-    <!-- DECOR BIRU -->
+
     <div class="circle"></div>
 
     <!-- BADAN -->
     <div class="container-fluid">
-      <p>
-        <b>Input your new password</b>
-      </p>
+      <h6>
+        Confirm this is you
+      </h6>
 
       <div class="formnya">
         <div class="mb-3">
           <div class="input-field">
             <input
-              type="password"
-              class="form-control"
-              id="passwordconfirmationinput"
-              placeholder="New Password"
-            />
-              <a type="button" class="togglePassword" id="togglePassword2">
-                  <i class="fas fa-eye" id="showPasswordIcon2"></i>
-              </a>
-        </div>
-          <span id="errortext3" class="text-danger hide">text</span>
+            type="email"
+            class="form-control"
+            id="emailinput"
+            placeholder="Email"
+          />
+          </div>
+          <span id="errortext" class="text-danger hide">text</span>
         </div>
 
         <div class="mb-3">
-            <div class="input-field">
-              <input
-                type="password"
-                class="form-control"
-                id="newpasswordconfirmationinput"
-                placeholder="New Password Confirmation"
-              />
-                <a type="button" class="togglePassword" id="togglePassword2">
-                    <i class="fas fa-eye" id="showPasswordIcon2"></i>
-                </a>
-          </div>
-            <span id="errortext3" class="text-danger hide">text</span>
-          </div>
+          <div class="input-field">
+            <input
+              type="password"
+              class="form-control"
+              id="passwordinput"
+              placeholder="Password"
+            />
+              <a type="button" class="togglePassword" id="togglePassword">
+                  <i class="fas fa-eye" id="showPasswordIcon"></i>
+              </a>
+        </div>
+          <span id="errortext2" class="text-danger hide">text</span>
+        </div>
 
         <div class="d-grid gap-2 col-6 mx-auto">
-          <a href="./profile.html">
-            <button class="btn btn-primary" type="button" id="submitBtn">
-              Submit
-            </button>
-          </a>
+        <a href="./changePw.html">
+          <button class="btn btn-primary" type="button" id="submitBtn">
+            Confirm
+          </button>
+        </a>
         </div>
 
         <div class="needhelp">
@@ -76,6 +73,7 @@
         </div>
       </div>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
     <script

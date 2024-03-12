@@ -153,7 +153,7 @@ button[type="button"]{
 .circle{
     height: 100%;
     width: 100%;
-    background-image: radial-gradient(circle at bottom, rgba(100, 165, 249, 30%),white 70%);
+    background-image: radial-gradient(circle at bottom, rgba(100, 165, 249, 40%),white 60%);
     position: absolute;
     z-index: -1;
 }
