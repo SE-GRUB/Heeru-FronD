@@ -1094,7 +1094,8 @@ async function initpoin13(){
     document.getElementById('tanggal').innerText = result.consultation_date;
     document.getElementById('nomor').innerText = 'Pesanan ' + result.consultation_id;
     document.getElementById('note').innerText = result.note;
-    
+    document.getElementById('counselorName').innerText = result.counselorName;
+
 }
 
 async function initpoin14() {
