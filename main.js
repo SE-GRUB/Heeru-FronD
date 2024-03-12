@@ -1135,3 +1135,121 @@ async function initpoin14() {
     }
     loadhisto();
 }
+
+async function initpoin15(){
+    var email = document.getElementById('emailinput');
+    var Oldpassword = document.getElementById('passwordinput');
+    var user_id = localStorage.getItem('user_id');
+    
+    var errortext=document.getElementById("errortext");
+    var errortext1=document.getElementById("errortext1");
+    document.getElementById("submitBtn").addEventListener("click", async function() {
+        if(email.value.trim() === ""){
+            errortext.innerHTML="Please provide your registered email"
+            errortext.classList.remove("hide")
+        }else{
+            errortext.classList.add("hide")
+        }
+
+        if(Oldpassword.value.trim() === ""){
+            errortext1.innerHTML="Please input your password"
+            errortext1.classList.remove("hide")
+        }else{
+            errortext1.classList.add("hide")
+            if (email.value.trim() !== "" && Oldpassword.value.trim() !== "") {
+                await requestdata(`changePass?user_id=${user_id}&email=${email.value}&old_password=${Oldpassword.value}`)
+                if(alldata.success){
+                    window.location.href = "changePw.html";
+                }else{
+                    errortext1.innerHTML=alldata.message;
+                    errortext1.classList.remove("hide")
+                }
+            }
+        }
+    });
+
+    var togglePassword = document.getElementById('togglePassword');
+    var showPasswordIcon = document.getElementById("showPasswordIcon");
+
+    togglePassword.addEventListener('click', function() {
+        var type = Oldpassword.getAttribute('type') === 'password' ? 'text' : 'password';
+        Oldpassword.setAttribute('type', type);
+
+        if (type === 'text') {
+            showPasswordIcon.classList.remove("fa-eye");
+            showPasswordIcon.classList.add("fa-eye-slash");
+        } else {
+            showPasswordIcon.classList.remove("fa-eye-slash");
+            showPasswordIcon.classList.add("fa-eye");
+        }
+    });
+}
+
+async function initpoin16(){
+    var password = document.getElementById('passwordconfirmationinput');
+    var passwordconfirmationinput = document.getElementById('newpasswordconfirmationinput');
+    var user_id = localStorage.getItem('user_id');
+    
+    var errortext=document.getElementById("errortext");
+    var errortext1=document.getElementById("errortext1");
+    document.getElementById("submitBtn").addEventListener("click", async function() {
+        if(password.value.trim() === ""){
+            errortext.innerHTML="Please input your new password"
+            errortext.classList.remove("hide")
+        }else{
+            errortext.classList.add("hide")
+        }
+
+        if(passwordconfirmationinput.value.trim() === ""){
+            errortext1.innerHTML="Please input your confirmation password"
+            errortext1.classList.remove("hide")
+        }else{
+            errortext1.classList.add("hide")
+            if (password.value.trim() !== "" && passwordconfirmationinput.value.trim() !== "") {
+                if(password.value == passwordconfirmationinput.value){
+                    errortext1.classList.add("hide")
+                    await requestdata(`changePassword?user_id=${user_id}&new_password=${password.value}`)
+                    if(alldata.success){
+                        window.location.href = "profile.html";
+                    }else{
+                        errortext1.innerHTML=alldata.message;
+                        errortext1.classList.remove("hide")
+                    }
+                }else{
+                    errortext1.innerHTML="Check again your confirmation password"
+                    errortext1.classList.remove("hide")
+                }
+            }
+        }
+    });
+
+    var togglePassword = document.getElementById('togglePassword');
+    var togglePassword2 = document.getElementById('togglePassword2');
+    var showPasswordIcon = document.getElementById("showPasswordIcon");
+    var showPasswordIcon2 = document.getElementById("showPasswordIcon2");
+
+    togglePassword.addEventListener('click', function() {
+        var type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+
+        if (type === 'text') {
+            showPasswordIcon.classList.remove("fa-eye");
+            showPasswordIcon.classList.add("fa-eye-slash");
+        } else {
+            showPasswordIcon.classList.remove("fa-eye-slash");
+            showPasswordIcon.classList.add("fa-eye");
+        }
+    });
+    togglePassword2.addEventListener('click', function() {
+        var type = passwordconfirmationinput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordconfirmationinput.setAttribute('type', type);
+
+        if (type === 'text') {
+            showPasswordIcon2.classList.remove("fa-eye");
+            showPasswordIcon2.classList.add("fa-eye-slash");
+        } else {
+            showPasswordIcon2.classList.remove("fa-eye-slash");
+            showPasswordIcon2.classList.add("fa-eye");
+        }
+    });
+}
