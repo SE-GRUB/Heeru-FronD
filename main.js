@@ -1042,7 +1042,6 @@ async function initpoin10() {
 async function initpoin11() {
     var user_id = localStorage.getItem('user_id');
     await requestdata(`userProfile?user_id=${user_id}`);
-    console.log(alldata.user);
     var pp = alldata.user.profile_pic;
     pp=pp ? histhost+pp : histhost+'Admin/images/profile.jpg'
     document.getElementById('profileImage').src = pp
@@ -1050,6 +1049,12 @@ async function initpoin11() {
     document.getElementById("profNama").textContent = alldata.user.name;
     document.getElementById("profNoTelp").textContent = alldata.user.no_telp;
     document.getElementById("profEmail").textContent = alldata.user.email;
+
+    document.getElementById("buttonLogout").addEventListener("click", async function() {
+        localStorage.clear();
+        sessionStorage.clear();
+        window.location.href = '../../index.html'
+    });
 }
 
 function initPost(){
@@ -1196,7 +1201,13 @@ async function initpoin15(){
             errortext.innerHTML="Please provide your registered email"
             errortext.classList.remove("hide")
         }else{
-            errortext.classList.add("hide")
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email.value)) {
+                errortext.innerHTML = "Email address is not valid";
+                errortext.classList.remove("hide");
+            }else{
+                errortext.classList.add("hide")
+            }
         }
 
         if(Oldpassword.value.trim() === ""){
@@ -1245,7 +1256,27 @@ async function initpoin16(){
             errortext.innerHTML="Please input your new password"
             errortext.classList.remove("hide")
         }else{
-            errortext.classList.add("hide")
+            if(!/[A-Z]/.test(password.value)){
+                errortext.innerText = "Your password must contain at least one uppercase letter";
+                errortext.classList.remove("hide");
+            }{
+                if (password.value.length < 8 ) {
+                    errortext.innerHTML = "Password must be at least 8 characters long";
+                    errortext.classList.remove("hide");
+                } else {
+                    if(!/[a-z]/.test(password.value)){
+                        errortext.innerText = "Your password must contain at least one lowercase letter";
+                        errortext.classList.remove("hide");
+                    }else{
+                        if(!/\d/.test(password.value)){
+                            errortext.innerText = "Your password must contain at least one number.";
+                            errortext.classList.remove("hide");
+                        }else{
+                            errortext.classList.add('hide');
+                        }
+                    }
+                }
+            }
         }
 
         if(passwordconfirmationinput.value.trim() === ""){
