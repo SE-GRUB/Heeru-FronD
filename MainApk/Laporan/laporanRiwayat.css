@@ -1,0 +1,91 @@
+body{
+    font-family: 'Poppins' !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+.nonactivate{
+    color: #d6d6d6 !important;
+}
+
+.active{
+    color: #64A5F9;
+}
+
+.tab_box{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 2px solid #F2F2F2;
+    position: relative;
+}
+
+.tab_box .tab_btn{
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 6px;
+}
+
+.tab_box .tab_btn.active{
+    color: #64A5F9;
+}
+
+.content_box{
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content_box .content{
+    display: none;
+}
+
+.content_box .content.active{
+    display: block;
+}
+
+.line{
+    position: absolute;
+    top: 2.2rem;
+    left: 4rem;
+    width: 90px;
+    height: 2px;
+    background-color: #64A5F9;
+    border-radius: 10px ;
+    transition: all .3s ease-in-out;
+}
+
+ 
+/* CONTENTNYA */
+.kotak{
+    width: 90vw;
+    border-radius: 11px;
+    box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    display: flex;
+}
+
+
+
+/* ISI LAPORAN */
+
+.circle{
+    height: 92%;
+    width: 97%;
+    background-image: radial-gradient(circle at right, rgba(100, 165, 249, 45%),white 70%);
+    position: absolute;
+    z-index: -1;
+}
+

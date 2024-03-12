@@ -9,9 +9,9 @@ var histhost;
 
 var datasession = [];
 // tanggal expired 1 bulan dari sekarang
-// var histhost = 'http://127.0.0.1:8000/';
+var histhost = 'http://127.0.0.1:8000/';
 // var histhost = 'http://47.245.121.87/Heeru-BackD/public/';
-var histhost = 'https://enp.lahoras.my.id/';
+// var histhost = 'https://enp.lahoras.my.id/';
 
 function poinexp() {
     try {
@@ -875,8 +875,8 @@ async function initpoin10() {
     var kotp = [];
     var inp = [];
 
-    function loadcomend(datacomend) {
-        return datacomend.map(oneonone => {
+    function loadComments(dataComment) {
+        return dataComment.map(oneonone => {
             var comment = oneonone.comment;
             var namacomment = oneonone.user;
             var profilkomen = oneonone.profilkomen ? histhost + oneonone.profilkomen : histhost + 'Admin/images/profile.jpg';
@@ -898,8 +898,8 @@ async function initpoin10() {
         }).join('');
     }
 
-    async function loadpostingan2(hit, limit) {
-        await requestdata('postList');
+    async function loadMorePosts(currentPage) {
+        await requestdata('postList?page=' + currentPage); // Include page parameter in the request
         var posting = alldata.posts;
 
         for (const singgaldatapost of posting) {
@@ -912,7 +912,7 @@ async function initpoin10() {
             var timelib = timeAgo(created_at);
             var name = singgaldatapost.name;
             var totalcomend = singgaldatapost.totalcomments;
-            var comment = loadcomend(singgaldatapost.comments);
+            var comment = loadComments(singgaldatapost.comments);
 
             var loadkonten = `
                 <div class="kotakpost" id="kotakpost${id}">
@@ -994,36 +994,54 @@ async function initpoin10() {
         }
     }
 
+    // async function allpost() {
+    //     var hit = 1;
+    //     var limit = 10;
+    //     var allpost = [];
+
+    //     if (sessionStorage.getItem('hitpost')) {
+    //         hit = parseInt(sessionStorage.getItem('post')) + 1;
+    //         limit = hit * 10;
+    //         allpost = JSON.parse(sessionStorage.getItem('allpost'));
+    //     } else {
+    //         await info2(hit, limit);
+    //         await loadPostingan2(hit, limit);
+    //         allpost = kotp.concat(inp);
+    //         sessionStorage.setItem('hitpost', hit);
+    //         sessionStorage.setItem('allpost', JSON.stringify(allpost));
+    //     }
+
+    //     allpost = shuffleArray(allpost);
+    //     badanpost.innerHTML += allpost.join('');
+    // }
     async function allpost() {
-        var hit = 1;
-        var limit = 10;
-        var allpost = [];
-
-        if (sessionStorage.getItem('hitpost')) {
-            hit = parseInt(sessionStorage.getItem('post')) + 1; //1-10 /2 11-20
-            limit = hit * 10;
-            allpost = JSON.parse(sessionStorage.getItem('allpost'));
-        } else {
-            await info2(hit, limit);
-            await loadpostingan2(hit, limit);
-            allpost = kotp.concat(inp);
-            sessionStorage.setItem('hitpost', hit);
-            sessionStorage.setItem('allpost', JSON.stringify(allpost));
-        }
-
+        var currentPage = 1;
+        await info2();
+        await loadMorePosts(currentPage);
+        var allpost = kotp.concat(inp);
+        
         allpost = shuffleArray(allpost);
-        badanpost.innerHTML += allpost.join('');
-    }
+    
+        allpost.forEach(element => {
+            badanpost.innerHTML += element;
+        });
 
+        currentPage++;
+    }
     
-    
+
+    $(window).scroll(function() {
+        if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+            loadMorePosts();
+        }
+    });
+
     await allpost();
 }
 
 async function initpoin11() {
     var user_id = localStorage.getItem('user_id');
     await requestdata(`userProfile?user_id=${user_id}`);
-    console.log(alldata.user);
     var pp = alldata.user.profile_pic;
     pp=pp ? histhost+pp : histhost+'Admin/images/profile.jpg'
     document.getElementById('profileImage').src = pp
@@ -1031,6 +1049,12 @@ async function initpoin11() {
     document.getElementById("profNama").textContent = alldata.user.name;
     document.getElementById("profNoTelp").textContent = alldata.user.no_telp;
     document.getElementById("profEmail").textContent = alldata.user.email;
+
+    document.getElementById("buttonLogout").addEventListener("click", async function() {
+        localStorage.clear();
+        sessionStorage.clear();
+        window.location.href = '../../index.html'
+    });
 }
 
 function initPost(){
@@ -1075,7 +1099,8 @@ async function initpoin13(){
     document.getElementById('tanggal').innerText = result.consultation_date;
     document.getElementById('nomor').innerText = 'Pesanan ' + result.consultation_id;
     document.getElementById('note').innerText = result.note;
-    
+    document.getElementById('counselorName').innerText = result.counselorName;
+
 }
 
 async function initpoin14() {
@@ -1089,13 +1114,61 @@ async function initpoin14() {
         alldata.consultation.forEach(item => {
             var date = new Date(item.consultation_date);
             var buttonHTML = (new Date().getTime() > date.getTime()) ?
-                '<a  href="#"  class="btn btn-primary col-2 loca" data-uid="' + 'dh1' + '">Harap bersiap</a>' :
-                '<a href="../RIWAYAT/rangkuman_pesanan.html"class="btn btn-success col-2">Lihat Riwayat</a>';
+                '<a  href="#"  class="btn btn-primary loca" data-uid="' + 'dh1' + '">Harap bersiap</a>' :
+                '<a href="../RIWAYAT/rangkuman_pesanan.html"class="btn btn-success">Lihat Riwayat</a>';
 
+            let x=item.duration;
+            // console.log(x-9);
+            switch (x) {
+                case '0':
+                  text = "Off";
+                  break;
+                case '1':
+                  text = "08:00-09:00";
+                  break;
+                case '2':
+                  text = "09:00-10:00";
+                  break;
+                case '3':
+                  text = "10:00-11:00";
+                  break;
+                case '4':
+                  text = "11:00-12:00";
+                  break;
+                case '5':
+                  text = "13:00-14:00";
+                  break;
+                case '6':
+                  text = "14:00-15:00";
+                  break;
+                case '7':
+                  text = "15:00-16:00";
+                  break;
+                case '8':
+                  text = "16:00-17:00";
+                break;
+                case '9':
+                  text = "17:00-18:00";
+                break;
+                default:
+                  text = "No value found";
+              }
             addpoin += `
                 <li class="list-group-item">
                     <span class="row">
-                        <span class="col-10">Dr. ${item.dokter_name}-${item.consultation_date}-${item.duration} jam</span>
+                        <span class="col-10">
+                            <div class="cell">
+                                <div id="nama">
+                                    Dr. ${item.dokter_name} 
+                                </div>
+                                <div id="tanggalkonsul">
+                                    ${item.consultation_date}
+                                </div>
+                                <div id="durasi">
+                                    ${text}
+                                </div>
+                            </div>
+                        </span>
                         ${buttonHTML}
                     </span>
                 </li>
@@ -1115,4 +1188,148 @@ async function initpoin14() {
         });
     }
     loadhisto();
+}
+
+async function initpoin15(){
+    var email = document.getElementById('emailinput');
+    var Oldpassword = document.getElementById('passwordinput');
+    var user_id = localStorage.getItem('user_id');
+    
+    var errortext=document.getElementById("errortext");
+    var errortext1=document.getElementById("errortext1");
+    document.getElementById("submitBtn").addEventListener("click", async function() {
+        if(email.value.trim() === ""){
+            errortext.innerHTML="Please provide your registered email"
+            errortext.classList.remove("hide")
+        }else{
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email.value)) {
+                errortext.innerHTML = "Email address is not valid";
+                errortext.classList.remove("hide");
+            }else{
+                errortext.classList.add("hide")
+            }
+        }
+
+        if(Oldpassword.value.trim() === ""){
+            errortext1.innerHTML="Please input your password"
+            errortext1.classList.remove("hide")
+        }else{
+            errortext1.classList.add("hide")
+            if (email.value.trim() !== "" && Oldpassword.value.trim() !== "") {
+                await requestdata(`changePass?user_id=${user_id}&email=${email.value}&old_password=${Oldpassword.value}`)
+                if(alldata.success){
+                    window.location.href = "changePw.html";
+                }else{
+                    errortext1.innerHTML=alldata.message;
+                    errortext1.classList.remove("hide")
+                }
+            }
+        }
+    });
+
+    var togglePassword = document.getElementById('togglePassword');
+    var showPasswordIcon = document.getElementById("showPasswordIcon");
+
+    togglePassword.addEventListener('click', function() {
+        var type = Oldpassword.getAttribute('type') === 'password' ? 'text' : 'password';
+        Oldpassword.setAttribute('type', type);
+
+        if (type === 'text') {
+            showPasswordIcon.classList.remove("fa-eye");
+            showPasswordIcon.classList.add("fa-eye-slash");
+        } else {
+            showPasswordIcon.classList.remove("fa-eye-slash");
+            showPasswordIcon.classList.add("fa-eye");
+        }
+    });
+}
+
+async function initpoin16(){
+    var password = document.getElementById('passwordconfirmationinput');
+    var passwordconfirmationinput = document.getElementById('newpasswordconfirmationinput');
+    var user_id = localStorage.getItem('user_id');
+    
+    var errortext=document.getElementById("errortext");
+    var errortext1=document.getElementById("errortext1");
+    document.getElementById("submitBtn").addEventListener("click", async function() {
+        if(password.value.trim() === ""){
+            errortext.innerHTML="Please input your new password"
+            errortext.classList.remove("hide")
+        }else{
+            if(!/[A-Z]/.test(password.value)){
+                errortext.innerText = "Your password must contain at least one uppercase letter";
+                errortext.classList.remove("hide");
+            }{
+                if (password.value.length < 8 ) {
+                    errortext.innerHTML = "Password must be at least 8 characters long";
+                    errortext.classList.remove("hide");
+                } else {
+                    if(!/[a-z]/.test(password.value)){
+                        errortext.innerText = "Your password must contain at least one lowercase letter";
+                        errortext.classList.remove("hide");
+                    }else{
+                        if(!/\d/.test(password.value)){
+                            errortext.innerText = "Your password must contain at least one number.";
+                            errortext.classList.remove("hide");
+                        }else{
+                            errortext.classList.add('hide');
+                        }
+                    }
+                }
+            }
+        }
+
+        if(passwordconfirmationinput.value.trim() === ""){
+            errortext1.innerHTML="Please input your confirmation password"
+            errortext1.classList.remove("hide")
+        }else{
+            errortext1.classList.add("hide")
+            if (password.value.trim() !== "" && passwordconfirmationinput.value.trim() !== "") {
+                if(password.value == passwordconfirmationinput.value){
+                    errortext1.classList.add("hide")
+                    await requestdata(`changePassword?user_id=${user_id}&new_password=${password.value}`)
+                    if(alldata.success){
+                        window.location.href = "profile.html";
+                    }else{
+                        errortext1.innerHTML=alldata.message;
+                        errortext1.classList.remove("hide")
+                    }
+                }else{
+                    errortext1.innerHTML="Check again your confirmation password"
+                    errortext1.classList.remove("hide")
+                }
+            }
+        }
+    });
+
+    var togglePassword = document.getElementById('togglePassword');
+    var togglePassword2 = document.getElementById('togglePassword2');
+    var showPasswordIcon = document.getElementById("showPasswordIcon");
+    var showPasswordIcon2 = document.getElementById("showPasswordIcon2");
+
+    togglePassword.addEventListener('click', function() {
+        var type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+
+        if (type === 'text') {
+            showPasswordIcon.classList.remove("fa-eye");
+            showPasswordIcon.classList.add("fa-eye-slash");
+        } else {
+            showPasswordIcon.classList.remove("fa-eye-slash");
+            showPasswordIcon.classList.add("fa-eye");
+        }
+    });
+    togglePassword2.addEventListener('click', function() {
+        var type = passwordconfirmationinput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordconfirmationinput.setAttribute('type', type);
+
+        if (type === 'text') {
+            showPasswordIcon2.classList.remove("fa-eye");
+            showPasswordIcon2.classList.add("fa-eye-slash");
+        } else {
+            showPasswordIcon2.classList.remove("fa-eye-slash");
+            showPasswordIcon2.classList.add("fa-eye");
+        }
+    });
 }
