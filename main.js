@@ -1108,13 +1108,61 @@ async function initpoin14() {
         alldata.consultation.forEach(item => {
             var date = new Date(item.consultation_date);
             var buttonHTML = (new Date().getTime() > date.getTime()) ?
-                '<a  href="#"  class="btn btn-primary col-2 loca" data-uid="' + 'dh1' + '">Harap bersiap</a>' :
-                '<a href="../RIWAYAT/rangkuman_pesanan.html"class="btn btn-success col-2">Lihat Riwayat</a>';
+                '<a  href="#"  class="btn btn-primary loca" data-uid="' + 'dh1' + '">Harap bersiap</a>' :
+                '<a href="../RIWAYAT/rangkuman_pesanan.html"class="btn btn-success">Lihat Riwayat</a>';
 
+            let x=item.duration;
+            // console.log(x-9);
+            switch (x) {
+                case '0':
+                  text = "Off";
+                  break;
+                case '1':
+                  text = "08:00-09:00";
+                  break;
+                case '2':
+                  text = "09:00-10:00";
+                  break;
+                case '3':
+                  text = "10:00-11:00";
+                  break;
+                case '4':
+                  text = "11:00-12:00";
+                  break;
+                case '5':
+                  text = "13:00-14:00";
+                  break;
+                case '6':
+                  text = "14:00-15:00";
+                  break;
+                case '7':
+                  text = "15:00-16:00";
+                  break;
+                case '8':
+                  text = "16:00-17:00";
+                break;
+                case '9':
+                  text = "17:00-18:00";
+                break;
+                default:
+                  text = "No value found";
+              }
             addpoin += `
                 <li class="list-group-item">
                     <span class="row">
-                        <span class="col-10">Dr. ${item.dokter_name}-${item.consultation_date}-${item.duration} jam</span>
+                        <span class="col-10">
+                            <div class="cell">
+                                <div id="nama">
+                                    Dr. ${item.dokter_name} 
+                                </div>
+                                <div id="tanggalkonsul">
+                                    ${item.consultation_date}
+                                </div>
+                                <div id="durasi">
+                                    ${text}
+                                </div>
+                            </div>
+                        </span>
                         ${buttonHTML}
                     </span>
                 </li>
