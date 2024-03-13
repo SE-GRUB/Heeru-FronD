@@ -706,9 +706,9 @@ async function initpoin8() {
                 <div class="NamaJob">
                     <h5>${name}</h5>
                     <div class="rating">
-                    <i data-rating="${rating}">
-                        <span>${rating}</span>
-                    </i>
+                        <i data-rating="${rating}">
+                            <span>${rating}</span>
+                        </i>
                     </div>
                     <p>${formatCurrency(parseFloat(fare))}</p>
                 </div>
@@ -793,23 +793,59 @@ async function initpoin9() {
     var data = {
         namedoctor: alldata.users.name,
         jobpoin: alldata.users.rating + " bintang",
-        start: alldata.users.rating + " bintang",
+        start: alldata.users.rating ,
         Harga: "Rp. " + alldata.users.fare,
         success: "0",
-        listbit: alldata.users.description,
+        listbit: alldata.users.description ? alldata.users.description : 'Description not available!',
         imghip: alldata.users.profile_pic ? histhost + alldata.users.profile_pic : histhost + 'Admin/images/profile.jpg'
     };
-
-    console.log(data);
 
     function initdokter(data) {
         document.getElementById("namedoctor").innerHTML = data.namedoctor;
         document.getElementById("jobpoin").innerHTML = data.jobpoin;
-        document.getElementById("start").innerHTML = data.start;
+        document.getElementById("irating").setAttribute("data-rating", data.start);
+        document.getElementById("start").innerHTML = "(" + data.start + ")";
         document.getElementById("Harga").innerHTML = data.Harga;
-        // document.getElementById("success").innerHTML = data.success;
         document.getElementById("listbit").innerHTML = data.listbit;
         document.getElementById("imghip").src = data.imghip;
+    }
+
+    async function initPopular() {
+        await requestdata2('counselorList');
+        var ul = document.getElementById('carouselExample');
+        var template = ''; 
+        alldata.users.forEach(index => {
+            console.log(index)
+            var id = index.user_id;
+            var name = index.name;
+            var rating = index.rating;
+            var fare = index.fare;
+            var profile_pic = index.profile_pic;
+            profile_pic=profile_pic ? histhost+profile_pic: histhost+'Admin/images/profile.jpg'
+            template += `
+            <li class="carousel inner card dpilist" id="${id}">
+                <img class="dct_img" src="${profile_pic}">
+                <div class="NamaJob">
+                    <h5>${name}</h5>
+                    <div class="rating">
+                        <i data-rating="${rating}">
+                            <span>${rating}</span>
+                        </i>
+                    </div>
+                    <p>${formatCurrency(parseFloat(fare))}</p>
+                </div>
+            </li>
+            `
+        });
+        ul.innerHTML = template;
+        var dpilist = document.getElementsByClassName('dpilist');  
+        for (var i = 0; i < dpilist.length; i++) {
+            dpilist[i].addEventListener('click', function(e) {
+                var id = this.id
+                sessionStorage.setItem('dokter_id', id);
+                window.location.href = `./detail_dokter.html?id=${id}`;
+            });
+        }
     }
 
     async function initskj() {
@@ -826,7 +862,6 @@ async function initpoin9() {
         };
         var time = document.getElementById("Test_DatetimeLocal").value;
         var notav = [];
-
         try {
             var response = await fetch(`${histhost}api/counSlot?time=${time}`);
             var data = await response.json();
@@ -838,7 +873,7 @@ async function initpoin9() {
             });
 
             var selectopt = document.getElementById("selectopt");
-            selectopt.innerHTML = ""; // Clear options before appending
+            selectopt.innerHTML = "";
             for (var key in jadwal) {
                 if (jadwal.hasOwnProperty(key)) {
                     var option = document.createElement("option");
@@ -849,38 +884,30 @@ async function initpoin9() {
             }
         } catch (error) {
             console.error("Error fetching or parsing data:", error);
-            // Handle error here, such as displaying a message to the user
         }
     }
-
-
 
     async function generatepaymend() {
     var iddokter = sessionStorage.getItem('dokter_id');
     var idpasien = localStorage.getItem('user_id');
     var waktu = document.getElementById("Test_DatetimeLocal").value;
     var jam = document.getElementById("selectopt").value;
-    // var uri='http://'+window.location.hostname+':5500/Konsultasi_dokter/list.html'
-    var uri='http://'+window.location.hostname+':5500/Konsultasi_dokter/list.html'
+    var uri='http://'+window.location.hostname+':5500/Konsultasi_dokter/konsultasiRiwayat.html'
     var data = {
-        iddokter: iddokter, //id of the doctor
-        idpasien: idpasien, //id of the patient
-        waktu: waktu, //date
-        jam: jam, //time slot
+        iddokter: iddokter,
+        idpasien: idpasien,
+        waktu: waktu,
+        jam: jam,
         success: '"'+uri+'"',
     };
 
     try {
         var response = await fetch(`${histhost}pembayaran?student_id=${idpasien}&counselor_id=${iddokter}&consultation_date=${waktu}&duration=${jam}&success=${uri}`);
         var responseData = await response.json();
-        
-        // console.log();
-        
         if (responseData['url']) {
             window.location.href=responseData['url'];
         } else {
             console.error("Error in generating payment:", responseData.error);
-            // alert("Error in generating payment: " + responseData.error);
         }
     } catch (error) {
         console.error("Error:", error);
@@ -889,11 +916,10 @@ async function initpoin9() {
 }
 
     await initskj();
-    // Add event listener to Test_DatetimeLocal
     document.getElementById("Test_DatetimeLocal").addEventListener("change", await initskj);
     document.getElementById("orderpay").addEventListener("click", await generatepaymend);
-
     initdokter(data);
+    await initPopular();
 }
 
 async function initpoin10() {
