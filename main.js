@@ -33,6 +33,14 @@ function poinexp() {
     }
 }
 
+function showLoading() {
+    document.getElementById("loadingContainer").style.display = "flex";
+}
+
+function hideLoading() {
+    document.getElementById("loadingContainer").style.display = "none";
+}
+
 async function requestdata(param) {
     try {
         const response = await fetch(`${histhost}api/${param}`);
@@ -44,6 +52,25 @@ async function requestdata(param) {
         return data;
     } catch (error) {
         console.error('There was a problem with the fetch operation:', error);
+        throw error;
+    }
+    return false;
+}
+
+async function requestdata2(param) {
+    try {
+        showLoading();
+        const response = await fetch(`${histhost}api/${param}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        alldata = data;
+        hideLoading();
+        return data;
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+        hideLoading();
         throw error;
     }
     return false;
@@ -640,7 +667,7 @@ async function initpoin7(){
 async function initpoin8() {
 
     // inisiasi globla variable
-    await requestdata('counselorList');      
+    await requestdata2('counselorList');      
     var sortedUsers = Object.values(alldata.users).sort(function(a, b) {
         return a.name.localeCompare(b.name);
     });
@@ -899,7 +926,7 @@ async function initpoin10() {
     }
 
     async function loadMorePosts(currentPage) {
-        await requestdata('postList?page=' + currentPage); // Include page parameter in the request
+        await requestdata2('postList?page=' + currentPage); // Include page parameter in the request
         var posting = alldata.posts;
 
         for (const singgaldatapost of posting) {
@@ -949,7 +976,7 @@ async function initpoin10() {
 
     async function info2(hit, limit) {
         try {
-            await requestdata('showInfografis');
+            await requestdata2('showInfografis');
             if (!alldata.infographics) {
                 throw new Error('Data infografis tidak tersedia');
             }
@@ -1025,12 +1052,11 @@ async function initpoin10() {
         allpost.forEach(element => {
             badanpost.innerHTML += element;
         });
-
         currentPage++;
     }
     
-     document.getElementById("tulispostnya").src = `${histhost}poincreate?user_id=${localStorage.getItem('user_id')}`;
-     console.log(document.getElementById("tulispostnya").src);
+    //  document.getElementById("tulispostnya").src = `${histhost}poincreate?user_id=${localStorage.getItem('user_id')}`;
+    //  console.log(document.getElementById("tulispostnya").src);
 
     $(window).scroll(function() {
         if ($(window).scrollTop() == $(document).height() - $(window).height()) {
@@ -1043,14 +1069,76 @@ async function initpoin10() {
 
 async function initpoin11() {
     var user_id = localStorage.getItem('user_id');
-    await requestdata(`userProfile?user_id=${user_id}`);
+    await requestdata2(`userProfile?user_id=${user_id}`);
     var pp = alldata.user.profile_pic;
     pp=pp ? histhost+pp : histhost+'Admin/images/profile.jpg'
-    document.getElementById('profileImage').src = pp
-    document.getElementById("username").textContent = alldata.user.name;
-    document.getElementById("profNama").textContent = alldata.user.name;
-    document.getElementById("profNoTelp").textContent = alldata.user.no_telp;
-    document.getElementById("profEmail").textContent = alldata.user.email;
+    var profile = `
+            <div class="atas">
+                <div class="judul">
+                    Hello, <span id="username">${alldata.user.name}</span>
+                </div>                
+
+                <div class="photoprofile mb-">
+                    <div class="lingkarannya" id="profileImageContainer">
+                          <img id="profileImage" src="${pp}" alt="" />
+                          <input type="file" id="fileInput" accept="image/*" style="display: none;" />
+                      </label>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="bawah">
+                <div class="textjudul">
+                    Personal Information
+                </div>
+
+                <div class="datadiri">
+                    <div class="jenis">
+                        Name
+                    </div>
+                    <span id="profNama" class="daridata">
+                        ${alldata.user.name}
+                    </span>
+
+                    <div class="jenis">
+                        No. Hp
+                    </div>
+                    <span id="profNoTelp"  class="daridata">
+                        ${alldata.user.no_telp}
+                    </span>
+
+                    <div class="jenis">
+                        Email
+                    </div>
+                    <span id="profEmail"  class="daridata">
+                        ${alldata.user.email}
+                    </span>
+                </div>
+
+                <div class="tombolnya">
+                    <a href="confirmPw.html" class="buatedit">
+                        <button class="buatedit">
+                            Change Password
+                        </button>
+                    </a>
+                </div>
+
+                <div class="tombolnya2">
+                    <button class="buatlogout" id="buttonLogout">
+                        Logout
+                    </button>
+                </div>
+
+                <div class="copyright">
+                    <p>
+                        © 2024 Heeru
+                    </p>
+                </div>
+
+            </div>
+    `
+    document.getElementById("badanProfile").innerHTML =  profile;
 
     document.getElementById("buttonLogout").addEventListener("click", async function() {
         localStorage.clear();
@@ -1302,7 +1390,7 @@ async function initpoin17(){
     });
 
     async function getongoing(){
-        await requestdata(`riwayatOngoing?user_id=${user_id}`)
+        await requestdata2(`riwayatOngoing?user_id=${user_id}`)
         var onprogressContent = '';
         alldata.reports.forEach(report => {
             var kotak = `
@@ -1325,7 +1413,7 @@ async function initpoin17(){
     }
 
     async function getdone(){
-        await requestdata(`riwayatDone?user_id=${user_id}`)
+        await requestdata2(`riwayatDone?user_id=${user_id}`)
         var doneContent = '';
         alldata.reports.forEach(report => {
             var kotak = `
@@ -1400,7 +1488,7 @@ async function initpoin18(){
     });
 
     async function getongoing(){
-        await requestdata(`konsulOngoing?user_id=${user_id}`)
+        await requestdata2(`konsulOngoing?user_id=${user_id}`)
         var onprogressContent = '';
         alldata.consultations.forEach(consultation => {
             var kotak;
@@ -1443,7 +1531,7 @@ async function initpoin18(){
     }
     
     async function getdone(){
-        await requestdata(`konsulDone?user_id=${user_id}`)
+        await requestdata2(`konsulDone?user_id=${user_id}`)
         var doneContent = '';
         alldata.consultations.forEach(consultation => {
             var kotak = `
