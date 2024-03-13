@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="rangkuman_pesanan.css">
-    <title>RANGKUMAN PESANAN</title>
+    <title>Consuktation Details</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -21,24 +21,21 @@
 
 </head>
 <body>
+    <div class="circle"></div>
     <div class="responsivecontainer">
         <header>
             <div class="backnav">
                 <button onclick="location.href = '../Konsultasi_dokter/list.html'"><</button>
-                <h3>Rangkuman Pesanan</h3>
+                <h3>Consultation Detail</h3>
             </div>
 
             <div class="headernya">
-                <div id="logo">HERUU (logo dan nama)</div>
-                <div id="tanggal">13 Jan, 25:15 PM</div>
-                <div id="status">Sudah selesai konsultasi</div>
-                <div id="nomor">Pesanan __-_______</div>
+                <div id="tanggal"></div>
+                <div id="status"></div>
+                <div id="nomor"></div>
             </div>
 
-            <div class="terimakasih">
-                <h3>TERIMAKASIH SUDAH pakai HEERU</h3>
-                <h5>semoga kamu cepat sembuh dan memiliki hari yang indah</h5>
-            </div>
+           
         </header>
 
 
@@ -46,7 +43,7 @@
         <div class="konten">
 
             <div class="kasihrate">
-                <h3 id="kasihrating">KASIH Rating ke Dokter?</h3>
+                <h3 id="kasihrating">Rate Your Counselor</h3>
 
                 <div class="rating"> <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label> <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label> <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label> <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label> <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
                 </div>
@@ -58,24 +55,30 @@
             </div>
 
             <div id="doktornya" class="doktornya">
-                <img src="https://assets.dataindonesia.id/1655356019321_45_Joko%20Widodo.png" alt="">
-                <h4 id=" counselorName">Nama Dokter</h4>
+                <img
+                src="https://media.tarkett-image.com/large/TH_24567080_24594080_24596080_24601080_24563080_24565080_24588080_001.jpg"
+                alt="Doctor avatar"
+                id="imgCounselor"/>             
+                <h4 id=" counselorName"></h4>
             </div>
 
             <div class="hasil">
-                <h3>DETAIL KONSULTASI</h3>
-                <p id = "note">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eaque quam reprehenderit hic accusantium voluptates nam impedit quas nisi. Assumenda magnam ipsum quae ipsa quod esse eaque labore dolorem ullam autem!</p>
+                <h3>Consultation Detail</h3>
+                <p id = "note"></p>
             </div>
 
             <div class="pembayaran">
-                <h3 class="item1">DETAIL PEMBAYARAN</h3>
-                <h6 class="item2">Dibayar pakai ...</h6>
-                <h6 class="item3">Rp.......</h6>
+                <h3 class="item1">Payment Detail</h3>
+                <h4 class="item2">Paid with</h4>
+                <h4 class="item3">Rp</h4>
             </div>
 
         </div>
 
-
+        <div class="terimakasih">
+            <h3>Thank You for Using Heeru</h3>
+            <h4>Get Well Soon!</h4>
+        </div>
 
         
     </div>
@@ -97,7 +100,7 @@
             person
         </span>
     </nav> -->
-    <nav class="navbarr">
+    <!-- <nav class="navbarr">
         <span class="material-symbols-outlined nonactivate"> home </span>
   
         <span class="material-symbols-outlined nonactivate">
@@ -107,7 +110,7 @@
         <span class="material-symbols-outlined active"> shield_person </span>
   
         <span class="material-symbols-outlined nonactivate"> person </span>
-      </nav>
+      </nav> -->
 
 <!-- <script src="rangkuman_pesanan.js"></script> -->
     <script src="../../main.js"></script>

@@ -1104,6 +1104,7 @@ async function initpoin13(){
     document.getElementById('nomor').innerText = 'Pesanan ' + result.consultation_id;
     document.getElementById('note').innerText = result.note;
     document.getElementById('counselorName').innerText = result.counselorName;
+    document.getElementById("imgCounselor").src = result.counselor_profile;
 
 }
 
