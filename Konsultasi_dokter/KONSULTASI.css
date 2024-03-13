@@ -1,3 +1,7 @@
+::-webkit-search-cancel-button{
+  display: none;
+}
+
 body {
   /* background-color: rgba(255, 255, 255); */
   background-color: #ffffff;
@@ -29,7 +33,7 @@ body {
   padding-top: 10px;
   padding-bottom: 10px;
   text-align: center;
-  background-color: white;
+  /* background-color: rgb(255, 0, 0); */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 

@@ -1423,16 +1423,8 @@ async function initpoin17(){
     }
 }
 
-function calculateTimeUntilConsultationStarts(statusText, consultation_date) {
-    let timeRange = statusText.split(' ')[2];
-    let [startTime, endTime] = timeRange.split('-');
-    let consultationDate = new Date(consultation_date + 'T' + startTime);
-    let timeUntilConsultationStarts = consultationDate - new Date();
-    let minutesUntilConsultationStarts = Math.floor(timeUntilConsultationStarts / (1000 * 60));
-    return minutesUntilConsultationStarts;
-}
-
 async function initpoin18(){
+    getongoing();
     var onprogress = document.getElementById('onProgress');
     var done = document.getElementById('done');
     var user_id = localStorage.getItem('user_id');
@@ -1466,56 +1458,10 @@ async function initpoin18(){
         await requestdata(`konsulOngoing?user_id=${user_id}`)
         var onprogressContent = '';
         alldata.consultations.forEach(consultation => {
-            let statusText;
-            let x = consultation.duration;
-            switch (x) {
-                case '0':
-                    statusText = "Off";
-                    break;
-                case '1':
-                    statusText = "08:00-09:00";
-                    break;
-                case '2':
-                    statusText = "09:00-10:00";
-                    break;
-                case '3':
-                    statusText = "10:00-11:00";
-                    break;
-                case '4':
-                    statusText = "11:00-12:00";
-                    break;
-                case '5':
-                    statusText = "13:00-14:00";
-                    break;
-                case '6':
-                    statusText = "14:00-15:00";
-                    break;
-                case '7':
-                    statusText = "15:00-16:00";
-                    break;
-                case '8':
-                    statusText = "16:00-17:00";
-                    break;
-                case '9':
-                    statusText = "17:00-18:00";
-                    break;
-                default:
-                    statusText = "No value found";
-            }
-            let minutesUntilConsultationStarts = calculateTimeUntilConsultationStarts(statusText, consultation.consultation_date);
-            let status = '';
-            if (minutesUntilConsultationStarts > 0) {
-                status = `Consultation start in ${minutesUntilConsultationStarts} menit.`;
-            } else if (minutesUntilConsultationStarts === 0) {
-                status =  1;
-            } else {
-                status = 0;
-            }
-            let statusString = (status === 1) ? 'Consultation In Progress' : (status === 0) ? 'Consultation Finish' : status;
             var kotak = `
             <div class="kotak" id="OP_CON${consultation.id}">
                 <div class="tulisan">
-                    <p class="status">${statusString}</p>
+                    <p class="status">${consultation.time}</p>
                     <p class="title">Dr. ${consultation.name}</p>
                     <p class="date">${consultation.consultation_date}</p>
                 </div>
@@ -1536,18 +1482,24 @@ async function initpoin18(){
         var doneContent = '';
         alldata.consultations.forEach(consultation => {
             var kotak = `
-            <div class="kotak" id= "D_CON${consultation.id}" >
-                <div class="tulisan">
-                    <p class="status">On Progress</p>
-                    <p class="title">${report.title}</p>
-                    <p class="date">${formatDate(report.created_at)}</p>
+            <a href="../RIWAYAT/rangkuman_pesanan.html?id=${consultation.id}">
+                <div class="kotak" id= "D_CON${consultation.id}" >
+                    <div class="tulisan">
+                        <div class="rating">
+                            <i data-rating="${consultation.rating}">
+                                <span>${consultation.rating}</span>
+                            </i>
+                        </div>
+                        <p class="title">Dr. ${consultation.name}</p>
+                        <p class="date">${consultation.consultation_date}</p>
+                    </div>
+                    <div class="tombol">
+                        <span class="material-symbols-outlined">
+                            arrow_forward_ios
+                        </span>
+                    </div>
                 </div>
-                <div class="tombol">
-                    <span class="material-symbols-outlined">
-                        arrow_forward_ios
-                    </span>
-                </div>
-            </div>
+            </a>
             `;
             doneContent += kotak;
         });
