@@ -1346,10 +1346,10 @@ function formatDate(dateString) {
 }
 
 async function initpoin17(){
-    getongoing();
     var onprogress = document.getElementById('onProgress');
     var done = document.getElementById('done');
     var user_id = localStorage.getItem('user_id');
+    getongoing();
     const tabOnProgress = document.getElementById('tabOnProgress');
     const tabDone = document.getElementById('tabDone');
     const onProgressContent = document.getElementById('onProgress');
@@ -1423,11 +1423,31 @@ async function initpoin17(){
     }
 }
 
+function formatTimeRemaining(remainingMinutes) {
+    const days = Math.floor(remainingMinutes / (60 * 24));
+    const hours = Math.floor((remainingMinutes % (60 * 24)) / 60);
+    const minutes = remainingMinutes % 60;
+
+    let formattedTime = '';
+
+    if (days > 0) {
+        formattedTime += `${days} days `;
+    }
+    if (hours > 0) {
+        formattedTime += `${hours} hours `;
+    }
+    if (minutes > 0) {
+        formattedTime += `${minutes} minutes`;
+    }
+
+    return formattedTime.trim();
+}
+
 async function initpoin18(){
-    getongoing();
     var onprogress = document.getElementById('onProgress');
     var done = document.getElementById('done');
     var user_id = localStorage.getItem('user_id');
+    getongoing();
     const tabOnProgress = document.getElementById('tabOnProgress');
     const tabDone = document.getElementById('tabDone');
     const onProgressContent = document.getElementById('onProgress');
@@ -1458,22 +1478,42 @@ async function initpoin18(){
         await requestdata(`konsulOngoing?user_id=${user_id}`)
         var onprogressContent = '';
         alldata.consultations.forEach(consultation => {
-            var kotak = `
-            <div class="kotak" id="OP_CON${consultation.id}">
-                <div class="tulisan">
-                    <p class="status">${consultation.time}</p>
-                    <p class="title">Dr. ${consultation.name}</p>
-                    <p class="date">${consultation.consultation_date}</p>
+            var kotak;
+            if (consultation.endIn) {
+                kotak = `
+                <a href="">
+                    <div class="kotak" id="OP_CON${consultation.id}">
+                        <div class="tulisan">
+                            <p class="status">
+                                End in ${formatTimeRemaining(consultation.endIn)}
+                            </p>              
+                            <p class="title">Dr. ${consultation.name}</p>
+                            <p class="date">${consultation.consultation_date}</p>
+                        </div>
+                        <div class="tombol">
+                                <span class="material-symbols-outlined">arrow_forward_ios</span>
+                        </div>
+                    </div>
+                </a>
+                `;
+            } else {
+                kotak = `
+                <div class="kotak" id="OP_CON${consultation.id}">
+                    <div class="tulisan">
+                        <p class="status">
+                            Start in ${formatTimeRemaining(consultation.time)}
+                        </p>              
+                        <p class="title">Dr. ${consultation.name}</p>
+                        <p class="date">${consultation.consultation_date}</p>
+                    </div>
+                    <div class="tombol">
+                        <span class="material-symbols-outlined">schedule</span>
+                    </div>
                 </div>
-                <div class="tombol">
-                    <span class="material-symbols-outlined">
-                        arrow_forward_ios
-                    </span>
-                </div>
-            </div>
-            `;
+                `;
+            }
             onprogressContent += kotak;
-        });
+        });        
         onprogress.innerHTML = onprogressContent;
     }
     
