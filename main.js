@@ -741,7 +741,7 @@ async function initpoin8() {
     pencarian();
 
     $('.owl-carousel').owlCarousel({
-        loop:false,
+        loop:true,
         margin:5,
         nav:false,
         responsive:{
