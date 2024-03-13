@@ -1337,3 +1337,57 @@ async function initpoin16(){
         }
     });
 }
+
+function formatDate(dateString) {
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-GB', options);
+}
+
+async function initpoin17(){
+var onprogress = document.getElementById('onProgress');
+var done = document.getElementById('done');
+if (onprogress && onprogress.classList.contains('active')) {
+    await requestdata('riwayatOngoing')
+    var onprogressContent = '';
+    alldata.reports.forEach(report => {
+        var kotak = `
+        <div class="kotak" id="OP${report.id}">
+            <div class="tulisan">
+                <p>${report.isProcess == 0 ? 'Report Submitted' : 'Report Under Review'}</p>
+                <p>${report.title}</p>
+                <p>${formatDate(report.created_at)}</p>
+            </div>
+            <div class="tombol">
+                <span class="material-symbols-outlined">
+                    arrow_forward_ios
+                </span>
+            </div>
+        </div>
+        `;
+        onprogressContent += kotak;
+    });
+    onprogress.innerHTML = onprogressContent;
+}else if (done && done.classList.contains('active')) {
+    await requestdata('riwayatDone')
+    var doneContent = '';
+    alldata.reports.forEach(report => {
+        var kotak = `
+        <div class="kotak" id= "D${report.id}" >
+            <div class="tulisan">
+                <p>On Progress</p>
+                <p>${report.title}</p>
+                <p>${formatDate(report.created_at)}</p>
+            </div>
+            <div class="tombol">
+                <span class="material-symbols-outlined">
+                    arrow_forward_ios
+                </span>
+            </div>
+        </div>
+        `;
+        doneContent += kotak;
+    });
+    done.innerHTML = doneContent;
+}
+}
