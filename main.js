@@ -9,10 +9,10 @@ var histhost;
 
 var datasession = [];
 // tanggal expired 1 bulan dari sekarang
-// var histhost = 'http://127.0.0.1:8000/';    
+var histhost = 'http://127.0.0.1:8000/';    
 // var histhost = 'http://172.16.31.107:8000/';
 // var histhost = 'http://47.245.121.87/Heeru-BackD/public/';
-var histhost = 'https://enp.lahoras.my.id/';
+// var histhost = 'https://enp.lahoras.my.id/';
 
 function poinexp() {
     try {
@@ -136,6 +136,8 @@ async function initpoin() {
                     localStorage.setItem('email', email);
                     profile_pic = alldata.user['profile_pic'];
                     localStorage.setItem('profile_pic', profile_pic);
+                    password = alldata.user['password'];
+                    localStorage.setItem('password', password);
                     window.location.href = "./sign_up2.html";
                     return true;
                 }
@@ -1595,8 +1597,9 @@ async function initpoin18(){
         alldata.consultations.forEach(consultation => {
             var kotak;
             if (consultation.endIn) {
+                sessionStorage.setItem("uid", user_id);
                 kotak = `
-                <a href="">
+                <a href="/CHAT/last.html">
                     <div class="kotak" id="OP_CON${consultation.id}">
                         <div class="tulisan">
                             <p class="status">
