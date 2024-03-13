@@ -5,6 +5,17 @@ body {
   font-family: 'Poppins';
 }
 
+.circle{
+  height: 92%;
+  width: 100%;
+  background-image: radial-gradient(circle at left top, rgba(100, 165, 249, 45%),white 70%);
+  /* background-image: radial-gradient(circle at right bottom, rgba(100, 165, 249, 45%),white 70%); */
+  position: absolute;
+  z-index: -1;
+  /* right: 0px; */
+  top: 0px;
+}
+
 /* NAVBAR */
 /* NAVBAR */
 .navbarr{
