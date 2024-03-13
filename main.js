@@ -1354,9 +1354,9 @@ if (onprogress && onprogress.classList.contains('active')) {
         var kotak = `
         <div class="kotak" id="OP${report.id}">
             <div class="tulisan">
-                <p>${report.isProcess == 0 ? 'Report Submitted' : 'Report Under Review'}</p>
-                <p>${report.title}</p>
-                <p>${formatDate(report.created_at)}</p>
+                <p class="status">${report.isProcess == 0 ? 'Report Submitted' : 'Report Under Review'}</p>
+                <p class="title">${report.title}</p>
+                <p class="date">${formatDate(report.created_at)}</p>
             </div>
             <div class="tombol">
                 <span class="material-symbols-outlined">
@@ -1375,9 +1375,9 @@ if (onprogress && onprogress.classList.contains('active')) {
         var kotak = `
         <div class="kotak" id= "D${report.id}" >
             <div class="tulisan">
-                <p>On Progress</p>
-                <p>${report.title}</p>
-                <p>${formatDate(report.created_at)}</p>
+                <p class="status">On Progress</p>
+                <p class="title">${report.title}</p>
+                <p class="date">${formatDate(report.created_at)}</p>
             </div>
             <div class="tombol">
                 <span class="material-symbols-outlined">

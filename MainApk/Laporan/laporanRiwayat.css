@@ -13,12 +13,67 @@ body{
     'opsz' 24;
 }
 
+.atas{
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+}
+
+.balik {
+    margin-right: 10px;
+}
+
+.yourreport {
+    display: flex;
+    /* flex-direction: row;
+    justify-content: center; */
+    align-items: center;
+    font-size: x-large;
+    font-weight: 500;
+  
+}
+
+.yourreport p, .balik span {
+    margin: 0; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
 .nonactivate{
     color: #d6d6d6 !important;
 }
 
-.active{
+.tab_btn .active{
     color: #64A5F9;
+}
+
+.status{
+    color: #64A5F9;
+    font-weight: 500
+}
+
+.title{
+    font-size: larger;
+    font-weight: 600;
+}
+
+.tulisan{
+    flex: 1;
+    margin: 0;
+}
+
+.tulisan p{
+    margin: 5px 0;
+}
+
+.date{
+    font-size: smaller;
+}
+
+.tombol{
+    align-self: center;
 }
 
 .tab_box{
@@ -75,6 +130,8 @@ body{
     box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.1);
     padding: 1rem;
     display: flex;
+    justify-content: space-between;
+    margin-bottom: 14px;
 }
 
 
