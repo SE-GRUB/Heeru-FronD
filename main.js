@@ -1346,6 +1346,7 @@ function formatDate(dateString) {
 }
 
 async function initpoin17(){
+    getongoing();
     var onprogress = document.getElementById('onProgress');
     var done = document.getElementById('done');
     var user_id = localStorage.getItem('user_id');
