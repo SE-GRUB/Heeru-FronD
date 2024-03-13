@@ -1597,7 +1597,7 @@ async function initpoin18(){
         alldata.consultations.forEach(consultation => {
             var kotak;
             if (consultation.endIn) {
-                sessionStorage.setItem("uid", user_id);
+                sessionStorage.setItem("uid", 'dh1');
                 kotak = `
                 <a href="/CHAT/last.html">
                     <div class="kotak" id="OP_CON${consultation.id}">
