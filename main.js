@@ -770,8 +770,6 @@ async function initpoin9() {
         start: alldata.users.rating + " bintang",
         Harga: "Rp. " + alldata.users.fare,
         success: "0",
-        ongoing: "1,2k",
-        totalpatien: "1,2k",
         listbit: alldata.users.description,
         imghip: alldata.users.profile_pic ? histhost + alldata.users.profile_pic : histhost + 'Admin/images/profile.jpg'
     };
@@ -837,7 +835,7 @@ async function initpoin9() {
     var waktu = document.getElementById("Test_DatetimeLocal").value;
     var jam = document.getElementById("selectopt").value;
     // var uri='http://'+window.location.hostname+':5500/Konsultasi_dokter/list.html'
-    var uri='http://'+window.location.hostname+'/Konsultasi_dokter/list.html'
+    var uri='http://'+window.location.hostname+':5500/Konsultasi_dokter/list.html'
     var data = {
         iddokter: iddokter, //id of the doctor
         idpasien: idpasien, //id of the patient
@@ -1099,100 +1097,27 @@ function initPost(){
 }
 
 async function initpoin13(){
-    const result = await requestdata('getResult');
-    document.getElementById('tanggal').innerText = result.consultation_date;
-    document.getElementById('nomor').innerText = 'Pesanan ' + result.consultation_id;
-    document.getElementById('note').innerText = result.note;
-    document.getElementById('counselorName').innerText = result.counselorName;
-    document.getElementById("imgCounselor").src = result.counselor_profile;
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+    console.log(id);
 
-}
-
-async function initpoin14() {
-    var template = document.getElementById("histopat").innerHTML;
-
-    async function loadhisto() {
-        await requestdata("myconsultation?id=" + localStorage.getItem('user_id'));
-        var addpoin = '';
-
-        // Loop through consultation data
-        alldata.consultation.forEach(item => {
-            var date = new Date(item.consultation_date);
-            var buttonHTML = (new Date().getTime() > date.getTime()) ?
-                '<a  href="#"  class="btn btn-primary loca" data-uid="' + 'dh1' + '">Harap bersiap</a>' :
-                '<a href="../RIWAYAT/rangkuman_pesanan.html"class="btn btn-success">Lihat Riwayat</a>';
-
-            let x=item.duration;
-            // console.log(x-9);
-            switch (x) {
-                case '0':
-                  text = "Off";
-                  break;
-                case '1':
-                  text = "08:00-09:00";
-                  break;
-                case '2':
-                  text = "09:00-10:00";
-                  break;
-                case '3':
-                  text = "10:00-11:00";
-                  break;
-                case '4':
-                  text = "11:00-12:00";
-                  break;
-                case '5':
-                  text = "13:00-14:00";
-                  break;
-                case '6':
-                  text = "14:00-15:00";
-                  break;
-                case '7':
-                  text = "15:00-16:00";
-                  break;
-                case '8':
-                  text = "16:00-17:00";
-                break;
-                case '9':
-                  text = "17:00-18:00";
-                break;
-                default:
-                  text = "No value found";
-              }
-            addpoin += `
-                <li class="list-group-item">
-                    <span class="row">
-                        <span class="col-10">
-                            <div class="cell">
-                                <div id="nama">
-                                    Dr. ${item.dokter_name} 
-                                </div>
-                                <div id="tanggalkonsul">
-                                    ${item.consultation_date}
-                                </div>
-                                <div id="durasi">
-                                    ${text}
-                                </div>
-                            </div>
-                        </span>
-                        ${buttonHTML}
-                    </span>
-                </li>
-            `;
-        });
-
-        // Set HTML content
-        document.getElementById("histopat").innerHTML = addpoin;
-
-        // Add event listener to all loca buttons
-        var locaButtons = document.querySelectorAll(".loca");
-        locaButtons.forEach(button => {
-            button.addEventListener("click", function() {
-                sessionStorage.setItem("uid", this.dataset.uid);
-                window.location.href = "../CHAT/Last.html";
-            });
-        });
-    }
-    loadhisto();
+    const formatter = new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR'
+    });
+    
+    // Call the requestdata function with the id as an argument
+    const result = await requestdata('getResult?id='+id);   
+    console.log(result) 
+    document.getElementById('tanggal').innerText = alldata.result.consultation_date;
+    document.getElementById('nomor').innerText = 'ID :\t ' + alldata.result.consultation_id;
+    document.getElementById('note').innerText = alldata.result.note;
+    document.getElementById('counselorName').innerText = alldata.result.counselorName;
+    document.getElementById('counselorEmail').innerText = alldata.result.counselorEmail;
+    document.getElementById("imgCounselor").src = alldata.result.counselor_profile ? histhost + alldata.result.counselor_profile : histhost + 'Admin/images/profile.jpg';
+    // document.getElementById('paymentMethod').innerText = 'Paid With ' + result.paymentMethod;
+    document.getElementById('paymentNominal').innerText = 'Price'+ '\t\t\t' +  formatter.format(alldata.result.paymentNominal);
+    document.getElementById('time').innerText = 'Time\t\t\t' + alldata.result.time;
 }
 
 async function initpoin15(){
