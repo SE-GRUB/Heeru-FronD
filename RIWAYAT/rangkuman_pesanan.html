@@ -25,7 +25,7 @@
     <div class="responsivecontainer">
         <header>
             <div class="backnav">
-                <button onclick="location.href = '../Konsultasi_dokter/list.html'"><</button>
+                <button onclick="location.href = '../Konsultasi_dokter/konsultasiRiwayat.html'"><</button>
                 <h3>Consultation Detail</h3>
             </div>
 
@@ -58,8 +58,14 @@
                 <img
                 src="https://media.tarkett-image.com/large/TH_24567080_24594080_24596080_24601080_24563080_24565080_24588080_001.jpg"
                 alt="Doctor avatar"
-                id="imgCounselor"/>             
-                <h4 id=" counselorName"></h4>
+                id="imgCounselor"/>   
+                <div id="dataDokter" class="dataDokter">
+                    <h4 id="counselorName"></h4>
+                    <h5 id="counselorEmail"></h5>
+                </div>
+          
+                
+
             </div>
 
             <div class="hasil">
@@ -69,8 +75,9 @@
 
             <div class="pembayaran">
                 <h3 class="item1">Payment Detail</h3>
-                <h4 class="item2">Paid with</h4>
-                <h4 class="item3">Rp</h4>
+                <!-- <h5 class="item2" id = "paymentMethod"></h5> -->
+                <h5 class="item3" id = "paymentNominal"></h5>
+                <h5 class="item4" id="time"></h5>
             </div>
 
         </div>
