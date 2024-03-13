@@ -9,7 +9,7 @@ body{
 .circle1{
     height: 92%;
     width: 100%;
-    background-image: radial-gradient(circle at left top, rgba(100, 165, 249, 45%),white 70%);
+    background-image: radial-gradient(circle at left top, rgba(3, 112, 255, 0.445) 10%,white 40%);
     /* background-image: radial-gradient(circle at right bottom, rgba(100, 165, 249, 45%),white 70%); */
     position: absolute;
     z-index: -1;
@@ -268,10 +268,8 @@ p{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 .bookbarr button{
-    /* background-color: #64A5F9; */
-    /* height: 25px; */
-    /* text-align: center; */
-    /* align-items: center; */
+    background-color: #64A5F9 ;
+    border-width: 0;
 }
 #booking{
     /* margin-left: 10px; */
