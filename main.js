@@ -1099,7 +1099,6 @@ function initPost(){
 async function initpoin13(){
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
-    console.log(id);
 
     const formatter = new Intl.NumberFormat('id-ID', {
         style: 'currency',
@@ -1107,18 +1106,96 @@ async function initpoin13(){
     });
     
     // Call the requestdata function with the id as an argument
-    const result = await requestdata('getResult?id='+id);   
-    console.log(result) 
-    document.getElementById('tanggal').innerText = alldata.result.consultation_date;
-    document.getElementById('nomor').innerText = 'ID :\t ' + alldata.result.consultation_id;
-    document.getElementById('note').innerText = alldata.result.note;
-    document.getElementById('counselorName').innerText = alldata.result.counselorName;
-    document.getElementById('counselorEmail').innerText = alldata.result.counselorEmail;
-    document.getElementById("imgCounselor").src = alldata.result.counselor_profile ? histhost + alldata.result.counselor_profile : histhost + 'Admin/images/profile.jpg';
-    // document.getElementById('paymentMethod').innerText = 'Paid With ' + result.paymentMethod;
-    document.getElementById('paymentNominal').innerText = 'Price'+ '\t\t\t' +  formatter.format(alldata.result.paymentNominal);
-    document.getElementById('time').innerText = 'Time\t\t\t' + alldata.result.time;
+    const result = await requestdata('getResult?id='+id);
+    // document.getElementById('note').innerText = alldata.result.note;
+    // document.getElementById('paymentNominal').innerText = 'Price'+ '\t\t\t' +  formatter.format(alldata.result.paymentNominal);
+    // document.getElementById('time').innerText = 'Time\t\t\t' + alldata.result.time;
+    var pp = alldata.result.counselor_profile ? histhost + alldata.result.counselor_profile : histhost + 'Admin/images/profile.jpg';
+
+    var detail = `
+            <div class="photoprofile mb-">
+                <div class="lingkarannya" id="profileImageContainer">
+                    <img id="profileImage" src="${pp}" alt="" />
+                </label>
+                </div>
+            </div>
+            <div class="datadiri">
+                <div class="jenis">
+                    Counselor Name
+                </div>
+                <span id="counselorName" class="daridata">Dr. ${alldata.result.counselorName}</span>
+
+                <div class="jenis">
+                    Counselor Email
+                </div>
+                <span id="counselorEmail"  class="daridata">${alldata.result.counselorEmail}</span>
+
+                <div class="jenis">
+                    Consultation Date
+                </div>
+                <span id="tanggal" class="daridata">${alldata.result.consultation_date}</span>
+
+                <div class="jenis">
+                    Consultation ID
+                </div>
+                <span id="nomor"  class="daridata">${alldata.result.consultation_id}</span>
+                
+                <div class="jenis">
+                    Counselor Note
+                </div>
+                <textarea id="note" value="${alldata.result.note}" class="form-control enlarged-textarea" readonly></textarea>
+            </div>
+            <div class="textjudul">
+                IV. Payment
+            </div>
+            <div class="datadiri">
+                <div class="jenis">
+                    Payment Nominal
+                </div>
+                <span id="note" class="daridata">${formatter.format(alldata.result.paymentNominal)}</span>
+                <div class="jenis">
+                    Payment Time
+                </div>
+                <span id="time" class="daridata">${alldata.result.time}</span>
+            </div>
+    `
+    document.getElementById('kontenDetail').innerHTML = detail
+    function initRating(){
+        $(document).ready(async function(){
+            document.getElementById("errortext1").classList.remove("hide");
+            var modal = new bootstrap.Modal(document.getElementById("qui"));
+            var rating = new document.getElementById("rating");
+            var review = new document.getElementById("review");
+            document.getElementById("ratingButton").addEventListener("click", async function() {
+                var formData = new FormData();
+                formData.append('rating', rating);
+                formData.append('review', review);
+            });
+    
+            await $.ajax({
+                url: `${histhost}api/createRating`,
+                method: 'POST',
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function (response) {
+                    if (response.success) {
+                        localStorage.removeItem('rating');
+                        localStorage.removeItem('review');
+                        window.location.href = "home.html";
+                    } else {
+                        console.error('Error:', response.message);
+                    }
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+        
+};
 }
+
 
 async function initpoin15(){
     var email = document.getElementById('emailinput');
