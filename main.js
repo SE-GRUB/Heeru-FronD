@@ -1104,6 +1104,7 @@ async function initpoin13(){
     document.getElementById('nomor').innerText = 'Pesanan ' + result.consultation_id;
     document.getElementById('note').innerText = result.note;
     document.getElementById('counselorName').innerText = result.counselorName;
+    document.getElementById("imgCounselor").src = result.counselor_profile;
 
 }
 
@@ -1345,49 +1346,211 @@ function formatDate(dateString) {
 }
 
 async function initpoin17(){
-var onprogress = document.getElementById('onProgress');
-var done = document.getElementById('done');
-if (onprogress && onprogress.classList.contains('active')) {
-    await requestdata('riwayatOngoing')
-    var onprogressContent = '';
-    alldata.reports.forEach(report => {
-        var kotak = `
-        <div class="kotak" id="OP${report.id}">
-            <div class="tulisan">
-                <p class="status">${report.isProcess == 0 ? 'Report Submitted' : 'Report Under Review'}</p>
-                <p class="title">${report.title}</p>
-                <p class="date">${formatDate(report.created_at)}</p>
-            </div>
-            <div class="tombol">
-                <span class="material-symbols-outlined">
-                    arrow_forward_ios
-                </span>
-            </div>
-        </div>
-        `;
-        onprogressContent += kotak;
+    getongoing();
+    var onprogress = document.getElementById('onProgress');
+    var done = document.getElementById('done');
+    var user_id = localStorage.getItem('user_id');
+    const tabOnProgress = document.getElementById('tabOnProgress');
+    const tabDone = document.getElementById('tabDone');
+    const onProgressContent = document.getElementById('onProgress');
+    const doneContent = document.getElementById('done');
+    const line = document.querySelector('.line');
+
+    tabOnProgress.addEventListener('click', () => {
+        tabOnProgress.classList.add('active');
+        tabDone.classList.remove('active');
+        line.style.width = tabOnProgress.offsetWidth + "px";
+        line.style.left = tabOnProgress.offsetLeft + "px";
+        onProgressContent.classList.add('active');
+        doneContent.classList.remove('active');
+        getongoing();
     });
-    onprogress.innerHTML = onprogressContent;
-}else if (done && done.classList.contains('active')) {
-    await requestdata('riwayatDone')
-    var doneContent = '';
-    alldata.reports.forEach(report => {
-        var kotak = `
-        <div class="kotak" id= "D${report.id}" >
-            <div class="tulisan">
-                <p class="status">On Progress</p>
-                <p class="title">${report.title}</p>
-                <p class="date">${formatDate(report.created_at)}</p>
-            </div>
-            <div class="tombol">
-                <span class="material-symbols-outlined">
-                    arrow_forward_ios
-                </span>
-            </div>
-        </div>
-        `;
-        doneContent += kotak;
+
+    tabDone.addEventListener('click', () => {
+        tabDone.classList.add('active');
+        tabOnProgress.classList.remove('active');
+        line.style.width = tabDone.offsetWidth + "px";
+        line.style.left = tabDone.offsetLeft + "px";
+        doneContent.classList.add('active');
+        onProgressContent.classList.remove('active');
+        getdone();
     });
-    done.innerHTML = doneContent;
+
+    async function getongoing(){
+        await requestdata(`riwayatOngoing?user_id=${user_id}`)
+        var onprogressContent = '';
+        alldata.reports.forEach(report => {
+            var kotak = `
+            <div class="kotak" id="OP${report.id}">
+                <div class="tulisan">
+                    <p class="status">${report.isProcess == 0 ? 'Report Submitted' : 'Report Under Review'}</p>
+                    <p class="title">${report.title}</p>
+                    <p class="date">${formatDate(report.created_at)}</p>
+                </div>
+                <div class="tombol">
+                    <span class="material-symbols-outlined">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </div>
+            `;
+            onprogressContent += kotak;
+        });
+        onprogress.innerHTML = onprogressContent;
+    }
+
+    async function getdone(){
+        await requestdata(`riwayatDone?user_id=${user_id}`)
+        var doneContent = '';
+        alldata.reports.forEach(report => {
+            var kotak = `
+            <div class="kotak" id= "D${report.id}" >
+                <div class="tulisan">
+                    <p class="status">On Progress</p>
+                    <p class="title">${report.title}</p>
+                    <p class="date">${formatDate(report.created_at)}</p>
+                </div>
+                <div class="tombol">
+                    <span class="material-symbols-outlined">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </div>
+            `;
+            doneContent += kotak;
+        });
+        done.innerHTML = doneContent;
+    }
 }
+
+function calculateTimeUntilConsultationStarts(statusText, consultation_date) {
+    let timeRange = statusText.split(' ')[2];
+    let [startTime, endTime] = timeRange.split('-');
+    let consultationDate = new Date(consultation_date + 'T' + startTime);
+    let timeUntilConsultationStarts = consultationDate - new Date();
+    let minutesUntilConsultationStarts = Math.floor(timeUntilConsultationStarts / (1000 * 60));
+    return minutesUntilConsultationStarts;
+}
+
+async function initpoin18(){
+    var onprogress = document.getElementById('onProgress');
+    var done = document.getElementById('done');
+    var user_id = localStorage.getItem('user_id');
+    const tabOnProgress = document.getElementById('tabOnProgress');
+    const tabDone = document.getElementById('tabDone');
+    const onProgressContent = document.getElementById('onProgress');
+    const doneContent = document.getElementById('done');
+    const line = document.querySelector('.line');
+
+    tabOnProgress.addEventListener('click', () => {
+        tabOnProgress.classList.add('active');
+        tabDone.classList.remove('active');
+        line.style.width = tabOnProgress.offsetWidth + "px";
+        line.style.left = tabOnProgress.offsetLeft + "px";
+        onProgressContent.classList.add('active');
+        doneContent.classList.remove('active');
+        getongoing();
+    });
+
+    tabDone.addEventListener('click', () => {
+        tabDone.classList.add('active');
+        tabOnProgress.classList.remove('active');
+        line.style.width = tabDone.offsetWidth + "px";
+        line.style.left = tabDone.offsetLeft + "px";
+        doneContent.classList.add('active');
+        onProgressContent.classList.remove('active');
+        getdone();
+    });
+
+    async function getongoing(){
+        await requestdata(`konsulOngoing?user_id=${user_id}`)
+        var onprogressContent = '';
+        alldata.consultations.forEach(consultation => {
+            let statusText;
+            let x = consultation.duration;
+            switch (x) {
+                case '0':
+                    statusText = "Off";
+                    break;
+                case '1':
+                    statusText = "08:00-09:00";
+                    break;
+                case '2':
+                    statusText = "09:00-10:00";
+                    break;
+                case '3':
+                    statusText = "10:00-11:00";
+                    break;
+                case '4':
+                    statusText = "11:00-12:00";
+                    break;
+                case '5':
+                    statusText = "13:00-14:00";
+                    break;
+                case '6':
+                    statusText = "14:00-15:00";
+                    break;
+                case '7':
+                    statusText = "15:00-16:00";
+                    break;
+                case '8':
+                    statusText = "16:00-17:00";
+                    break;
+                case '9':
+                    statusText = "17:00-18:00";
+                    break;
+                default:
+                    statusText = "No value found";
+            }
+            let minutesUntilConsultationStarts = calculateTimeUntilConsultationStarts(statusText, consultation.consultation_date);
+            let status = '';
+            if (minutesUntilConsultationStarts > 0) {
+                status = `Consultation start in ${minutesUntilConsultationStarts} menit.`;
+            } else if (minutesUntilConsultationStarts === 0) {
+                status =  1;
+            } else {
+                status = 0;
+            }
+            let statusString = (status === 1) ? 'Consultation In Progress' : (status === 0) ? 'Consultation Finish' : status;
+            var kotak = `
+            <div class="kotak" id="OP_CON${consultation.id}">
+                <div class="tulisan">
+                    <p class="status">${statusString}</p>
+                    <p class="title">Dr. ${consultation.name}</p>
+                    <p class="date">${consultation.consultation_date}</p>
+                </div>
+                <div class="tombol">
+                    <span class="material-symbols-outlined">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </div>
+            `;
+            onprogressContent += kotak;
+        });
+        onprogress.innerHTML = onprogressContent;
+    }
+    
+    async function getdone(){
+        await requestdata(`konsulDone?user_id=${user_id}`)
+        var doneContent = '';
+        alldata.consultations.forEach(consultation => {
+            var kotak = `
+            <div class="kotak" id= "D_CON${consultation.id}" >
+                <div class="tulisan">
+                    <p class="status">On Progress</p>
+                    <p class="title">${report.title}</p>
+                    <p class="date">${formatDate(report.created_at)}</p>
+                </div>
+                <div class="tombol">
+                    <span class="material-symbols-outlined">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </div>
+            `;
+            doneContent += kotak;
+        });
+        done.innerHTML = doneContent;
+    }
 }
