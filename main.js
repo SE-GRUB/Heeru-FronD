@@ -665,7 +665,6 @@ async function initpoin7(){
 }
 
 async function initpoin8() {
-
     // inisiasi globla variable
     await requestdata2('counselorList');      
     var sortedUsers = Object.values(alldata.users).sort(function(a, b) {
@@ -763,8 +762,8 @@ async function initpoin8() {
          }
     }
 
-    listdokter(sortedUsers);
     listdokterowl();
+    listdokter(sortedUsers);
     pencarian();
 
     $('.owl-carousel').owlCarousel({
