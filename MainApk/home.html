@@ -71,7 +71,7 @@
 
       <div class="badanpost" id="badanpost">
         <!-- templatepost -->
-        <!-- <div class="kotakpost" id="kotakpost">
+        <div class="kotakpost" id="kotakpost">
           <div class="bioyangpost">
             <div class="containerfoto">
               <img
@@ -116,6 +116,7 @@
 
           <div class="bioyangkomen row" id="komenField">
             <div class="garis"></div>
+
             <div class="col-1">
               <div class="containerfoto">
                 <img
@@ -129,15 +130,31 @@
 
             <div class="bagiantext col-11">
               <span id="isikomen" class="isikomen">
-                <span id="databaseName" class="databaseName namekomen"
-                  >Nama yang ngepost</span
-                >
+                <span id="databaseName" class="databaseName namekomen">
+                  Nama yang reply</span>
+                <br>
+
+                <span id="namayangngepost" class="namayangngepost">
+                  @namayangngepost
+                </span>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Cupiditate doloremque itaque ex.
               </span>
             </div>
+
+            <div class="buatreply">
+              <textarea 
+              type="textarea" 
+              class="inputreply col-10"
+              placeholder="Add comment..."></textarea>
+              
+              <button class="ngepost col-2">
+                Post
+              </button>
+            </div>
+
           </div>
-        </div> -->
+        </div>
         <!-- template infografis -->
         <!-- <div class="boxinfografis">
           <div
@@ -217,17 +234,21 @@
               <span class="visually-hidden">Next</span>
             </button>
           </div>
-        </div> -->
+        </div>
       </div>
 
       <div class="row justify-content-end fixed-bottom bikinpost">
         <button
           type="button"
-          class="btn btn-primary col-3"
+          class="btn btn-primary col-3 ciptain"
           data-bs-toggle="modal"
           data-bs-target="#newpostnow"
-        >
-          tulis sesuatu
+          >
+          
+          <span class="material-symbols-outlined">
+            stylus_note
+          </span>
+
         </button>
       </div>
 

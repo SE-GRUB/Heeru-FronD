@@ -200,6 +200,40 @@ button[type="submit"] {
 
 .bikinpost {
     margin-bottom: 6rem;
+    margin-right: 1.5rem !important;
+    border-radius: 100% !important;
+}
+
+.ciptain{
+    border-radius: 100% !important;
+    height: 4rem !important;
+    width: 4rem !important;
+}
+
+.namayangngepost{
+    background-color: #dbdbdb;
+    border-radius: 10px;
+    padding: 0.1rem;
+    margin-right: 0.3rem;
+}
+
+.buatreply{
+    margin-top: 1rem !important;
+    display: flex;
+    align-items: center;
+
+}
+
+.inputreply{
+    width: 100%;
+    border: none;
+    resize: none;
+}
+
+.ngepost{
+    color: #64A5F9;
+    background: none;
+    border: none;
 }
 
 
