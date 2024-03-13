@@ -37,9 +37,11 @@
   <!-- ================================================================================================ -->
   <!-- ================================================================================================ -->
   <body>
+    <div class="circle1"></div>
+    <div class="circle2"></div>
     <header>
-      <button onclick="document.location='KONSULTASI.html'"><</button>
-      <h2 id="namedoctor">Doctor's Details</h2>
+      <button onclick="document.location='KONSULTASI.html'"> < </button>
+      <h2>Doctor's Details</h2>
     </header>
 
     <ul id="sortdoctor" class="test123">
@@ -50,39 +52,13 @@
           id="imghip"
         />
         <div class="sortcard-info">
-          <h2 id="jobpoin">...</h2>
+          <h2 id="namedoctor">...</h2>
+          <h2 id="jobpoin" style="display: none;">...</h2>
           <h3 id="start">...</h3>
-          <h3 id="Harga">...</h3>
+
         </div>
-        <!-- Button trigger modal -->
-        <button
-          type="button"
-          id="booking"
-          class="btn btn-primary col-11"
-          data-bs-toggle="modal"
-          data-bs-target="#staticBackdrop"
-        >
-          Book Now
-        </button>
-        <!-- <button id="booking">Book Now</button> -->
       </div>
     </ul>
-
-    <!-- <div class="experience">
-      <div class="experience-box">
-        <h3 id="success">...</h3>
-        <span>success</span>
-      </div>
-      <div class="experience-box">
-        <h3 id="ongoing">...</h3>
-        <span>Ongoing</span>
-      </div>
-      <div class="experience-box">
-        <h3 id="totalpatien">...</h3>
-        <span>Patient</span>
-      </div>
-    </div> -->
-
     <div class="services">
       <h2>Services</h2>
       <p id="listbit"></p>
@@ -119,9 +95,7 @@
             ></button>
           </div>
           <div class="modal-body">
-            <!-- pilih tanggal dan waktu <br> under construction -->
             <h4>Choose Date and Time</h4>
-            <!-- <br> -->
             <h4>
               Date and Time:
               <!-- <input
@@ -165,17 +139,16 @@
     </div>
 
 
-    <nav class="navbarr">
-      <span class="material-symbols-outlined nonactivate"> home </span>
-
-      <span class="material-symbols-outlined nonactivate">
-        digital_wellbeing
-      </span>
-
-      <span class="material-symbols-outlined active"> shield_person </span>
-
-      <span class="material-symbols-outlined nonactivate"> person </span>
-    </nav>
+    <nav class="bookbarr">
+      <h3 id="Harga">...</h3>
+      <!-- Button trigger modal -->
+      <button
+      type="button" id="booking" class="btn btn-primary col-11"
+      data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+      >
+        Book Now
+      </button>
+      </nav>
 
 
     <!-- <script src="../main.js"></script> -->
