@@ -792,9 +792,9 @@ async function initpoin9() {
     var ul = document.getElementById('carouselExample');
     var data = {
         namedoctor: alldata.users.name,
-        jobpoin: alldata.users.rating + " bintang",
-        start: alldata.users.rating ,
-        Harga: "Rp. " + alldata.users.fare,
+        // jobpoin: alldata.users.rating + " bintang",
+        start: alldata.users.rating + " bintang",
+        Harga: alldata.users.fare,
         success: "0",
         listbit: alldata.users.description ? alldata.users.description : 'Description not available!',
         imghip: alldata.users.profile_pic ? histhost + alldata.users.profile_pic : histhost + 'Admin/images/profile.jpg'

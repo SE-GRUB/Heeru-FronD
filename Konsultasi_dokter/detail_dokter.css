@@ -88,7 +88,6 @@ header button:hover{background-color:rgb(168, 168, 168);}
     background-color: #fff;
 }
 
-
 .sortcard img {
     width: 40dvw;
     max-width: 90px;
@@ -281,6 +280,22 @@ p{
 }
 #booking:hover{
     background-color: #1579fd;
+}
+
+.bookbarr div{
+    display: flex;
+    
+}
+
+#Harga, #IDRnya{
+    margin-top: 5px;
+    font-size: larger;
+}
+#IDRnya{
+    /* font-size: x-large; */
+    font-weight: bold;
+    margin-right: 10px;
+    color: #64A5F9;
 }
 
 .material-symbols-outlined {
