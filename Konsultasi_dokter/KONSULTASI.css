@@ -2,6 +2,43 @@ body {
   /* background-color: rgba(255, 255, 255); */
   background-color: #ffffff;
   overflow-x: hidden;
+  font-family: 'Poppins';
+}
+
+/* NAVBAR */
+/* NAVBAR */
+.navbarr{
+  display: flex;   
+  justify-content: center;
+  gap: 50px;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: 66px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24;
+}
+
+.nonactivate{
+  font-size: 36px !important;
+  color: #C6D2E2;
+}
+
+.navbarr .active{
+  font-size: 36px !important;
+  color: #64A5F9;
 }
 
 /* HEADER SEARCH BAR */
@@ -22,13 +59,17 @@ body {
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 20px;
-  width: 100%;
-  
+  width: 100%; 
+  /* webkit-can */
 }
+::-webkit-search-cancel-button{
+  display: none;
+}
+
 
 .nyari[type="search"]::placeholder{
   
-    color: rgb(0, 0, 0);
+    color: rgb(147, 147, 147);
 }
 
 .ikonnyari{
@@ -47,9 +88,6 @@ button[type="submit"]{
   background-color: transparent;
   border: 0;
 }
-
-
-/* NAVBAR */
 
 
 
@@ -101,7 +139,7 @@ h5 {
   margin-right: 0px;
   /* width: 100dvw; */
   /* margin: 0 auto; */
-  font-family: sans-serif;
+  padding-bottom: 3.5rem;
 }
 
 p {
@@ -210,40 +248,6 @@ img.gambar {
 .sortcard-info span {
   font-size: 0.875rem;
   color: #333;
-}
-
-.navbarr{
-    display: flex;   
-    justify-content: center;
-    gap: 50px;
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    height: 66px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    text-align: center;
-    background-color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.material-symbols-outlined {
-    font-variation-settings:
-    'FILL' 1,
-    'wght' 400,
-    'GRAD' 0,
-    'opsz' 24;
-}
-
-.nonactivate{
-    font-size: 36px !important;
-    color: #C6D2E2;
-}
-
-.navbarr .active{
-    font-size: 36px !important;
-    color: #64A5F9;
 }
 
 .rating {
