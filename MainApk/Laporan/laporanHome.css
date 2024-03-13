@@ -2,10 +2,10 @@
     font-family: 'Poppins';
 }
 
-.viewhistory{
+/* .viewhistory{
     text-align: right;
     margin: 2 rem;
-}
+} */
 
 .riwayat{
     font-size: 30px !important;
@@ -86,8 +86,10 @@
 
 .buttonplace{
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    padding-top: 150px;
+    align-items: center;
+    padding-top: 100px;
 }
 
 .buttonnext{
@@ -99,6 +101,7 @@
     color: white;
     font-size: 15px;
     font-weight: 400;
+    margin: 10px 0;
 }
 
 
