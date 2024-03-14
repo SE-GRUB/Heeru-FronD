@@ -515,7 +515,7 @@ function initpoin6() {
 }
 
 async function initpoin5() {
-    await requestdata('categoryName');
+    await requestdata2('categoryName');
 
     var container = document.getElementById('containerisi');
 
