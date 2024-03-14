@@ -1523,7 +1523,7 @@ async function initpoin17(){
             var kotak = `
             <div class="kotak" id= "D${report.id}" >
                 <div class="tulisan">
-                    <p class="status">On Progress</p>
+                    <p class="status">Done</p>
                     <p class="title">${report.title}</p>
                     <p class="date">${formatDate(report.created_at)}</p>
                 </div>
