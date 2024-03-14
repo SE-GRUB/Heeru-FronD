@@ -35,6 +35,7 @@ body {
   text-align: center;
   background-color: rgb(255, 255, 255);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1;
 }
 
 .material-symbols-outlined {
@@ -310,6 +311,7 @@ img.gambar {
   color: #ff8c00;
   overflow: hidden;
   height: 100%;
+  /* z-index: -1; */
 }
 
 .rating span {

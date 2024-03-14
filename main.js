@@ -747,7 +747,11 @@ async function initpoin8() {
                 <div class="sortcard-info">
                     <h3>${name}</h3>
                     <p>${formatCurrency(parseFloat(fare))}</p>
-                    <span>${rating.toString()} bintang</span>
+                    <div class="rating">
+                        <i data-rating="${rating}">
+                            <span>${rating}</span>
+                        </i>
+                    </div>
                 </div>
             </div>
             `
@@ -1067,9 +1071,13 @@ async function initpoin10() {
 
     //     allpost = shuffleArray(allpost);
     //     badanpost.innerHTML += allpost.join('');
-    // }
+    // 
+    function initCreatePost(){
+        document.getElementById("tulispostnya").src = `${histhost}poincreate?user_id=${localStorage.getItem('user_id')}`;
+    }
     async function allpost() {
         var currentPage = 1;
+        initCreatePost();
         await info2();
         await loadMorePosts(currentPage);
         var allpost = kotp.concat(inp);
@@ -1081,9 +1089,6 @@ async function initpoin10() {
         });
         currentPage++;
     }
-    
-    //  document.getElementById("tulispostnya").src = `${histhost}poincreate?user_id=${localStorage.getItem('user_id')}`;
-    //  console.log(document.getElementById("tulispostnya").src);
 
     $(window).scroll(function() {
         if ($(window).scrollTop() == $(document).height() - $(window).height()) {
