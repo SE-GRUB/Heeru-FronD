@@ -1214,6 +1214,7 @@ function initPost(){
 async function initpoin13(){
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
+    var user_id = localStorage.getItem('user_id');
 
     const formatter = new Intl.NumberFormat('id-ID', {
         style: 'currency',
@@ -1236,17 +1237,48 @@ async function initpoin13(){
             </div>
             <div class="kasihrate">
                 <h3 id="kasihrating">Rate Your Counselor</h3>
-
-                <div class="rating"> <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label> <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label> <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label> <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label> <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label> </div>
-                <div class="reviewtext">
-                    <textarea name="review" id="review"></textarea>
+                <input type="hidden" name="consultation_id" value="${alldata.result.consultation_id}">
+                <input type="hidden" name="student_id" value="${user_id}">
+                <input type="hidden" name="counselor_id" value="${alldata.result.counselor_id}">
+                <div class="rating">
+                    <label>
+                        <input type="radio" name="stars" value="1" />
+                        <span class="icon">★</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="stars" value="2" />
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="stars" value="3" />
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>   
+                    </label>
+                    <label>
+                        <input type="radio" name="stars" value="4" />
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="stars" value="5" />
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>
+                        <span class="icon">★</span>
+                    </label>
                 </div>
-            
+                <div class="reviewtext">
+                    <textarea name="review" id="review" class="form-control"></textarea>
+                </div>
+                <button class="btn btn-success">Submit</button>
+                <div class="buttons px-4 mt-0">
+                </div>
 
-
-                <div class="buttons px-4 mt-0"></div>
-
-                <!-- <button class="btn btn-warning btn-block rating-submit">Submit</button> -->
             </div>
             <div class="datadiri">
                 <div class="jenis">
@@ -1272,7 +1304,7 @@ async function initpoin13(){
                 <div class="jenis">
                     Counselor Note
                 </div>
-                <div id="note" class="enlarged-textarea" readonly>${alldata.result.note}</div>
+                <div id="note" class="enlarged-textarea" readonly>${alldata.result.note ? alldata.result.note : 'Counselor Note not available'}</div>
             </div>
             <div class="textjudul">
             <h2>Payment</h2>
@@ -1657,7 +1689,7 @@ async function initpoin18(){
         var doneContent = '';
         alldata.consultations.forEach(consultation => {
             var kotak = `
-            <a href="../RIWAYAT/rangkuman_pesanan.html?id=${consultation.id}">
+            <a href="../Konsultasi_dokter/detail_konsul.html?id=${consultation.id}">
                 <div class="kotak" id= "D_CON${consultation.id}" >
                     <div class="tulisan">
                         <div class="rating">
