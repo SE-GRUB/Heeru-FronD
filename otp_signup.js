@@ -13,8 +13,7 @@ document.getElementById("submitBtn").addEventListener("click", function() {
         if (inputField.value==otp) {
             // alert("user ada")
             var pass = localStorage.getItem('password')
-            alert(pass)
-            if(pass == null){
+            if(pass == ''){
                 localStorage.removeItem('password');
                 window.location.href="./setup.html"          
             } else{

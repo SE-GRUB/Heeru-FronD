@@ -54,13 +54,16 @@
         <div class="sortcard-info">
           <h2 id="namedoctor">...</h2>
           <h2 id="jobpoin" style="display: none;">...</h2>
-          <h3 id="start">...</h3>
-
+          <div class="rating">
+            <i id="irating">
+                <span id="start"></span>
+            </i>
+        </div>
         </div>
       </div>
     </ul>
     <div class="services">
-      <h2>Services</h2>
+      <h2>Descriptions</h2>
       <p id="listbit"></p>
     </div>
 
@@ -86,7 +89,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="staticBackdropLabel">
-              Choose Date and Time
+              Make Appointment
             </h1>
             <button
               type="button"
@@ -96,15 +99,8 @@
             ></button>
           </div>
           <div class="modal-body">
-            <h4>Choose Date and Time</h4>
             <h4>
               Date and Time:
-              <!-- <input
-                type="datetime-local"
-                id="Test_DatetimeLocal"
-                min="2024-02-26T00:00"
-                step="1"
-              /> -->
               <input
                 type="date"
                 id="Test_DatetimeLocal"
@@ -114,7 +110,6 @@
               />
             </h4>
             <h4>pilih jam</h4>
-            <!-- input select -->
             <select
               class="form-select"
               aria-label="Default select example"
@@ -132,7 +127,7 @@
               Close
             </button>
             <button type="button" class="btn btn-primary" id="orderpay">
-              Understood
+              Submit
             </button>
           </div>
         </div>
@@ -141,7 +136,12 @@
 
 
     <nav class="bookbarr">
-      <h3 id="Harga">...</h3>
+      <div>
+        <h3 id="IDRnya">IDR</h3>
+        <h3 id="Harga">...</h3>
+      </div>
+      <!-- <h3 id="IDRnya">IDR</h3>
+      <h3 id="Harga">...</h3> -->
       <!-- Button trigger modal -->
       <button
       type="button" id="booking" class="btn btn-primary col-11"
@@ -149,17 +149,7 @@
       >
         Book Now
       </button>
-      </nav>
-
-
-    <!-- <script src="../main.js"></script> -->
-    <script>
-      // const myModal = document.getElementById("myModal");
-      // const myInput = document.getElementById("myInput");
-      // myModal.addEventListener("shown.bs.modal", () => {
-      //   myInput.focus();
-      // });
-    </script>
+    </nav>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <script src="../main.js"></script>

@@ -20,7 +20,9 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css"
     />
+
     <link rel="stylesheet" href="KONSULTASI.css" />
+    <link rel="stylesheet" href="/MainApk/loading.css">
 
     <!-- ICON -->
     <link
@@ -68,7 +70,7 @@
           <input
             type="search"
             class="nyari"
-            id="nyari"
+            id="searchInput"
             placeholder="search your professional"
           />
           
@@ -89,13 +91,21 @@
       <div id="popular-doctor-section">
         <h2 id="popdoc">Popular Doctor</h2>
         <div class="">
-          <ul id="carouselExample" class="owl-carousel"></ul>
+          <ul id="carouselExample" class="owl-carousel">
+            <div id="loadingContainer">
+              <div id="loadingCircle"></div>
+            </div>
+          </ul>
         </div>
 
         <h2 id="sortname">Sort By Name</h2>
       </div>
 
-      <ul id="sortdoctor" class="ul-bawah"></ul>
+      <ul id="sortdoctor" class="ul-bawah">
+        <div id="loadingContainer">
+          <div id="loadingCircle"></div>
+        </div>
+      </ul>
     </div>
 
   
