@@ -9,10 +9,10 @@ var histhost;
 
 var datasession = [];
 // tanggal expired 1 bulan dari sekarang
-// var histhost = 'http://127.0.0.1:8000/';    
+var histhost = 'http://127.0.0.1:8000/';    
 // var histhost = 'http://172.16.31.107:8000/';
 // var histhost = 'http://47.245.121.87/Heeru-BackD/public/';
-var histhost = 'https://enp.lahoras.my.id/';
+// var histhost = 'https://enp.lahoras.my.id/';
 
 function poinexp() {
     try {
@@ -1119,6 +1119,20 @@ async function initpoin13(){
                 </label>
                 </div>
             </div>
+            <div class="kasihrate">
+                <h3 id="kasihrating">Rate Your Counselor</h3>
+
+                <div class="rating"> <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label> <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label> <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label> <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label> <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label> </div>
+                <div class="reviewtext">
+                    <textarea name="review" id="review"></textarea>
+                </div>
+            
+
+
+                <div class="buttons px-4 mt-0"></div>
+
+                <!-- <button class="btn btn-warning btn-block rating-submit">Submit</button> -->
+            </div>
             <div class="datadiri">
                 <div class="jenis">
                     Counselor Name
@@ -1143,20 +1157,23 @@ async function initpoin13(){
                 <div class="jenis">
                     Counselor Note
                 </div>
-                <textarea id="note" value="${alldata.result.note}" class="form-control enlarged-textarea" readonly></textarea>
+                <div id="note" class="enlarged-textarea" readonly>${alldata.result.note}</div>
             </div>
             <div class="textjudul">
-                IV. Payment
+            <h2>Payment</h2>
             </div>
-            <div class="datadiri">
-                <div class="jenis">
-                    Payment Nominal
+            <div class="datadiri2">
+                <div class="Nominal">
+                    <div class = "PaymentNominal"> Payment Nominal</div>
+                    <div class = "NominalRupiah">${formatter.format(alldata.result.paymentNominal)}</div>
+
                 </div>
-                <span id="note" class="daridata">${formatter.format(alldata.result.paymentNominal)}</span>
-                <div class="jenis">
-                    Payment Time
+                <div class="Time">
+                    <div class = "PaymentTime"> Payment Time</div>
+                    <div class = "Timedate">${alldata.result.time}</div>
                 </div>
-                <span id="time" class="daridata">${alldata.result.time}</span>
+
+                
             </div>
     `
     document.getElementById('kontenDetail').innerHTML = detail

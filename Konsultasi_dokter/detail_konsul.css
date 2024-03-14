@@ -47,7 +47,7 @@ body{
     color: #333333;
     font-size: 18px;
     font-weight: 600;
-    margin-left: 0.8rem;
+    /* margin-left: 0.8rem; */
 }
 
 .jenis{
@@ -90,4 +90,45 @@ body{
     width: 300px;
     height: 150px;
     font-size: 16px;
+}
+
+.datadiri span{
+    font-size: 20px;
+}
+
+.Nominal {
+    display: flex;
+    width: 100%;
+    /* justify-content: flex-end; */
+
+}
+
+.PaymentNominal {
+    flex: 1; 
+}
+
+.NominalRupiah {
+    flex: 1; 
+    justify-content: flex-end;
+    text-align: right;
+}
+
+.Time{
+    display: flex;
+    width: 100%;
+}
+
+.PaymentTime {
+    flex: 1; 
+}
+
+.Timedate {
+    flex: 1; 
+    justify-content: end;
+    text-align: right;
+
+}
+
+.kasihrate{
+    justify-content: center;
 }
