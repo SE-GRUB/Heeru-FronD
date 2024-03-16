@@ -957,7 +957,7 @@ async function initpoin10() {
     }
 
     async function loadMorePosts(currentPage) {
-        await requestdata2('postList?page=' + currentPage); // Include page parameter in the request
+        await requestdata2('postList?page=' + currentPage);
         var posting = alldata.posts;
 
         for (const singgaldatapost of posting) {
@@ -1075,6 +1075,7 @@ async function initpoin10() {
     function initCreatePost(){
         document.getElementById("tulispostnya").src = `${histhost}poincreate?user_id=${localStorage.getItem('user_id')}`;
     }
+    
     async function allpost() {
         var currentPage = 1;
         initCreatePost();
