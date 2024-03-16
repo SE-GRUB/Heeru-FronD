@@ -9,10 +9,10 @@ var histhost;
 
 var datasession = [];
 // tanggal expired 1 bulan dari sekarang
-// var histhost = 'http://127.0.0.1:8000/';    
+var histhost = 'http://127.0.0.1:8000/';    
 // var histhost = 'http://172.16.31.107:8000/';
 // var histhost = 'http://47.245.121.87/Heeru-BackD/public/';
-var histhost = 'https://enp.lahoras.my.id/';
+// var histhost = 'https://enp.lahoras.my.id/';
 
 function poinexp() {
     try {
@@ -1090,32 +1090,10 @@ async function initpoin10() {
         }
     }
 
-    async function showcomments(){
-        await requestdata('showComment?id='+id);
-        var comments = alldata.comments;
-        for (const singlecomment of comments) {
-            var comment = alldata.singlecomment.comment;
-            var namacomment = alldata.singlecomment.username;
-            var profilkomen = alldata.singlecomment.profile_pic ? histhost + oneonone.profilkomen : histhost + 'Admin/images/profile.jpg';
-
-            var load =  `
-            <span class="row">
-                <div class="garis"></div>
-                <div class="col-1">
-                    <div class="containerfoto">
-                        <img id="profileImage" class="photoprofile2 rounded-circle" src="${profilkomen}" alt="">
-                    </div>
-                </div>
-                <div class="bagiantext col-11">
-                    <span id="isikomen" class="isikomen">
-                        <span id="databaseName" class="databaseName namekomen">${namacomment}</span>
-                        ${comment}
-                    </span>
-                </div>
-            </span>`;
-            
-        }
-    }
+    // async function showcomments(postId){
+    //     await requestdata('showComment?id='+ postId);
+    //     return loadComments(alldata.comments);
+    // }    
 
     function loadComments(dataComment) {
         return dataComment.map(oneonone => {
@@ -1154,6 +1132,7 @@ async function initpoin10() {
             var timelib = timeAgo(created_at);
             var name = singgaldatapost.name;
             var totalcomend = singgaldatapost.totalcomments;
+            // var comment = showcomments(singgaldatapost.post_id);
             var comment = loadComments(singgaldatapost.comments);
 
             var loadkonten = `
