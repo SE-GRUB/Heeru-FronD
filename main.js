@@ -1410,11 +1410,34 @@ async function initpoin13(){
                 </label>
                 </div>
             </div>
+
+            <span id="counselorName" class="daridata">Dr. ${alldata.result.counselorName}</span>
+            
+            <div class="datadiri">
+                <h3 id="detailkonsul">Detail</h3>
+
+                <div class="item">
+                    <div class="jenis"> Consultation ID </div>
+                    <div id="nomor"  class="daridata">${alldata.result.consultation_id}</div>
+                </div>
+
+                <div class="item">
+                    <div class="jenis"> Consultation Time </div>
+                    <div id="jamkonsul" class="daridata">${alldata.result.duration}</div>
+                </div>
+
+                <div class="item">
+                    <div class="jenis"> Consultation Date </div>
+                    <div id="tanggal" class="daridata">${alldata.result.consultation_date}</div>
+                </div>
+            </div>
+            
             <div class="kasihrate">
                 <h3 id="kasihrating">Rate Your Counselor</h3>
                 <input type="hidden" name="consultation_id" value="${alldata.result.consultation_id}">
                 <input type="hidden" name="student_id" value="${user_id}">
                 <input type="hidden" name="counselor_id" value="${alldata.result.counselor_id}">
+                
                 <div class="rating">
                     <label>
                         <input type="radio" name="stars" value="1" />
@@ -1447,60 +1470,43 @@ async function initpoin13(){
                         <span class="icon">★</span>
                     </label>
                 </div>
+
                 <div class="reviewtext">
                     <textarea name="review" id="review" class="form-control"></textarea>
                 </div>
-                <button class="btn btn-success">Submit</button>
+                <button
+                type="button" id="submit" class="btn btn-primary col-11"
+                data-bs-target="#staticBackdrop">
+                    Submit Review
+                </button>
                 <div class="buttons px-4 mt-0">
                 </div>
-
             </div>
+
+
+            
+
             <div class="datadiri">
-                <div class="jenis">
-                    Counselor Name
-                </div>
-                <span id="counselorName" class="daridata">Dr. ${alldata.result.counselorName}</span>
-
-                <div class="jenis">
-                    Counselor Email
-                </div>
-                <span id="counselorEmail"  class="daridata">${alldata.result.counselorEmail}</span>
-
-                <div class="jenis">
-                    Consultation Date
-                </div>
-                <span id="tanggal" class="daridata">${alldata.result.consultation_date}</span>
-
-                <div class="jenis">
-                    Consultation Time
-                </div>
-                <span id="tanggal" class="daridata">${alldata.result.duration}</span>
-
-                <div class="jenis">
-                    Consultation ID
-                </div>
-                <span id="nomor"  class="daridata">${alldata.result.consultation_id}</span>
-                
-                <div class="jenis">
-                    Counselor Note
-                </div>
-                <div id="note" class="enlarged-textarea" readonly>${alldata.result.note ? alldata.result.note : 'Counselor Note not available'}</div>
+                <h3 id="detailkonsul">Consultation Note</h3>
+                <span id="note" class="daridata" >${alldata.result.note ? alldata.result.note : 'Counselor Note not available'}</span>
             </div>
-            <div class="textjudul">
-            <h2>Payment</h2>
-            </div>
+                    
+
+
             <div class="datadiri2">
+                <div class="textjudul">
+                <h3 id="detailkonsul">Payment</h3>
+                </div>
+
                 <div class="Nominal">
                     <div class = "PaymentNominal"> Payment Nominal</div>
                     <div class = "NominalRupiah">${formatter.format(alldata.result.paymentNominal)}</div>
-
                 </div>
+
                 <div class="Time">
                     <div class = "PaymentTime"> Payment Time</div>
                     <div class = "Timedate">${alldata.result.time}</div>
                 </div>
-
-                
             </div>
     `
     document.getElementById('kontenDetail').innerHTML = detail
