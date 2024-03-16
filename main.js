@@ -9,10 +9,10 @@ var histhost;
 
 var datasession = [];
 // tanggal expired 1 bulan dari sekarang
-// var histhost = 'http://127.0.0.1:8000/';    
+var histhost = 'http://127.0.0.1:8000/';    
 // var histhost = 'http://172.16.31.107:8000/';
 // var histhost = 'http://47.245.121.87/Heeru-BackD/public/';
-var histhost = 'https://enp.lahoras.my.id/';
+// var histhost = 'https://enp.lahoras.my.id/';
 
 function poinexp() {
     try {
@@ -898,7 +898,8 @@ async function initpoin9() {
     var idpasien = localStorage.getItem('user_id');
     var waktu = document.getElementById("Test_DatetimeLocal").value;
     var jam = document.getElementById("selectopt").value;
-    var uri='http://'+window.location.hostname+':5500/Konsultasi_dokter/konsultasiRiwayat.html'
+    // var uri='http://'+window.location.hostname+':5500/Konsultasi_dokter/list.html'
+    var uri='http://'+window.location.hostname+':5500/Konsultasi_dokter/list.html'
     var data = {
         iddokter: iddokter,
         idpasien: idpasien,
@@ -932,6 +933,8 @@ async function initpoin10() {
     var badanpost = document.getElementById('badanpost');
     var kotp = [];
     var inp = [];
+
+
 
     function loadComments(dataComment) {
         return dataComment.map(oneonone => {
@@ -1301,6 +1304,11 @@ async function initpoin13(){
                     Consultation Date
                 </div>
                 <span id="tanggal" class="daridata">${alldata.result.consultation_date}</span>
+
+                <div class="jenis">
+                    Consultation Time
+                </div>
+                <span id="tanggal" class="daridata">${alldata.result.duration}</span>
 
                 <div class="jenis">
                     Consultation ID
