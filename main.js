@@ -1075,7 +1075,47 @@ async function initpoin10() {
     var kotp = [];
     var inp = [];
 
+    async function loadReply(){
+        await requestdata('showReply?id='+id);
+        var replies = alldata.replies;
+        for (const singlereply of replies) {
 
+            var reply = alldata.singlereply.comment;
+            var namacomment = alldata.singlereply.username;
+            var profilkomen = alldata.singlereply.profile_pic ? histhost + oneonone.profilkomen : histhost + 'Admin/images/profile.jpg';
+            var created_at = alldata.singlereply.created_at;
+
+            var load =  ``;
+            
+        }
+    }
+
+    async function showcomments(){
+        await requestdata('showComment?id='+id);
+        var comments = alldata.comments;
+        for (const singlecomment of comments) {
+            var comment = alldata.singlecomment.comment;
+            var namacomment = alldata.singlecomment.username;
+            var profilkomen = alldata.singlecomment.profile_pic ? histhost + oneonone.profilkomen : histhost + 'Admin/images/profile.jpg';
+
+            var load =  `
+            <span class="row">
+                <div class="garis"></div>
+                <div class="col-1">
+                    <div class="containerfoto">
+                        <img id="profileImage" class="photoprofile2 rounded-circle" src="${profilkomen}" alt="">
+                    </div>
+                </div>
+                <div class="bagiantext col-11">
+                    <span id="isikomen" class="isikomen">
+                        <span id="databaseName" class="databaseName namekomen">${namacomment}</span>
+                        ${comment}
+                    </span>
+                </div>
+            </span>`;
+            
+        }
+    }
 
     function loadComments(dataComment) {
         return dataComment.map(oneonone => {
