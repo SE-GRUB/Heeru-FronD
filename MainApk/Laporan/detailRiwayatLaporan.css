@@ -31,7 +31,7 @@ body{
 .yourreport {
     display: flex;
     align-items: center;
-    font-size: x-large;
+    font-size: 22px;
     font-weight: 500;
 }
 
@@ -50,3 +50,154 @@ body{
 
 
 /* ISINYA */
+
+.isinya{
+    padding: 0.3rem;
+}
+
+.kepala{
+    margin-bottom: 1.5rem;
+}
+
+.noreport{
+    font-size: 18;
+    font-weight: 700;
+}
+
+.statussingkat{
+    font-size: 12px;
+    border-radius: 10px;
+    padding: 0.2rem 0.5rem;
+}
+
+.sent{
+    background-color: #E8E8E8;
+    color: #666666;
+}
+
+.inprogress{
+    background-color: #E6F4F7;
+    color: #074560;
+}
+
+.done{
+    background-color: #E6F7ED;
+    color: #076027;
+}
+
+.detailpelapor{
+    border-radius: 11px;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+    padding: 0.3rem;
+    font-size: 12px;
+}
+
+.pelapor{
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.buattabel{
+    border-collapse: collapse !important;
+    border-radius: 11px !important;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0)
+}
+
+.rata{
+    text-align: right;
+}
+
+.statusreport{
+    border-radius: 11px;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    font-size: 12px;
+}
+
+.statusreport .judul{
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+/* COBACOBA */
+.timeline {
+    position: relative;
+    max-width: 600px;
+    height: fit-content;
+    margin-left: 20px;
+  }
+
+.terakhir{
+    position: relative;
+    max-width: 600px;
+    height: fit-content;
+    margin-left: 20px;
+}
+    .terakhir::before{
+        content: '';
+        position: absolute;
+        transform: translateX(-50%);
+        height: 0;
+        border: 2px dotted rgba(0, 0, 0, 0);
+    }
+  
+  .timeline::before {
+    content: '';
+    position: absolute;
+    transform: translateX(-50%);
+    height: 100%;
+    border: 2px dotted #64A5F9;
+  }
+  
+  .timeline-item {
+    position: relative;
+    padding: 0 20px 20px 20px;
+    background-color: #fff;
+    margin-bottom: 1rem;
+  }
+  
+  .timeline-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -7px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #64A5F9;
+  }
+  
+  .timeline-item:last-child {
+    margin-bottom: 0;
+  }
+
+  /* PROCESS */
+  .timeline-item-process {
+    position: relative;
+    padding: 0 20px 20px 20px;
+    background-color: #fff;
+    margin-bottom: 1rem;
+  }
+  
+  .timeline-item-process::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -7px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1.5px solid #64A5F9;
+  }
+  
+  .timeline-item-process:last-child {
+    margin-bottom: 0;
+  }
+
+.waktu{
+    font-weight: 600;
+}
