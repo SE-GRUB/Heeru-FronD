@@ -42,6 +42,17 @@
         'opsz' 24;
 }
 
+.baglike .like-btn,
+.baglike .dislike-btn {
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.unlike{
+    font-variation-settings:
+        'FILL' 0 !important;
+}
+
 .nonactivate {
     font-size: 36px !important;
     color: #C6D2E2;

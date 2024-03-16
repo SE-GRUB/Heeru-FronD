@@ -9,10 +9,10 @@ var histhost;
 
 var datasession = [];
 // tanggal expired 1 bulan dari sekarang
-// var histhost = 'http://127.0.0.1:8000/';    
+var histhost = 'http://127.0.0.1:8000/';    
 // var histhost = 'http://172.16.31.107:8000/';
 // var histhost = 'http://47.245.121.87/Heeru-BackD/public/';
-var histhost = 'https://enp.lahoras.my.id/';
+// var histhost = 'https://enp.lahoras.my.id/';
 
 function poinexp() {
     try {
@@ -1101,7 +1101,7 @@ async function initpoin10() {
     }
 
     async function loadMorePosts(currentPage) {
-        await requestdata2('postList?page=' + currentPage);
+        await requestdata2('postList?page=' + currentPage + '&user_id=' + localStorage.getItem('user_id'));
         var posting = alldata.posts;
 
         for (const singgaldatapost of posting) {
@@ -1115,6 +1115,7 @@ async function initpoin10() {
             var name = singgaldatapost.name;
             var totalcomend = singgaldatapost.totalcomments;
             var comment = loadComments(singgaldatapost.comments);
+            var isLiked = singgaldatapost.isLiked;
 
             var loadkonten = `
             <div class="kotakpost" id="kotakpost${id}">
@@ -1138,9 +1139,9 @@ async function initpoin10() {
                 </div>
                 <div class="actionpost">
                     <div class="baglike">
-                        <span class="material-symbols-outlined"> favorite </span>
+                        <span class="material-symbols-outlined like-btn ${isLiked ? '' : 'unlike'}" data-id="${id}" data-type="${isLiked ? 'unlike' : 'like'}"> favorite </span>
                         <span id="databaseJumlahLike${id}" class="databaseJumlahLike">${like}</span>
-                    </div>
+                    </div>            
                     <div class="bagreply">
                         <span class="material-symbols-outlined"> reply </span>
                         <span id="databaseJumlahReply${id}" class="databaseJumlahReply">${totalcomend}</span>
@@ -1248,6 +1249,32 @@ async function initpoin10() {
     });
 
     await allpost();
+
+    document.querySelectorAll('.like-btn').forEach(btn => {
+        btn.addEventListener('click', async function() {
+            const postId = this.getAttribute('data-id');
+            const type = this.getAttribute('data-type');
+            const isActive = this.classList.contains('unlike');
+            const action = isActive ? 'like' : 'unlike';
+    
+            try {
+                await requestdata(`like?post_id=${postId}&user_id=${localStorage.getItem('user_id')}&action=${action}`);
+    
+                if (!alldata.success) {
+                    throw new Error('Failed to update like/dislike');
+                }
+    
+                this.classList.toggle('unlike');
+    
+                const likeCountElement = document.getElementById(`databaseJumlahLike${postId}`);
+                likeCountElement.textContent = alldata.likeCount;
+    
+                this.setAttribute('data-type', isActive ? 'unlike' : 'like');
+            } catch (error) {
+                console.error(error);
+            }
+        });
+    });    
 }
 
 async function initpoin11() {
