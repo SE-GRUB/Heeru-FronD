@@ -9,10 +9,10 @@ var histhost;
 
 var datasession = [];
 // tanggal expired 1 bulan dari sekarang
-// var histhost = 'http://127.0.0.1:8000/';    
+var histhost = 'http://127.0.0.1:8000/';    
 // var histhost = 'http://172.16.31.107:8000/';
 // var histhost = 'http://47.245.121.87/Heeru-BackD/public/';
-var histhost = 'https://enp.lahoras.my.id/';
+// var histhost = 'https://enp.lahoras.my.id/';
 
 function poinexp() {
     try {
@@ -929,6 +929,147 @@ async function initpoin9() {
 }
 
 async function initpoin10() {
+    var user_id = localStorage.getItem("user_id");
+
+    await requestdata2(`pponly?user_id=${user_id}`);
+    // console.log(alldata.pp)
+    var ppPost = alldata.pp['profile_pic'];
+    ppPost = ppPost ? histhost + ppPost : histhost + 'Admin/images/profile.jpg';
+    document.getElementById("ppModal").src = ppPost;
+
+    document.getElementById('postImage').addEventListener('change', function() {
+        updateHeight(98);
+        posterContainer.style.display = 'block';
+        var file = this.files[0];
+        var reader = new FileReader();
+        
+        reader.onload = function(e) {
+            document.getElementById('imagePreview').src = e.target.result;
+        }
+        
+        reader.readAsDataURL(file);
+    });      
+
+    let posterContainer = document.querySelector(".community-post");
+    let btn = document.querySelector("#openBtn");
+    let bottomSheet = document.querySelector(".bottom-sheet");
+    let overlay = document.querySelector(".overlay");
+    let content = document.querySelector(".content");
+    let dragIcon = document.querySelector(".drag-icon");
+    
+    let isDragging = false,
+    startY,
+    startHeight;
+    
+    let updateHeight = (height) => {
+    //updating sheet height
+    content.style.height = `${height}vh`;
+
+    // if the sheet height is equal to 100 then toggling fullsceen class to bottom sheet
+    bottomSheet.classList.toggle("fullscreen", height === 100);
+    };
+
+    let showSheet = () => {
+    bottomSheet.classList.add("show");
+    btn.style.display = "none";
+    //updating sheet height with default height 50
+    updateHeight(50);
+
+    document.body.style.overflow = "hidden";
+    };
+
+    let hideSheet = () => {
+    bottomSheet.classList.remove("show");
+    btn.style.display = "block";
+    document.body.style.overflow = "auto";
+    };
+
+    let dragStart = (e) => {
+    isDragging = true;
+    bottomSheet.classList.add("dragging");
+    //recording intitial y position and sheet height
+    startY = e.pageY || e.touches?.[0].pageY;
+    startHeight = parseInt(content.style.height);
+    };
+
+    let dragging = (e) => {
+    //return if isDragging is false
+    if (!isDragging) return;
+
+    //calculating new height of sheet by using starty and start height
+    //calling updateHeight function with new height as argument
+
+    let delta = startY - (e.pageY || e.touches?.[0].pageY);
+    let newHeight = startHeight + (delta / window.innerHeight) * 100;
+
+    updateHeight(newHeight);
+    };
+
+    let dragStop = () => {
+    isDragging = false;
+    bottomSheet.classList.remove("dragging");
+
+    //setting sheet height based on the sheet current height or position
+    let sheetHeight = parseInt(content.style.height);
+
+    sheetHeight < 25
+        ? hideSheet()
+        : sheetHeight > 75
+        ? updateHeight(100)
+        : updateHeight(50);
+
+    //if height is greater than 75 making sheet full screen else making it to 50vh
+    };
+
+    dragIcon.addEventListener("mousedown", dragStart);
+    dragIcon.addEventListener("mousemove", dragging);
+    document.addEventListener("mouseup", dragStop);
+
+    dragIcon.addEventListener("touchstart", dragStart);
+    dragIcon.addEventListener("touchmove", dragging);
+    document.addEventListener("touchend", dragStop);
+
+    btn.addEventListener("click", showSheet);
+    overlay.addEventListener("click", hideSheet);
+
+    document.getElementById("btnPost").addEventListener("click", async function() {
+        var poster = document.getElementById("postImage");
+        var post_body = document.getElementById("postBody");
+
+        var errortext=document.getElementById("errortext");
+
+        if (post_body.value.trim() === "") {
+            errortext.innerHTML = "Please input your post!";
+            errortext.classList.remove("hide");
+        } else {
+            var formData = new FormData();
+            if(poster.files.length != 0){
+                poster = poster.files[0];
+                formData.append('poster', poster);
+            }
+            formData.append('post_body', post_body.value);
+            formData.append('user_id', user_id);
+    
+            await $.ajax({
+                url: `${histhost}api/createPost`,
+                method: 'POST',
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function (response) {
+                    if (response.success) {
+                        window.location.href = "./MainApk/home.html";
+                        return true;
+                    } else {
+                        errortext.innerHTML = "Error in creating your post!";
+                        errortext.classList.remove("hide");
+                    }
+                },
+            });
+        }
+        
+    });
+
     var badanpost = document.getElementById('badanpost');
     var kotp = [];
     var inp = [];
@@ -963,7 +1104,7 @@ async function initpoin10() {
         for (const singgaldatapost of posting) {
             var id = singgaldatapost.post_id;
             var post_body = singgaldatapost.post_body;
-            var poster = singgaldatapost.poster;
+            var poster = histhost + singgaldatapost.poster;
             var like = singgaldatapost.like;
             var created_at = singgaldatapost.created_at;
             var profile_pic = singgaldatapost.profile_pic ? histhost + singgaldatapost.profile_pic : histhost + 'Admin/images/profile.jpg';
@@ -973,34 +1114,40 @@ async function initpoin10() {
             var comment = loadComments(singgaldatapost.comments);
 
             var loadkonten = `
-                <div class="kotakpost" id="kotakpost${id}">
-                    <div class="bioyangpost">
-                        <div class="containerfoto">
-                            <img id="profileImage${id}" class="photoprofile rounded-circle" src="${profile_pic}" alt="">
-                        </div>
-                        <div class="bagtext">
-                            <span id="databaseName${id}" class="databaseName namepost">${name}</span><br>
-                            <span id="waktungepost${id}" class="waktungepost">${timelib}</span>
-                        </div>
+            <div class="kotakpost" id="kotakpost${id}">
+                <div class="bioyangpost">
+                    <div class="containerfoto">
+                        <img id="profileImage${id}" class="photoprofile rounded-circle" src="${profile_pic}" alt="">
                     </div>
-                    <div class="isipost" id="isipost${id}">
-                        ${post_body}
+                    <div class="bagtext">
+                        <span id="databaseName${id}" class="databaseName namepost">${name}</span><br>
+                        <span id="waktungepost${id}" class="waktungepost">${timelib}</span>
                     </div>
-                    <div class="actionpost">
-                        <div class="baglike">
-                            <span class="material-symbols-outlined"> favorite </span>
-                            <span id="databaseJumlahLike${id}" class="databaseJumlahLike">${like}</span>
+                </div>
+                ${singgaldatapost.poster ? `
+                    <div class="community-post">
+                        <div class="image-container">
+                            <img src="${poster}" id="imagePreview" alt="Community Post Image" class="post-image" onclick="zoomImage()">
                         </div>
-                        <div class="bagreply">
-                            <span class="material-symbols-outlined"> reply </span>
-                            <span id="databaseJumlahReply${id}" class="databaseJumlahReply">${totalcomend}</span>
-                        </div>
+                    </div>` : ''}
+                <div class="isipost" id="isipost${id}">
+                    ${post_body}
+                </div>
+                <div class="actionpost">
+                    <div class="baglike">
+                        <span class="material-symbols-outlined"> favorite </span>
+                        <span id="databaseJumlahLike${id}" class="databaseJumlahLike">${like}</span>
                     </div>
-                    <div class="bioyangkomen row" id="komenField${id}">
-                        ${comment}
+                    <div class="bagreply">
+                        <span class="material-symbols-outlined"> reply </span>
+                        <span id="databaseJumlahReply${id}" class="databaseJumlahReply">${totalcomend}</span>
                     </div>
-                </div>`;
-            kotp.push(loadkonten);
+                </div>
+                <div class="bioyangkomen row" id="komenField${id}">
+                    ${comment}
+                </div>
+            </div>`;
+        kotp.push(loadkonten);
         }
         badanpost.innerHTML += kotp.join('');
     }
@@ -1072,13 +1219,13 @@ async function initpoin10() {
     //     allpost = shuffleArray(allpost);
     //     badanpost.innerHTML += allpost.join('');
     // 
-    function initCreatePost(){
-        document.getElementById("tulispostnya").src = `${histhost}poincreate?user_id=${localStorage.getItem('user_id')}`;
-    }
-    
+    // function initCreatePost(){
+    //     document.getElementById("tulispostnya").src = `${histhost}poincreate?user_id=${localStorage.getItem('user_id')}`;
+    // }
+
     async function allpost() {
         var currentPage = 1;
-        initCreatePost();
+        // initCreatePost();
         await info2();
         await loadMorePosts(currentPage);
         var allpost = kotp.concat(inp);
@@ -1180,42 +1327,42 @@ async function initpoin11() {
     });
 }
 
-function initPost(){
-    $(document).ready(async function(){
-        document.getElementById("errortext1").classList.remove("hide");
-        var modal = new bootstrap.Modal(document.getElementById("qui"));
-        var user_id = new document.getElementById("user_id");
-        var post_body = new document.getElementById("post_body");
-        var poster = new document.getElementById("poster");
-        document.getElementById("postButton").addEventListener("click", async function() {
-            var formData = new FormData();
-            formData.append('user_id', title);
-            formData.append('post_body', post_body);
-            formData.append('poster', poster);
-        });
+// function initPost(){
+//     $(document).ready(async function(){
+//         document.getElementById("errortext1").classList.remove("hide");
+//         var modal = new bootstrap.Modal(document.getElementById("qui"));
+//         var user_id = new document.getElementById("user_id");
+//         var post_body = new document.getElementById("post_body");
+//         var poster = new document.getElementById("poster");
+//         document.getElementById("postButton").addEventListener("click", async function() {
+//             var formData = new FormData();
+//             formData.append('user_id', title);
+//             formData.append('post_body', post_body);
+//             formData.append('poster', poster);
+//         });
 
-        await $.ajax({
-            url: `${histhost}api/createPost`,
-            method: 'POST',
-            processData: false,
-            contentType: false,
-            data: formData,
-            success: function (response) {
-                if (response.success) {
-                    localStorage.removeItem('post_body');
-                    localStorage.removeItem('poster');
-                    window.location.href = "home.html";
-                } else {
-                    console.error('Error:', response.message);
-                }
-            },
-            error: function (error) {
-                console.error('Error:', error);
-            }
-        });
-    });
+//         await $.ajax({
+//             url: `${histhost}api/createPost`,
+//             method: 'POST',
+//             processData: false,
+//             contentType: false,
+//             data: formData,
+//             success: function (response) {
+//                 if (response.success) {
+//                     localStorage.removeItem('post_body');
+//                     localStorage.removeItem('poster');
+//                     window.location.href = "home.html";
+//                 } else {
+//                     console.error('Error:', response.message);
+//                 }
+//             },
+//             error: function (error) {
+//                 console.error('Error:', error);
+//             }
+//         });
+//     });
     
-}
+// }
 
 async function initpoin13(){
     const urlParams = new URLSearchParams(window.location.search);

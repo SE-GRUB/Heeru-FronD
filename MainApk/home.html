@@ -244,7 +244,7 @@
       </div>
 
       <div class="row justify-content-end fixed-bottom bikinpost">
-        <button
+        <!-- <button
           type="button"
           class="btn btn-primary col-3 ciptain"
           data-bs-toggle="modal"
@@ -255,10 +255,22 @@
             stylus_note
           </span>
 
+        </button> -->
+        <button
+          type="button"
+          class="btn btn-primary col-3 ciptain"
+          data-bs-toggle="modal"
+          data-bs-target="#myModal"
+          id="openBtn"
+          >
+          <span class="material-symbols-outlined">
+            stylus_note
+          </span>
+
         </button>
       </div>
 
-      <div
+      <!-- <div
         class="modal fade"
         id="newpostnow"
         tabindex="-1"
@@ -300,7 +312,51 @@
           </div>
         </div>
       </div>
+    </div> -->
+
+    <div class="bottom-sheet">
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="modal-header">
+          <div class="drag-icon">
+            <span></span>
+          </div>
+        </div>
+        <form id="postForm" enctype="multipart/form-data">
+          <div class="modal-button">
+            <button class="postBtn" id="btnPost">Post</button>
+          </div>
+          <div class="modal-body">
+            <div class="community-post" style="display: none;">
+              <div class="image-container">
+                <img src="" id="imagePreview" alt="Community Post Image" class="post-image" onclick="zoomImage()">
+              </div>
+            </div>            
+            <div class="container-info">
+              <div class="containerfoto">
+                <img
+                    id="ppModal"
+                    class="photoprofile rounded-circle"
+                    src="https://static.wikia.nocookie.net/naruto/images/7/70/Naruto_newshot.jpg/revision/latest/scale-to-width-down/1200?cb=20141107130405&path-prefix=id"
+                    alt=""
+                />
+              </div>            
+              <div class="container-isi">
+                <textarea placeholder="What do you think ?" class="texta" id="postBody"></textarea>
+                <span id="errortext" class="text-danger hide">text</span>
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-end fixed-bottom bikinpost">
+            <label for="postImage" class="btn btn-primary col-3 ciptain">
+                <input type="file" id="postImage" class="d-none" accept="image/*">
+                <span class="material-symbols-outlined ciptains">add_photo_alternate</span>
+            </label>
+          </div>        
+        </form>
+      </div>
     </div>
+    
 
     <!-- JS -->
     <script
@@ -310,6 +366,12 @@
     ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../main.js"></script>
+    <script>
+      function zoomImage() {
+        var image = document.querySelector('.post-image');
+        image.classList.toggle('zoomed');
+      }    
+    </script>
     <script>
       initpoin10();
     </script>
