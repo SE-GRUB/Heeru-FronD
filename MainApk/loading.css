@@ -17,9 +17,22 @@
     border-top-color: #64A5F9;
     animation: spin 1s infinite linear;
 }
-  
+
+.spinner {
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    border-top: 3px solid #ffffff;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+}
+
 @keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
-}  
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes spin-reverse {
+    0% { transform: rotate(360deg); }
+    100% { transform: rotate(0deg); }
+}
