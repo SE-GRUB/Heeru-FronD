@@ -1423,154 +1423,191 @@ async function initpoin13(){
         currency: 'IDR'
     });
     
-    // Call the requestdata function with the id as an argument
-    const result = await requestdata('getResult?id='+id);
-    // document.getElementById('note').innerText = alldata.result.note;
-    // document.getElementById('paymentNominal').innerText = 'Price'+ '\t\t\t' +  formatter.format(alldata.result.paymentNominal);
-    // document.getElementById('time').innerText = 'Time\t\t\t' + alldata.result.time;
+    await requestdata2('getResult?id='+id);
     var pp = alldata.result.counselor_profile ? histhost + alldata.result.counselor_profile : histhost + 'Admin/images/profile.jpg';
+    var isRated = alldata.result.isRated;
 
     var detail = `
-            <div class="photoprofile mb-">
+            <div class="profilKonselor">
+                <div class="photoprofile mb-">
                 <div class="lingkarannya" id="profileImageContainer">
                     <img id="profileImage" src="${pp}" alt="" />
                 </label>
                 </div>
             </div>
-
-            <span id="counselorName" class="daridata">Dr. ${alldata.result.counselorName}</span>
-            
-            <div class="datadiri">
-                <h3 id="detailkonsul">Detail</h3>
-
-                <div class="item">
-                    <div class="jenis"> Consultation ID </div>
-                    <div id="nomor"  class="daridata">${alldata.result.consultation_id}</div>
-                </div>
-
-                <div class="item">
-                    <div class="jenis"> Consultation Time </div>
-                    <div id="jamkonsul" class="daridata">${alldata.result.duration}</div>
-                </div>
-
-                <div class="item">
-                    <div class="jenis"> Consultation Date </div>
-                    <div id="tanggal" class="daridata">${alldata.result.consultation_date}</div>
-                </div>
+            <span id="counselorName" class="namaKonselor">Dr. ${alldata.result.counselorName}</span>
+            ${isRated ? `<div class="ratingg">
+                <i data-rating="` + alldata.result.rating + `">
+                </i>
+            </div>`: ''}
             </div>
             
-            <div class="kasihrate">
-                <h3 id="kasihrating">Rate Your Counselor</h3>
-                <input type="hidden" name="consultation_id" value="${alldata.result.consultation_id}">
-                <input type="hidden" name="student_id" value="${user_id}">
-                <input type="hidden" name="counselor_id" value="${alldata.result.counselor_id}">
-                
-                <div class="rating">
-                    <label>
-                        <input type="radio" name="stars" value="1" />
-                        <span class="icon">★</span>
-                    </label>
-                    <label>
-                        <input type="radio" name="stars" value="2" />
-                        <span class="icon">★</span>
-                        <span class="icon">★</span>
-                    </label>
-                    <label>
-                        <input type="radio" name="stars" value="3" />
-                        <span class="icon">★</span>
-                        <span class="icon">★</span>
-                        <span class="icon">★</span>   
-                    </label>
-                    <label>
-                        <input type="radio" name="stars" value="4" />
-                        <span class="icon">★</span>
-                        <span class="icon">★</span>
-                        <span class="icon">★</span>
-                        <span class="icon">★</span>
-                    </label>
-                    <label>
-                        <input type="radio" name="stars" value="5" />
-                        <span class="icon">★</span>
-                        <span class="icon">★</span>
-                        <span class="icon">★</span>
-                        <span class="icon">★</span>
-                        <span class="icon">★</span>
-                    </label>
-                </div>
+            <div class="detailpasien">
+                <div class="judul">Detail</div>
 
-                <div class="reviewtext">
-                    <textarea name="review" id="review" class="form-control"></textarea>
-                </div>
-                <button
-                type="button" id="submit" class="btn btn-primary col-11"
-                data-bs-target="#staticBackdrop">
-                    Submit Review
-                </button>
-                <div class="buttons px-4 mt-0">
-                </div>
+                <table class="table table-borderless buattabel">
+                    <tr>
+                        <td>
+                            Consultation ID
+                        </td>
+                        <td class="rata">
+                            ${alldata.result.consultation_id}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Consultation Time
+                        </td>
+                        <td class="rata">
+                            ${alldata.result.duration}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Consultation Date
+                        </td>
+                        <td class="rata">
+                            ${alldata.result.consultation_date}
+                        </td>
+                    </tr>
+                </table>
             </div>
-
-
             
+            ${isRated ? '' :`
+                <div class="rateForm">
+                    <div class="judul">Rate Your Counselor</div>
+                    <input type="hidden" id="consultation_id" value="` + alldata.result.consultationId + `">
+                    <input type="hidden" id="student_id" value="` + user_id  + `">
+                    <input type="hidden" id="counselor_id" value="` + alldata.result.counselor_id + `">
+                    
+                    <div class="rating">
+                        <label>
+                            <input type="radio" name="stars" value="1" />
+                            <span class="icon">★</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="stars" value="2" />
+                            <span class="icon">★</span>
+                            <span class="icon">★</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="stars" value="3" />
+                            <span class="icon">★</span>
+                            <span class="icon">★</span>
+                            <span class="icon">★</span>   
+                        </label>
+                        <label>
+                            <input type="radio" name="stars" value="4" />
+                            <span class="icon">★</span>
+                            <span class="icon">★</span>
+                            <span class="icon">★</span>
+                            <span class="icon">★</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="stars" value="5" />
+                            <span class="icon">★</span>
+                            <span class="icon">★</span>
+                            <span class="icon">★</span>
+                            <span class="icon">★</span>
+                            <span class="icon">★</span>
+                        </label>
+                    </div>
+    
+                    <div class="reviewtext">
+                        <textarea id="review" class="texta" placeholder="Share your consultation experience"></textarea>
+                    </div>
+                    <span id="errortext" class="text-danger hide">text</span>
+                    <button
+                    type="button" id="Butnsubmit" class="col-11 buttonnext">
+                        Submit Review
+                    </button>
+                    <div class="buttons px-4 mt-0">
+                    </div>
+                </div>`}
 
-            <div class="datadiri">
-                <h3 id="detailkonsul">Consultation Note</h3>
-                <span id="note" class="daridata" >${alldata.result.note ? alldata.result.note : 'Counselor Note not available'}</span>
+            <div class="detailpasien">
+                <div class="judul">Consultation Note</div>
+                <p id="note" >${alldata.result.note ? alldata.result.note : 'Counselor Note not available'}</p>
             </div>
                     
+            <div class="detailpasien">
+                <div class="judul">Payment</div>
 
+                <table class="table table-borderless buattabel">
+                    <tr>
+                        <td>
+                            Payment Nominal
+                        </td>
+                        <td class="rata">
+                            ${formatter.format(alldata.result.paymentNominal)}
+                        </td>
+                    </tr>
 
-            <div class="datadiri2">
-                <div class="textjudul">
-                <h3 id="detailkonsul">Payment</h3>
-                </div>
-
-                <div class="Nominal">
-                    <div class = "PaymentNominal"> Payment Nominal</div>
-                    <div class = "NominalRupiah">${formatter.format(alldata.result.paymentNominal)}</div>
-                </div>
-
-                <div class="Time">
-                    <div class = "PaymentTime"> Payment Time</div>
-                    <div class = "Timedate">${alldata.result.time}</div>
-                </div>
+                    <tr>
+                        <td>
+                            Payment Time
+                        </td>
+                        <td class="rata">
+                            ${alldata.result.time}
+                        </td>
+                    </tr>
+                </table>
             </div>
     `
     document.getElementById('kontenDetail').innerHTML = detail
-    function initRating(){
-        $(document).ready(async function(){
-            document.getElementById("errortext1").classList.remove("hide");
-            var modal = new bootstrap.Modal(document.getElementById("qui"));
-            var rating = new document.getElementById("rating");
-            var review = new document.getElementById("review");
-            document.getElementById("ratingButton").addEventListener("click", async function() {
+
+    $(document).ready(async function(){
+        document.getElementById("Butnsubmit").addEventListener("click", async function(){
+            var errortext = document.getElementById("errortext");
+            const selectedStars = document.querySelector('input[name="stars"]:checked');
+            if (!selectedStars) {
+                errortext.innerHTML = "Please rate the consultation";
+                errortext.classList.remove("hide");
+            }else{
+                errortext.classList.add("hide")
+            }
+
+            var review = document.getElementById("review");
+            if(review.value.trim() === ""){
+                errortext.innerHTML="Please write a review"
+                errortext.classList.remove("hide")
+            }else{
+                errortext.classList.add("hide");
+            }
+
+            if(errortext.classList.contains("hide")){
                 var formData = new FormData();
-                formData.append('rating', rating);
-                formData.append('review', review);
-            });
-    
-            await $.ajax({
-                url: `${histhost}api/createRating`,
-                method: 'POST',
-                processData: false,
-                contentType: false,
-                data: formData,
-                success: function (response) {
-                    if (response.success) {
-                        localStorage.removeItem('rating');
-                        localStorage.removeItem('review');
-                        window.location.href = "home.html";
-                    } else {
-                        console.error('Error:', response.message);
-                    }
-                },
-                error: function (error) {
-                    console.error('Error:', error);
-                }
-            });
-        });
+                formData.append('consultation_id', document.getElementById("consultation_id").value);
+                formData.append('student_id', document.getElementById( 'student_id' ).value );
+                formData.append('counselor_id', document.getElementById('counselor_id').value);
+                formData.append('rating', selectedStars.value);
+                formData.append('review', review.value);
+                
         
-};
+                await $.ajax({
+                    url: `${histhost}api/createRating`,
+                    method: 'POST',
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    success: function (response) {
+                        if (response.success) {
+                            window.location.href = "/Konsultasi_dokter/detail_konsul.html?id=" + document.getElementById("consultation_id").value;
+                        } else {
+                            console.error('Error:', response.message);
+                            errortext.innerHTML=response.message + " Please try again later.";
+                            errortext.classList.remove("hide")
+                        }
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                    }
+                });
+            }
+        })
+    });
 }
 
 

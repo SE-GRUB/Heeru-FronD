@@ -90,6 +90,10 @@ body{
     padding-bottom: 20px;
 }
 
+.namaKonselor{
+    font-size: 22px;
+}
+
 .lingkarannya{
     /* background-color: #09f; */
     margin-bottom: 20px;
@@ -155,6 +159,87 @@ body{
     text-align: justify;
 }
 
+.profilKonselor{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.detailpasien{
+    border-radius: 11px;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    font-size: 12px;
+}
+
+.rateForm{
+    border-radius: 11px;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.texta {
+    width: 100%;
+    height: 150px;
+    padding: 10px; 
+    resize: vertical;
+    border: 0;
+    border-radius: 5px;
+    font-size: 16px;
+    line-height: 1.5;
+    resize: none;
+}
+
+.texta::placeholder{
+    font-size: 12px;
+}
+
+.judul{
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.buattabel{
+    border-collapse: collapse !important;
+    border-radius: 11px !important;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0)
+}
+
+.rata{
+    text-align: right;
+}
+
+.text-danger{
+    text-align: left;
+    font-size: 14px;
+    margin: 1rem;
+}
+
+.buttonnext{
+    background-color: #64A5F9;
+    border-radius: 20px;
+    border: 0;
+    width: 291px;
+    height: 41px;
+    color: white;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.hide{
+    display: none;
+}
 
 
 
@@ -236,6 +321,8 @@ body{
     background-color: #09f;
 } */
 
+/* Ray=ting Input */
+
 .rating {
     display: inline-block;
     position: relative;
@@ -301,3 +388,92 @@ body{
     color: #FECE31;
     text-shadow: 0 0 5px #09f;
 }
+
+/* Rating Show */
+.ratingg {
+    display: inline-block;
+    position: relative;
+    /* font-size: 15px; */
+  }
+  
+  [data-rating] {
+    text-align: left;
+    font-style: normal;
+    display: inline-block;
+    position: relative;
+    unicode-bidi: bidi-override;
+  }
+  
+  [data-rating]::before {
+    display: block;
+    content: '★★★★★';
+    color: #eee;
+  }
+  
+  [data-rating]::after {
+    white-space: nowrap;
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '★★★★★';
+    width: 0;
+    color: #ff8c00;
+    overflow: hidden;
+    height: 100%;
+    /* z-index: -1; */
+  }
+  
+  [data-rating^="0.1"]::after {
+    width: 2%
+  }
+  
+  [data-rating^="0.2"]::after {
+    width: 4%
+  }
+  
+  [data-rating^="0.3"]::after {
+    width: 6%
+  }
+  
+  [data-rating^="0.4"]::after {
+    width: 8%
+  }
+  
+  [data-rating^="0.5"]::after {
+    width: 10%
+  }
+  
+  [data-rating^="0.6"]::after {
+    width: 12%
+  }
+  
+  [data-rating^="0.7"]::after {
+    width: 14%
+  }
+  
+  [data-rating^="0.8"]::after {
+    width: 16%
+  }
+  
+  [data-rating^="0.9"]::after {
+    width: 18%
+  }
+  
+  [data-rating^="1"]::after {
+    width: 20%
+  }
+  [data-rating^="2"]::after {
+    width: 40%
+  }
+  
+  [data-rating^="3"]::after {
+    width: 60%
+  }
+  
+  [data-rating^="4"]::after {
+    width: 80%
+  }
+  
+  [data-rating^="5"]::after {
+    width: 100%
+  }
