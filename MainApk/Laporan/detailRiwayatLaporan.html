@@ -14,6 +14,7 @@
     
     <!-- CSS -->
     <link rel="stylesheet" href="detailRiwayatLaporan.css">
+    <link rel="stylesheet" href="/MainApk/loading.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
     <!-- ICON -->
@@ -23,7 +24,7 @@
 </head>
   
 <body>
-    <div class="container">
+    <div class="container" id="containerReportDetail">
         <div class="atas">
             <div class="balik">
                 <a href="laporanRiwayat.html">
@@ -41,114 +42,132 @@
         
         <div class="line"></div>
         
-        <div class="isinya">
+        <div class="isinya"  id="isiData">
+            <div id="loadingContainer">
+                <div id="loadingCircle"></div>
+            </div>
 
-            <div class="kepala">
-                <div class="noreport">
-                    Report ID : 
-                    <span class="idreport" id="idreport">
-                        23681SDJSI34
-                    </span>
-                </div>
+            <!-- <div class="kepala"> -->
+                <!-- <div class="noreport"> -->
+                    <!-- Report ID :  -->
+                    <!-- <span class="idreport" id="idreport"> -->
+                        <!-- 23681SDJSI34 -->
+                    <!-- </span> -->
+                <!-- </div> -->
 
                 <!-- INI NANTI BISA DIGANTI SESUAI STATUSNYA  -->
-                <span class="statussingkat inprogress">
-                    In Progress
-                </span>
+                <!-- <span class="statussingkat inprogress"> -->
+                    <!-- In Progress -->
+                <!-- </span> -->
 
-            </div>
+            <!-- </div> -->
 
-            <div class="detailpelapor">
-                <table class="table table-borderless buattabel">
-                    <tr>
-                        <td colspan="2">
-                            <span class="pelapor" id="pelapor">
-                                Adnal Wijaya
-                            </span>
-                            (
-                                <span class="pelapor noHp" id="noHp">
-                                    +628123456789
-                                </span>
-                            )
-                        </td>
-                    </tr>
+            <!-- <div class="detailpelapor"> -->
+                <!-- <table class="table table-borderless buattabel"> -->
+                    <!-- <tr> -->
+                        <!-- <td colspan="2"> -->
+                            <!-- <span class="pelapor" id="pelapor"> -->
+                                <!-- Adnal Wijaya -->
+                            <!-- </span> -->
+                            <!-- ( -->
+                                <!-- <span class="pelapor noHp" id="noHp"> -->
+                                    <!-- +628123456789 -->
+                                <!-- </span> -->
+                            <!-- ) -->
+                        <!-- </td> -->
+                    <!-- </tr> -->
 
-                    <tr>
-                        <td>
-                            Email
-                        </td>
-                        <td class="rata">
-                            adnal.wijaya@gmail.com
-                        </td>
-                    </tr>
+                    <!-- <tr> -->
+                        <!-- <td> -->
+                            <!-- Email -->
+                        <!-- </td> -->
+                        <!-- <td class="rata"> -->
+                            <!-- adnal.wijaya@gmail.com -->
+                        <!-- </td> -->
+                    <!-- </tr> -->
 
-                    <tr>
-                        <td>
-                            Report Category
-                        </td>
-                        <td class="rata">
-                            Pelecehan Verbal
-                        </td>
-                    </tr>
+                    <!-- <tr> -->
+                        <!-- <td> -->
+                            <!-- Report Category -->
+                        <!-- </td> -->
+                        <!-- <td class="rata"> -->
+                            <!-- Pelecehan Verbal -->
+                        <!-- </td> -->
+                    <!-- </tr> -->
 
-                    <tr>
-                        <td>
-                            Report Date
-                        </td>
-                        <td class="rata">
-                            20 December 2023
-                        </td>
-                    </tr>
-                </table>
-            </div>
+                    <!-- <tr> -->
+                        <!-- <td> -->
+                            <!-- Report Date -->
+                        <!-- </td> -->
+                        <!-- <td class="rata"> -->
+                            <!-- 20 December 2023 -->
+                        <!-- </td> -->
+                    <!-- </tr> -->
+                <!-- </table> -->
+            <!-- </div> -->
 
-            <div class="statusreport">
-                <div class="judul">
-                    Report Status
-                </div>
+            <!-- <div class="statusreport"> -->
+                <!-- <div class="judul"> -->
+                    <!-- Report Status -->
+                <!-- </div> -->
 
-                <div class="timeline">
-                    <div class="timeline-item">
-                      <span class="waktu">
-                        Saturday, 30 Feb 2024
-                      </span>
-                      <br>
-                      <span class="detailnya">
-                        Laporan berhasil dibuat
-                      </span>
-                    </div>
-                </div>
+                <!-- <div class="timeline"> -->
+                    <!-- <div class="timeline-item"> -->
+                      <!-- <div class="datetime"> -->
+                        <!-- <span class="tanggal"> -->
+                            <!-- Saturday, 30 Feb 2024 -->
+                        <!-- </span> -->
+                        <!-- <span class="waktu"> -->
+                            <!-- 13:45 PM -->
+                        <!-- </span> -->
+                      <!-- </div> -->
+                      <!-- <br> -->
+                      <!-- <span class="detailnya"> -->
+                        <!-- Laporan berhasil dibuat -->
+                      <!-- </span> -->
+                    <!-- </div> -->
+                <!-- </div> -->
 
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <span class="waktu">
-                          Monday, 2 Mar 2024
-                        </span>
-                        <br>
-                        <span class="detailnya">
-                          Laporan ini sedang diproses oleh PIC
-                        </span>
-                    </div>
-                </div>
+                <!-- <div class="timeline"> -->
+                    <!-- <div class="timeline-item"> -->
+                        <!-- <div class="datetime"> -->
+                            <!-- <span class="tanggal"> -->
+                                <!-- Monday, 2 Mar 2024 -->
+                            <!-- </span> -->
+                            <!-- <span class="waktu"> -->
+                                <!-- 10:35 PM -->
+                            <!-- </span> -->
+                        <!-- </div> -->
+                        <!-- <br> -->
+                        <!-- <span class="detailnya"> -->
+                          <!-- Laporan ini sedang diproses oleh PIC -->
+                        <!-- </span> -->
+                    <!-- </div> -->
+                <!-- </div> -->
 
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <span class="waktu">
-                          Tuesday, 3 Mar 2024
-                        </span>
-                        <br>
-                        <span class="detailnya">
-                          Menemui PIC di tower B lantai 6 pada 4 Maret 2024 pukul 12:00
-                        </span>
-                    </div>
-                </div>
+                <!-- <div class="timeline"> -->
+                    <!-- <div class="timeline-item"> -->
+                        <!-- <div class="datetime"> -->
+                            <!-- <span class="tanggal"> -->
+                                <!-- Tuesday, 3 Mar 2024 -->
+                            <!-- </span> -->
+                            <!-- <span class="waktu"> -->
+                                <!-- 13:05 PM -->
+                            <!-- </span> -->
+                        <!-- </div> -->
+                        <!-- <br> -->
+                        <!-- <span class="detailnya"> -->
+                          <!-- Menemui PIC di tower B lantai 6 pada 4 Maret 2024 pukul 12:00 -->
+                        <!-- </span> -->
+                    <!-- </div> -->
+                <!-- </div> -->
 
                 <!-- CONTOH KASUS ON PROCESS -->
-                <div class="terakhir">
-                    <div class="timeline-item-process">
+                <!-- <div class="terakhir"> -->
+                    <!-- <div class="timeline-item-process"> -->
 
-                    </div>
-                </div>
+                    <!-- </div> -->
+                <!-- </div> -->
 
                 <!-- CONTOH KASUS DONE -->
                 <!-- <div class="terakhir">
@@ -156,9 +175,8 @@
 
                     </div>
                 </div> -->
+            <!-- </div> -->
         </div>
-
-    </div>
     
     
     
@@ -166,7 +184,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="/main.js"></script>
     <script>
-        initpoin17();
+        initpoin19();
     </script>
   </body>
 

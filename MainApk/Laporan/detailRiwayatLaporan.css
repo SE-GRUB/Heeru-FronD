@@ -89,7 +89,7 @@ body{
     border-radius: 11px;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
     margin-bottom: 1.5rem;
-    padding: 0.3rem;
+    padding: 1rem;
     font-size: 12px;
 }
 
@@ -198,6 +198,16 @@ body{
     margin-bottom: 0;
   }
 
-.waktu{
+  .datetime {
+    display: flex;
+    justify-content: space-between;
+}
+
+.tanggal{
     font-weight: 600;
+}
+
+.waktu{
+    color: #5F6368;
+    font-weight: 400;
 }

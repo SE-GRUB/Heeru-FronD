@@ -1760,18 +1760,20 @@ async function initpoin17(){
         var onprogressContent = '';
         alldata.reports.forEach(report => {
             var kotak = `
-            <div class="kotak" id="OP${report.id}">
-                <div class="tulisan">
-                    <p class="status">${report.isProcess == 0 ? 'Report Submitted' : 'Report Under Review'}</p>
-                    <p class="title">${report.title}</p>
-                    <p class="date">${formatDate(report.created_at)}</p>
+            <a href="/MainApk/Laporan/detailRiwayatLaporan.html?report_id=${report.id}">
+                <div class="kotak" id="OP${report.id}">
+                    <div class="tulisan">
+                        <p class="status">${report.isProcess == 0 ? 'Report Submitted' : 'Report Under Review'}</p>
+                        <p class="title">${report.title}</p>
+                        <p class="date">${formatDate(report.created_at)}</p>
+                    </div>
+                    <div class="tombol">
+                        <span class="material-symbols-outlined">
+                            arrow_forward_ios
+                        </span>
+                    </div>
                 </div>
-                <div class="tombol">
-                    <span class="material-symbols-outlined">
-                        arrow_forward_ios
-                    </span>
-                </div>
-            </div>
+            </a>
             `;
             onprogressContent += kotak;
         });
@@ -1783,18 +1785,20 @@ async function initpoin17(){
         var doneContent = '';
         alldata.reports.forEach(report => {
             var kotak = `
-            <div class="kotak" id= "D${report.id}" >
-                <div class="tulisan">
-                    <p class="status">Done</p>
-                    <p class="title">${report.title}</p>
-                    <p class="date">${formatDate(report.created_at)}</p>
+            <a href="/MainApk/Laporan/detailRiwayatLaporan.html?report_id=${report.id}">
+                <div class="kotak" id= "D${report.id}" >
+                    <div class="tulisan">
+                        <p class="status">Done</p>
+                        <p class="title">${report.title}</p>
+                        <p class="date">${formatDate(report.created_at)}</p>
+                    </div>
+                    <div class="tombol">
+                        <span class="material-symbols-outlined">
+                            arrow_forward_ios
+                        </span>
+                    </div>
                 </div>
-                <div class="tombol">
-                    <span class="material-symbols-outlined">
-                        arrow_forward_ios
-                    </span>
-                </div>
-            </div>
+            </a>
             `;
             doneContent += kotak;
         });
@@ -1925,4 +1929,147 @@ async function initpoin18(){
         });
         done.innerHTML = doneContent;
     }
+}
+
+async function initpoin19(){
+    const urlParams = new URLSearchParams(window.location.search);
+    const report_id = urlParams.get('report_id');
+    var isiData = document.getElementById("isiData");
+    async function getStatus(){
+        await requestdata(`statusDetail?report_id=${report_id}`);
+        var status2 = '';
+        alldata.statuses.forEach((status, index) => {
+            if (status.stat == 'done'){
+                var statusnya = `
+                    <div class="terakhir">
+                        <div class="timeline-item">
+                        <div class="datetime">
+                            <span class="tanggal">
+                                ${status.date}
+                            </span>
+                            <span class="waktu">
+                                ${status.time}
+                            </span>
+                        </div>
+                        <br>
+                        <span class="detailnya">
+                            ${status.note}
+                        </span>
+                        </div>
+                    </div>
+                `
+            }else{
+                var statusnya = `
+                    <div class="timeline">
+                        <div class="timeline-item">
+                        <div class="datetime">
+                            <span class="tanggal">
+                                ${status.date}
+                            </span>
+                            <span class="waktu">
+                                ${status.time}
+                            </span>
+                        </div>
+                        <br>
+                        <span class="detailnya">
+                            ${status.note}
+                        </span>
+                        </div>
+                    </div>
+                `
+            }
+            if (index === alldata.statuses.length - 1 && status.stat !== 'done') {
+                statusnya += `
+                <div class="terakhir">
+                    <div class="timeline-item-process">
+
+                    </div>
+                </div>
+                `;
+            }
+            status2 += statusnya;
+        });
+        return status2;
+    }
+
+    async function initDetail(){
+        await requestdata2(`riwayatDetail?report_id=${report_id}`);
+        var stat;
+        if(alldata.report.status == 'sent'){
+            stat = 'sent';
+        }else if(alldata.report.status == 'on progress'){
+            stat = 'inprogress';
+        }else if(alldata.report.status == 'done'){
+            stat = 'done';
+        }
+        var isi = `
+            <div class="kepala">
+                <div class="noreport">
+                    Report ID : 
+                    <span class="idreport" id="idreport">
+                        ${alldata.report.report_id}
+                    </span>
+                </div>
+
+                <span class="statussingkat ${stat}">
+                    ${ alldata.report.status }
+                </span>
+
+            </div>
+
+            <div class="detailpelapor">
+                <table class="table table-borderless buattabel">
+                    <tr>
+                        <td colspan="2">
+                            <span class="pelapor" id="pelapor">
+                                ${alldata.report.name}
+                            </span>
+                            (
+                                <span class="pelapor noHp" id="noHp">
+                                    ${alldata.report.no_telp}
+                                </span>
+                            )
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Email
+                        </td>
+                        <td class="rata">
+                            ${alldata.report.email}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Report Category
+                        </td>
+                        <td class="rata">
+                            ${alldata.report.report_category}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Report Date
+                        </td>
+                        <td class="rata">
+                            ${alldata.report.report_date}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="statusreport">
+                <div class="judul">
+                    Report Status
+                </div>
+                ${await getStatus()}
+            </div>
+        `;
+        isiData.innerHTML = isi;
+    }
+
+    initDetail();
 }
