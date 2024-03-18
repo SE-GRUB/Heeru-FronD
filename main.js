@@ -267,21 +267,30 @@ function initpoin3() {
     });
 
     document.getElementById("submitBtn").addEventListener("click", async function() {
+        var username = document.getElementById('usernameInput');
         var email = document.getElementById("emailinput");
         var password = document.getElementById('passwordinput');
         var password_confirmation = document.getElementById('passwordconfirmationinput');
         var profile_pic = document.getElementById('fileInput');
 
+        var errortext0=document.getElementById("errortext0");
         var errortext=document.getElementById("errortext");
         var errortext2=document.getElementById("errortext2");
         var errortext3=document.getElementById("errortext3");   
+
+        if (username.value.trim() === "") {
+            errortext0.innerHTML = "Please enter a valid Username.";
+            errortext0.classList.remove("hide");
+        } else {
+            requestdata('checkusername?username=' + username.value.trim())
+            if (alldata.success) {
+                errortext0.classList.add("hide");
+            } else {
+                errortext0.innerHTML = "Username is already taken. Please choose another one.";
+                errortext0.classList.remove("hide");
+            }
+        }        
         
-        if(profile_pic.files.length === 0){
-            errortext3.innerHTML="Choose your photo profile"
-            errortext3.classList.remove("hide")
-        }else{
-            errortext3.classList.add("hide")
-        }
 
         if (email.value.trim() === "") {
             errortext.innerHTML = "Please input your email address";
@@ -329,73 +338,46 @@ function initpoin3() {
             errortext3.innerHTML = "Please input your password confirmation";
             errortext3.classList.remove("hide");
         } else {
-            
             if (password.value !== password_confirmation.value) {
                     errortext3.innerHTML = "Your password and password confirmation do not match";
                     errortext3.classList.remove("hide");
                 } else {
-                    profile_pic = profile_pic.files[0];
-
-                    var formData = new FormData();
-                    formData.append('profile_pic', profile_pic);
-                    formData.append('email', email.value);
-                    formData.append('password', password.value);
-                    formData.append('user_id', localStorage.getItem('user_id'));
-
-                    await $.ajax({
-                        url: `${histhost}api/updateProfile`,
-                        method: 'POST',
-                        processData: false,
-                        contentType: false,
-                        data: formData,
-                        success: function (response) {
-                            if (response.success) {
-                                window.location.href = "./MainApk/home.html";
-                                return true;
-                            } else {
-                                // console.error('Error:', response.message);
-                                errortext3.innerHTML = "Error in updating your data!";
-                                errortext3.classList.remove("hide");
-                            }
-                        },
-                    });
+                    if(profile_pic.files.length === 0){
+                        errortext3.innerHTML="Choose your photo profile"
+                        errortext3.classList.remove("hide")
+                    }else{
+                        errortext3.classList.add("hide")
+                    }
                 }
-            
         }
-        if (password_confirmation.value.trim() === "") {
-            errortext3.innerHTML = "Please input your password confirmation";
-            errortext3.classList.remove("hide");
-        } else {
-            if (password.value !== password_confirmation.value) {
-                    errortext3.innerHTML = "Your password and password confirmation do not match";
-                    errortext3.classList.remove("hide");
-                } else {
-                    errortext3.classList.add("hide");
-                    profile_pic = profile_pic.files[0];
 
-                    var formData = new FormData();
-                    formData.append('profile_pic', profile_pic);
-                    formData.append('email', email.value);
-                    formData.append('password', password.value);
-                    formData.append('user_id', localStorage.getItem('user_id'));
+        if(errortext.classList.contains("hide") && errortext0.classList.contains("hide") && errortext2.classList.contains("hide") && errortext3.classList.contains("hide")){
+            profile_pic = profile_pic.files[0];
 
-                    await $.ajax({
-                        url: `${histhost}api/updateProfile`,
-                        method: 'POST',
-                        processData: false,
-                        contentType: false,
-                        data: formData,
-                        success: function (response) {
-                            if (response.success) {
-                                window.location.href = "./MainApk/home.html";
-                                return true;
-                            } else {
-                                errortext3.innerHTML = "Error in updating your data!";
-                                errortext3.classList.remove("hide");
-                            }
-                        },
-                    });
-                }
+            var formData = new FormData();
+            formData.append('username', username.value);
+            formData.append('profile_pic', profile_pic);
+            formData.append('email', email.value);
+            formData.append('password', password.value);
+            formData.append('user_id', localStorage.getItem('user_id'));
+
+            await $.ajax({
+                url: `${histhost}api/updateProfile`,
+                method: 'POST',
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function (response) {
+                    if (response.success) {
+                        window.location.href = "./MainApk/home.html";
+                        return true;
+                    } else {
+                        // console.error('Error:', response.message);
+                        errortext3.innerHTML = "Error in updating your data!";
+                        errortext3.classList.remove("hide");
+                    }
+                },
+            });
         }
         return false;
     });
@@ -1388,6 +1370,13 @@ async function initpoin11() {
                     </div>
                     <span id="profNama" class="daridata">
                         ${alldata.user.name}
+                    </span>
+
+                    <div class="jenis">
+                        Username
+                    </div>
+                    <span id="userName" class="daridata">
+                        @${alldata.user.username}
                     </span>
 
                     <div class="jenis">
