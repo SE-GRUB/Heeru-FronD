@@ -242,7 +242,13 @@ button[type="submit"] {
     margin-top: 1rem !important;
     display: flex;
     align-items: center;
+}
 
+.tombolreply{
+  border: none;
+  background: none;
+  color: #B9B9B9;
+  margin-left: -5px;
 }
 
 .inputreply{
