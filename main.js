@@ -75,6 +75,25 @@ async function requestdata2(param) {
     return false;
 }
 
+async function requestdata3(param) {
+    try {
+        document.getElementById("spin").style.display = "flex";
+        const response = await fetch(`${histhost}api/${param}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        alldata = data;
+        document.getElementById("spin").style.display = "none";
+        return data;
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+        document.getElementById("spin").style.display = "none";
+        throw error;
+    }
+    return false;
+}
+
 function formatCurrency(amount) {
     var parts = amount.toFixed(2).split(".");
 
@@ -1112,62 +1131,48 @@ async function initpoin10() {
     }
 
     async function showcomments(post_Id){
-        dataComment = await requestdata('showComment?id='+ post_Id);
-        return dataComment.map(oneonone => {
-            var comment = oneonone.comment;
-            var username = oneonone.username;
-            var profile_pic = oneonone.profile_pic ? histhost + oneonone.profile_pic : histhost + 'Admin/images/profile.jpg';
-            var reply = loadReply(oneonone.comment_id);
-            return `
-                <span class="row">
-                    <div class="garis"></div>
-                    <div class="col-1">
-                        <div class="containerfoto">
-                            <img id="profileImage" class="photoprofile2 rounded-circle" src="${profile_pic}" alt="">
+        await requestdata('showComment?id='+ post_Id);
+        if(alldata.success){
+            return alldata.comments.map(oneonone => {
+                var id = oneonone.comment_id;
+                var comment = oneonone.comment;
+                var username = oneonone.username;
+                var profile_pic = oneonone.profile_pic ? histhost + oneonone.profile_pic : histhost + 'Admin/images/profile.jpg';
+                // var reply = loadReply(oneonone.comment_id);
+                var reply = '';
+                return `
+                    <span class="row">
+                        <div class="garis"></div>
+                        <div class="col-1">
+                            <div class="containerfoto">
+                                <img id="profileImage" class="photoprofile2 rounded-circle" src="${profile_pic}" alt="">
+                            </div>
                         </div>
+                        <div class="bagiantext col-11">
+                            <span id="isikomen" class="isikomen">
+                                <span id="databaseName" class="databaseName namekomen">${username}</span>
+                                ${comment}
+                            </span>
+                        </div>
+                        <div class="bioyangkomen row" id="komenField${id}">
+                       ${reply}
                     </div>
-                    <div class="bagiantext col-11">
-                        <span id="isikomen" class="isikomen">
-                            <span id="databaseName" class="databaseName namekomen">${username}</span>
-                            ${comment}
-                        </span>
-                    </div>
-                    <div class="bioyangkomen row" id="komenField${id}">
-                    ${reply}
-                </div>
-                </span>`;
-        }).join('');
+                    </span>`;
+            }).join('');
+        }else{
+            return '';
+        }
     }    
 
-    async function loadComments(dataComment) {
-        return dataComment.map(oneonone => {
-            var comment = oneonone.comment;
-            var namacomment = oneonone.user;
-            var profilkomen = oneonone.profilkomen ? histhost + oneonone.profilkomen : histhost + 'Admin/images/profile.jpg';
-          
-            return `
-                <span class="row">
-                    <div class="garis"></div>
-                    <div class="col-1">
-                        <div class="containerfoto">
-                            <img id="profileImage" class="photoprofile2 rounded-circle" src="${profilkomen}" alt="">
-                        </div>
-                    </div>
-                    <div class="bagiantext col-11">
-                        <span id="isikomen" class="isikomen">
-                            <span id="databaseName" class="databaseName namekomen">${namacomment}</span>
-                            ${comment}
-                        </span>
-                    </div>
-                </span>`;
-        }).join('');
-    }
-
     async function loadMorePosts(currentPage) {
-        await requestdata2('postList?page=' + currentPage + '&user_id=' + localStorage.getItem('user_id'));
+        if (currentPage === 1) {
+            await requestdata2('postList?page=' + currentPage + '&user_id=' + localStorage.getItem('user_id'));
+        } else {
+            await requestdata3('postList?page=' + currentPage + '&user_id=' + localStorage.getItem('user_id'));
+        }
         var posting = alldata.posts;
-
-        for (const singgaldatapost of posting) {
+    
+        for (const [index, singgaldatapost] of posting.entries()) {
             var id = singgaldatapost.post_id;
             var post_body = singgaldatapost.post_body;
             var poster = histhost + singgaldatapost.poster;
@@ -1177,9 +1182,9 @@ async function initpoin10() {
             var timelib = timeAgo(created_at);
             var name = singgaldatapost.name;
             var totalcomend = singgaldatapost.totalcomments;
-            var comment = await loadComments(singgaldatapost.post_id);
+            var comment = await showcomments(singgaldatapost.post_id);
             var isLiked = singgaldatapost.isLiked;
-
+    
             var loadkonten = `
             <div class="kotakpost" id="kotakpost${id}">
                 <div class="bioyangpost">
@@ -1214,63 +1219,77 @@ async function initpoin10() {
                     ${comment}
                 </div>
             </div>`;
-        kotp.push(loadkonten);
-        }
-    }
-
-    async function info2(currentPage) {
-        try {
-            await requestdata2('showInfografis?page='+ currentPage);
-            if (!alldata.infographics) {
-                throw new Error('Data infografis tidak tersedia');
+    
+            if (index === posting.length - 1) {
+                loadkonten += '<div class="spinner" id="spin"></div>';
             }
-            alldata.infographics.forEach((singgaldatainfo) => {
-                const id = singgaldatainfo.id;
-                const list = singgaldatainfo.images;
-
-                let buttonsHTML = '';
-                let carouselItemsHTML = '';
-
-                list.forEach((image, index) => {
-                    const activeClass = index === 0 ? 'active' : '';
-                    buttonsHTML += `<button type="button" data-bs-target="#carouselExampleIndicators${id}" data-bs-slide-to="${index}" class="${activeClass} buletin" aria-label="Slide ${index + 1}"></button>`;
-                    carouselItemsHTML += `<div class="carousel-item ${activeClass}">
-                                            <img src="${histhost + image.image_path}" class="d-block w-100 kustom" alt="...">
-                                          </div>`;
-                });
-
-                const template = `
-                    <div class="boxinfografis">
-                        <div id="carouselExampleIndicators${id}" class="carousel slide" data-bs-touch="false">
-                            <div class="carousel-indicators">
-                                ${buttonsHTML}
-                            </div>
-                            <div class="carousel-inner">
-                                ${carouselItemsHTML}
-                            </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators${id}" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators${id}" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                            </button>
-                        </div>
-                    </div>`;
-                inp.push(template);
-            });
-        } catch (error) {
-            console.error(error);
+    
+            kotp.push(loadkonten);
         }
+    }    
+
+    async function info(currentPage) {
+        if (currentPage === 1) {
+            await requestdata2('showInfografis?page='+ currentPage);
+        }else{
+            await requestdata3('showInfografis?page='+ currentPage);
+        }
+        if (!alldata.infographics) {
+            throw new Error('Data infografis tidak tersedia');
+        }
+        alldata.infographics.forEach((singgaldatainfo) => {
+            const id = singgaldatainfo.id;
+            const list = singgaldatainfo.images;
+
+            let buttonsHTML = '';
+            let carouselItemsHTML = '';
+
+            list.forEach((image, index) => {
+                const activeClass = index === 0 ? 'active' : '';
+                buttonsHTML += `<button type="button" data-bs-target="#carouselExampleIndicators${id}" data-bs-slide-to="${index}" class="${activeClass} buletin" aria-label="Slide ${index + 1}"></button>`;
+                carouselItemsHTML += `<div class="carousel-item ${activeClass}">
+                                        <img src="${histhost + image.image_path}" class="d-block w-100 kustom" alt="...">
+                                        </div>`;
+            });
+
+            const template = `
+                <div class="boxinfografis">
+                    <div id="carouselExampleIndicators${id}" class="carousel slide" data-bs-touch="false">
+                        <div class="carousel-indicators">
+                            ${buttonsHTML}
+                        </div>
+                        <div class="carousel-inner">
+                            ${carouselItemsHTML}
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators${id}" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators${id}" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>`;
+            inp.push(template);
+        });
     }
 
     var currentPage = 1;
     async function allpost() {
-        await info2(currentPage);
+        if(currentPage > 2){
+            var spinnerElement = document.getElementById("spin");
+            if (spinnerElement) {
+                spinnerElement.remove();
+            }
+        }
+        await info(currentPage);
         await loadMorePosts(currentPage);
         if(currentPage == 1){
-            document.getElementById("loadingContainer").style.display = 'none';
+            var loading = document.getElementById("loadingContainer");
+            if (loading) {
+                loading.remove();
+            }
         }
         currentPage++;
 
@@ -1297,7 +1316,6 @@ async function initpoin10() {
 
         kotp = [];
         inp = [];
-
     }
     
     await allpost();
