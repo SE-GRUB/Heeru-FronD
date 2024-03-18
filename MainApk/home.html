@@ -89,8 +89,8 @@
               >
               <br />
               <span id="waktungepost" class="waktungepost">
-                12 minutes ago</span
-              >
+                12 minutes ago
+              </span>
             </div>
           </div>
 
@@ -138,35 +138,33 @@
             <div class="bagiantext col-11">
               <span id="isikomen" class="isikomen">
                 <span id="databaseName" class="databaseName namekomen">
-                  Nama yang reply</span>
+                  Nama yang Komen</span>
                 <br>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Cupiditate doloremque itaque ex.
+                Cupiditate doloremque itaque ex
               </span>
 
               <br>
 
-              <button class="tombolreply" id="tombolreply">
-                <span class="material-symbols-outlined"> reply </span>
-              </button>
-            </div>
-            <button class="tombolreply" id="tombolreply">
-              Show more ...
-            </button>
+              <span id="waktukomen" class="waktukomen">
+                10m   ·  
+              </span>
 
+              <button class="tombolreply" id="tombolreply">
+                Reply
+              </button>
+
+              <br>
+
+              <button class="hideshow" id="tombolreply"
+                      onclick="hideshow()">
+                — View Reply
+              </button>
+
+            </div>
             
-            <div class="bagianreply">
-              <div class="col-1">
-                <div class="containerfoto">
-                  <img
-                    id="profileImage"
-                    class="photoprofile2 rounded-circle"
-                    src="https://static.wikia.nocookie.net/naruto/images/7/70/Naruto_newshot.jpg/revision/latest/scale-to-width-down/1200?cb=20141107130405&path-prefix=id"
-                    alt=""
-                  />
-                </div>
-              </div>
-              <div class="bagiantext col-11">
+            <div class="bagianreply" id="bagianreply">
+              <div class="bagiantext col-12">
                 <span id="isireply" class="isireply">
                   <span id="databaseName" class="databaseName namekomen">
                     Nama yang reply</span>
@@ -180,10 +178,6 @@
               </div>
 
               <br>
-
-              <button class="tombolreply" id="tombolreply">
-                <span class="material-symbols-outlined"> reply </span>
-              </button>
             </div>
             
 
@@ -414,6 +408,16 @@
         var image = event.target;
         image.classList.toggle('zoomed');
       }
+
+      function hideshow(){
+        var div = document.getElementById("bagianreply");
+        if(div.style.display === "none"){
+          div.style.display = "block";
+        } else{
+          div.style.display = "none";
+        }
+      }
+
     </script>
     <script>
       initpoin10();

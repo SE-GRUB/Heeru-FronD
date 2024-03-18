@@ -209,6 +209,10 @@ button[type="submit"] {
     height: 22px;
 }
 
+.isireply{
+  font-size: 12px;
+}
+
 .namekomen {
     font-size: 12px;
     margin-right: 0.3rem;
@@ -236,6 +240,7 @@ button[type="submit"] {
     border-radius: 10px;
     padding: 0.1rem;
     margin-right: 0.3rem;
+    font-size: 12px;
 }
 
 .buatreply{
@@ -251,6 +256,14 @@ button[type="submit"] {
   margin-left: -5px;
 }
 
+.hideshow{
+  border: none;
+  background: none;
+  color: #7d7d7d;
+  padding: 10px 0 10px 25px;
+  font-size: 11px;
+}
+
 .inputreply{
     width: 100%;
     border: none;
@@ -261,6 +274,12 @@ button[type="submit"] {
     color: #64A5F9;
     background: none;
     border: none;
+}
+
+.waktukomen {
+  color: #B9B9B9;
+  font-weight: 500;
+  font-size: 12px;
 }
 
 
