@@ -32,15 +32,6 @@ function poinexp() {
         console.error('Error:', error);
     }
 }
-
-function showLoading() {
-    document.getElementById("loadingContainer").style.display = "flex";
-}
-
-function hideLoading() {
-    document.getElementById("loadingContainer").style.display = "none";
-}
-
 async function requestdata(param) {
     try {
         const response = await fetch(`${histhost}api/${param}`);
@@ -55,6 +46,14 @@ async function requestdata(param) {
         throw error;
     }
     return false;
+}
+
+function showLoading() {
+    document.getElementById("loadingContainer").style.display = "flex";
+}
+
+function hideLoading() {
+    document.getElementById("loadingContainer").style.display = "none";
 }
 
 async function requestdata2(param) {
@@ -1178,9 +1177,7 @@ async function initpoin10() {
             var timelib = timeAgo(created_at);
             var name = singgaldatapost.name;
             var totalcomend = singgaldatapost.totalcomments;
-            var comment = showcomments(singgaldatapost.post_id);
-            // var comment = loadComments(singgaldatapost.comments);
-            console.log(comment);
+            var comment = await loadComments(singgaldatapost.post_id);
             var isLiked = singgaldatapost.isLiked;
 
             var loadkonten = `
@@ -1219,12 +1216,11 @@ async function initpoin10() {
             </div>`;
         kotp.push(loadkonten);
         }
-        badanpost.innerHTML += kotp.join('');
     }
 
-    async function info2(hit, limit) {
+    async function info2(currentPage) {
         try {
-            await requestdata2('showInfografis');
+            await requestdata2('showInfografis?page='+ currentPage);
             if (!alldata.infographics) {
                 throw new Error('Data infografis tidak tersedia');
             }
@@ -1269,52 +1265,51 @@ async function initpoin10() {
         }
     }
 
-    // async function allpost() {
-    //     var hit = 1;
-    //     var limit = 10;
-    //     var allpost = [];
-
-    //     if (sessionStorage.getItem('hitpost')) {
-    //         hit = parseInt(sessionStorage.getItem('post')) + 1;
-    //         limit = hit * 10;
-    //         allpost = JSON.parse(sessionStorage.getItem('allpost'));
-    //     } else {
-    //         await info2(hit, limit);
-    //         await loadPostingan2(hit, limit);
-    //         allpost = kotp.concat(inp);
-    //         sessionStorage.setItem('hitpost', hit);
-    //         sessionStorage.setItem('allpost', JSON.stringify(allpost));
-    //     }
-
-    //     allpost = shuffleArray(allpost);
-    //     badanpost.innerHTML += allpost.join('');
-    // 
-    // function initCreatePost(){
-    //     document.getElementById("tulispostnya").src = `${histhost}poincreate?user_id=${localStorage.getItem('user_id')}`;
-    // }
-
+    var currentPage = 1;
     async function allpost() {
-        var currentPage = 1;
-        // initCreatePost();
-        await info2();
+        await info2(currentPage);
         await loadMorePosts(currentPage);
-        var allpost = kotp.concat(inp);
-        
-        allpost = shuffleArray(allpost);
-    
-        allpost.forEach(element => {
-            badanpost.innerHTML += element;
-        });
+        if(currentPage == 1){
+            document.getElementById("loadingContainer").style.display = 'none';
+        }
         currentPage++;
-    }
 
-    $(window).scroll(function() {
-        if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-            loadMorePosts();
+        var infografisIndex = 0;
+        var insertedInfografis = false;
+
+        for (let i = 0; i < kotp.length; i++) {
+            badanpost.innerHTML += kotp[i];
+            
+            if (infografisIndex < inp.length) {
+                badanpost.innerHTML += inp[infografisIndex];
+                insertedInfografis = true;
+                infografisIndex++;
+            }
+        }
+
+        for (let j = infografisIndex; j < inp.length; j++) {
+            badanpost.innerHTML += inp[j];
+        }
+
+        if (!insertedInfografis) {
+            badanpost.innerHTML += inp.map(infografis => infografis).join('');
+        }
+
+        kotp = [];
+        inp = [];
+
+    }
+    
+    await allpost();
+
+    var isFetching = false;
+    $(window).scroll(async function() {
+        if (!isFetching && $(window).scrollTop() >= $(document).height() - $(window).height() - 10) {
+            isFetching = true;
+            await allpost();
+            isFetching = false;
         }
     });
-
-    await allpost();
 
     document.querySelectorAll('.like-btn').forEach(btn => {
         btn.addEventListener('click', async function() {
