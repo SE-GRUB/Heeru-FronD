@@ -116,6 +116,7 @@ button[type="submit"] {
     justify-content: center;
     background-color: #fff;
     margin: 1.25rem 0.75rem 1.25rem 0.75rem;
+    padding-bottom: 4.5rem;
 }
 
 .kotakpost {

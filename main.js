@@ -938,6 +938,7 @@ async function initpoin10() {
     ppPost = ppPost ? histhost + ppPost : histhost + 'Admin/images/profile.jpg';
     document.getElementById("ppModal").src = ppPost;
 
+    let posterContainer = document.querySelector("#containerPreview");
     document.getElementById('postImage').addEventListener('change', function() {
         updateHeight(98);
         posterContainer.style.display = 'block';
@@ -947,11 +948,10 @@ async function initpoin10() {
         reader.onload = function(e) {
             document.getElementById('imagePreview').src = e.target.result;
         }
-        
+
         reader.readAsDataURL(file);
     });      
 
-    let posterContainer = document.querySelector(".community-post");
     let btn = document.querySelector("#openBtn");
     let bottomSheet = document.querySelector(".bottom-sheet");
     let overlay = document.querySelector(".overlay");
@@ -1043,6 +1043,7 @@ async function initpoin10() {
             errortext.innerHTML = "Please input your post!";
             errortext.classList.remove("hide");
         } else {
+            errortext.classList.add("hide");
             var formData = new FormData();
             if(poster.files.length != 0){
                 poster = poster.files[0];
@@ -1150,7 +1151,7 @@ async function initpoin10() {
                 ${singgaldatapost.poster ? `
                     <div class="community-post">
                         <div class="image-container">
-                            <img src="${poster}" id="imagePreview" alt="Community Post Image" class="post-image" onclick="zoomImage()">
+                            <img src="${poster}" alt="Community Post Image" class="post-image" onclick="zoomImage(this)">
                         </div>
                     </div>` : ''}
                 <div class="isipost" id="isipost${id}">

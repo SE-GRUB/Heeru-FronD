@@ -72,7 +72,7 @@
 
       <div class="badanpost" id="badanpost">
         <!-- templatepost -->
-        <!-- <div class="kotakpost" id="kotakpost">
+        <div class="kotakpost" id="kotakpost">
           <div class="bioyangpost">
             <div class="containerfoto">
               <img
@@ -96,7 +96,7 @@
 
           <div class="community-post">
             <div class="image-container">
-                <img src="/assets/infografis1.jpg" id="imagePreview" alt="Community Post Image" class="post-image" onclick="zoomImage()">
+                <img src="/asset/infografis1.jpg" alt="Community Post Image" class="post-image" onclick="zoomImage(this)">
             </div>
         </div>
 
@@ -160,7 +160,7 @@
               </button>
             </div>
 
-          </div> -->
+          </div>
 
           <!-- Loading Spinner-->
           <div id="loadingContainer">
@@ -265,7 +265,6 @@
         <button
           type="button"
           class="btn btn-primary col-3 ciptain"
-          data-bs-toggle="modal"
           data-bs-target="#myModal"
           id="openBtn"
           >
@@ -330,12 +329,12 @@
         </div>
         <form id="postForm" enctype="multipart/form-data">
           <div class="modal-button">
-            <button class="postBtn" id="btnPost">Post</button>
+            <button type="button" class="postBtn" id="btnPost">Post</button>
           </div>
           <div class="modal-body">
-            <div class="community-post" style="display: none;">
+            <div class="community-post" id="containerPreview" style="display: none;">
               <div class="image-container">
-                <img src="" id="imagePreview" alt="Community Post Image" class="post-image" onclick="zoomImage()">
+                <img src="" id="imagePreview" alt="Community Post Image" class="post-image" onclick="zoomImage(this)">
               </div>
             </div>            
             <div class="container-info">
@@ -373,10 +372,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../main.js"></script>
     <script>
-      function zoomImage() {
-        var image = document.querySelector('.post-image');
+      function zoomImage(element) {
+        var image = event.target;
         image.classList.toggle('zoomed');
-      }    
+      }
     </script>
     <script>
       initpoin10();
