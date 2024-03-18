@@ -285,6 +285,16 @@ button[type="submit"] {
     border-radius: 2.5px;
 }
 
+/* REPLY YANG KEDUA */
+.bagianreply{
+  padding-left: 4rem !important;
+}
+
+.isirpely {
+  font-size: 12px;
+}
+
+
 /* Modal Add Post */
 .bottom-sheet {
     position: fixed;
