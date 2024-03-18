@@ -1076,31 +1076,76 @@ async function initpoin10() {
     var kotp = [];
     var inp = [];
 
-    async function loadReply(){
-        await requestdata('showReply?id='+id);
+    async function loadReply(comment_id){
+        await requestdata('showReply?id='+comment_id);
         var replies = alldata.replies;
         for (const singlereply of replies) {
 
-            var reply = alldata.singlereply.comment;
-            var namacomment = alldata.singlereply.username;
+            var reply = alldata.singlereply.reply;
+            var namareply = alldata.singlereply.username;
             var profilkomen = alldata.singlereply.profile_pic ? histhost + oneonone.profilkomen : histhost + 'Admin/images/profile.jpg';
             var created_at = alldata.singlereply.created_at;
+            var tag = alldata.singlereply.tag;
 
-            var load =  ``;
+            var load =  `
+                <div class="bagiantext col-11">
+                <span id="isikomen" class="isikomen">
+                <span id="databaseName" class="databaseName namekomen">
+                    ${namareply }</span>
+                <br>
+
+                <span id="namayangngepost" class="namayangngepost">
+                    ${tag }
+                </span>
+                    ${reply }
+                </span>
+
+                <br>
+
+                <button class="tombolreply" id="tombolreply">
+                Reply
+                </button>
+            </div>
+
+            `;
             
         }
     }
 
-    // async function showcomments(postId){
-    //     await requestdata('showComment?id='+ postId);
-    //     return loadComments(alldata.comments);
-    // }    
+    async function showcomments(post_Id){
+        dataComment = await requestdata('showComment?id='+ post_Id);
+        return dataComment.map(oneonone => {
+            var comment = oneonone.comment;
+            var username = oneonone.username;
+            var profile_pic = oneonone.profile_pic ? histhost + oneonone.profile_pic : histhost + 'Admin/images/profile.jpg';
+            var reply = loadReply(oneonone.comment_id);
+            return `
+                <span class="row">
+                    <div class="garis"></div>
+                    <div class="col-1">
+                        <div class="containerfoto">
+                            <img id="profileImage" class="photoprofile2 rounded-circle" src="${profile_pic}" alt="">
+                        </div>
+                    </div>
+                    <div class="bagiantext col-11">
+                        <span id="isikomen" class="isikomen">
+                            <span id="databaseName" class="databaseName namekomen">${username}</span>
+                            ${comment}
+                        </span>
+                    </div>
+                    <div class="bioyangkomen row" id="komenField${id}">
+                    ${reply}
+                </div>
+                </span>`;
+        }).join('');
+    }    
 
-    function loadComments(dataComment) {
+    async function loadComments(dataComment) {
         return dataComment.map(oneonone => {
             var comment = oneonone.comment;
             var namacomment = oneonone.user;
             var profilkomen = oneonone.profilkomen ? histhost + oneonone.profilkomen : histhost + 'Admin/images/profile.jpg';
+          
             return `
                 <span class="row">
                     <div class="garis"></div>
@@ -1133,8 +1178,9 @@ async function initpoin10() {
             var timelib = timeAgo(created_at);
             var name = singgaldatapost.name;
             var totalcomend = singgaldatapost.totalcomments;
-            // var comment = showcomments(singgaldatapost.post_id);
-            var comment = loadComments(singgaldatapost.comments);
+            var comment = showcomments(singgaldatapost.post_id);
+            // var comment = loadComments(singgaldatapost.comments);
+            console.log(comment);
             var isLiked = singgaldatapost.isLiked;
 
             var loadkonten = `
@@ -1530,7 +1576,7 @@ async function initpoin13(){
 
             <div class="detailpasien">
                 <div class="judul">Consultation Note</div>
-                <p id="note" >${alldata.result.note ? alldata.result.note : 'Counselor Note not available'}</p>
+                <p id="note" >${alldata.result.note ? alldata.result.note : 'Counselor did not leave a note'}</p>
             </div>
                     
             <div class="detailpasien">
