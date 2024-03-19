@@ -943,10 +943,10 @@ async function initpoin10() {
     });      
 
     let btn = document.querySelector("#openBtn");
-    let bottomSheet = document.querySelector(".bottom-sheet");
-    let overlay = document.querySelector(".overlay");
-    let content = document.querySelector(".content");
-    let dragIcon = document.querySelector(".drag-icon");
+    let bottomSheet = document.querySelector("#modalPost");
+    let overlay = document.querySelector("#overlayPost");
+    let content = document.querySelector("#kontenPost");
+    let dragIcon = document.querySelector("#dragIconPost");
     
     let isDragging = false,
     startY,
