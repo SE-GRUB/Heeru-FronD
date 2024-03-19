@@ -953,17 +953,14 @@ async function initpoin10() {
     startHeight;
     
     let updateHeight = (height) => {
-    //updating sheet height
     content.style.height = `${height}vh`;
 
-    // if the sheet height is equal to 100 then toggling fullsceen class to bottom sheet
     bottomSheet.classList.toggle("fullscreen", height === 100);
     };
 
     let showSheet = () => {
     bottomSheet.classList.add("show");
     btn.style.display = "none";
-    //updating sheet height with default height 50
     updateHeight(50);
 
     document.body.style.overflow = "hidden";
@@ -978,29 +975,20 @@ async function initpoin10() {
     let dragStart = (e) => {
     isDragging = true;
     bottomSheet.classList.add("dragging");
-    //recording intitial y position and sheet height
     startY = e.pageY || e.touches?.[0].pageY;
     startHeight = parseInt(content.style.height);
     };
 
     let dragging = (e) => {
-    //return if isDragging is false
     if (!isDragging) return;
-
-    //calculating new height of sheet by using starty and start height
-    //calling updateHeight function with new height as argument
-
     let delta = startY - (e.pageY || e.touches?.[0].pageY);
     let newHeight = startHeight + (delta / window.innerHeight) * 100;
-
     updateHeight(newHeight);
     };
 
     let dragStop = () => {
     isDragging = false;
     bottomSheet.classList.remove("dragging");
-
-    //setting sheet height based on the sheet current height or position
     let sheetHeight = parseInt(content.style.height);
 
     sheetHeight < 25
@@ -1008,8 +996,6 @@ async function initpoin10() {
         : sheetHeight > 75
         ? updateHeight(100)
         : updateHeight(50);
-
-    //if height is greater than 75 making sheet full screen else making it to 50vh
     };
 
     dragIcon.addEventListener("mousedown", dragStart);
@@ -1061,6 +1047,77 @@ async function initpoin10() {
         }
         
     });
+
+    // let btnAdd = document.querySelector("#openBtn");
+    // Modal Komen
+    // let btnKomenOpen = document.querySelector("#komenBtn");
+    // let bottomSheetK = document.querySelector("#komenView");
+    // let overlayK = document.querySelector("#komenOverlay");
+    // let contentK = document.querySelector("#komenKonten");
+    // let dragIconK = document.querySelector("#komenDrag");
+    
+    // let isDraggingK = false,
+    // startYK,
+    // startHeightK;
+    
+    // let updateHeightK = (height) => {
+    // contentK.style.height = `${height}vh`;
+    // bottomSheetK.classList.toggle("fullscreen", height === 100);
+    // };
+
+    // let showSheetK = () => {
+    // console.log("OPEN KOMEN");
+    // bottomSheetK.classList.add("show");
+    // // btnKomen.style.display = "none";
+    // updateHeightK(50);
+    // document.body.style.overflow = "hidden";
+    // };
+
+    // let hideSheetK = () => {
+    // console.log("HIDE KOMEN");
+    // bottomSheetK.classList.remove("show");
+    // // btnKomen.style.display = "block";
+    // document.body.style.overflow = "auto";
+    // };
+
+    // let dragStartK = (e) => {
+    // isDraggingK = true;
+    // bottomSheetK.classList.add("dragging");
+    // startYK = e.pageY || e.touches?.[0].pageY;
+    // startHeightK = parseInt(contentK.style.height);
+    // };
+
+    // let draggingK = (e) => {
+    // if (!isDraggingK) return;
+    // let delta = startYK - (e.pageY || e.touches?.[0].pageY);
+    // let newHeight = startHeightK + (delta / window.innerHeight) * 100;
+    // updateHeightK(newHeight);
+    // };
+
+    // let dragStopK = () => {
+    // isDraggingK = false;
+    // bottomSheetK.classList.remove("dragging");
+
+    // let sheetHeightK = parseInt(contentK.style.height);
+
+    // sheetHeightK < 25
+    //     ? hideSheetK()
+    //     : sheetHeightK > 75
+    //     ? updateHeightK(100)
+    //     : updateHeightK(50);
+
+    // };
+
+    // dragIconK.addEventListener("mousedown", dragStartK);
+    // dragIconK.addEventListener("mousemove", draggingK);
+    // document.addEventListener("mouseup", dragStopK);
+
+    // dragIconK.addEventListener("touchstart", dragStartK);
+    // dragIconK.addEventListener("touchmove", draggingK);
+    // document.addEventListener("touchend", dragStopK);
+
+    // btnKomenOpen.addEventListener("click", showSheetK);
+    // overlayK.addEventListener("click", hideSheetK);
 
     var badanpost = document.getElementById('badanpost');
     var kotp = [];

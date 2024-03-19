@@ -391,7 +391,7 @@
       </div>
     </div>
 
-    <div class="bottom-sheet" id="komenView">
+    <!-- <div class="bottom-sheet" id="komenView">
       <div class="overlay" id="komenOverlay"></div>
       <div class="content" id="komenKonten">
         <div class="modal-header" id="komenHeader">
@@ -404,7 +404,7 @@
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit perspiciatis, neque odio ipsam veritatis accusantium rerum porro perferendis quia illo dolorum voluptates ullam quibusdam ratione repellendus velit repellat harum ut.
         </p>
       </div>
-    </div>
+    </div> -->
     
 
     <!-- JS -->
@@ -429,83 +429,6 @@
           div.style.display = "none";
         }
       }
-
-    let btnKomen = document.querySelector("#komenBtn");
-    let bottomSheetK = document.querySelector("#komenView");
-    let overlayK = document.querySelector("#komenOverlay");
-    let contentK = document.querySelector("#komenKonten");
-    let dragIconK = document.querySelector("#komenDrag");
-    let btnAdd = document.getElementById("openBtn");
-    
-    let isDragging = false,
-    startY,
-    startHeight;
-    
-    let updateHeightK= (height) => {
-    contentK.style.height = `${height}vh`;
-
-    bottomSheetK.classList.toggle("fullscreen", height === 100);
-    };
-
-    let showSheetK = () => {
-    bottomSheetK.classList.add("show");
-    btnAdd.style.display = "none";
-    updateHeightK(50);
-
-    document.body.style.overflow = "hidden";
-    };
-
-    let hideSheetK = () => {
-    bottomSheetK.classList.remove("show");
-    btnAdd.style.display = "block";
-    document.body.style.overflow = "auto";
-    };
-
-    let dragStartK = (e) => {
-    isDragging = true;
-    bottomSheetK.classList.add("dragging");
-    //recording intitial y position and sheet height
-    startY = e.pageY || e.touches?.[0].pageY;
-    startHeight = parseInt(contentK.style.height);
-    };
-
-    let draggingK = (e) => {
-    //return if isDragging is false
-    if (!isDragging) return;
-
-    //calculating new height of sheet by using starty and start height
-    //calling updateHeight function with new height as argument
-
-    let delta = startY - (e.pageY || e.touches?.[0].pageY);
-    let newHeight = startHeight + (delta / window.innerHeight) * 100;
-
-    updateHeightK(newHeight);
-    };
-
-    let dragStopK = () => {
-    isDragging = false;
-    bottomSheetK.classList.remove("dragging");
-
-    let sheetHeight = parseInt(contentK.style.height);
-
-    sheetHeight < 25
-        ? hideSheetK()
-        : sheetHeight > 75
-        ? updateHeightK(100)
-        : updateHeightK(50);
-
-    };
-
-    dragIconK.addEventListener("mousedown", dragStartK);
-    dragIconK.addEventListener("mousemove", draggingK);
-    document.addEventListener("mouseup", dragStopK);
-
-    dragIconK.addEventListener("touchstart", dragStartK);
-    dragIconK.addEventListener("touchmove", draggingK);
-    document.addEventListener("touchend", dragStopK);
-
-    btnKomen.addEventListener("click", showSheetK);
-    overlayK.addEventListener("click", hideSheetK);
     </script>
     <script>
       initpoin10();
