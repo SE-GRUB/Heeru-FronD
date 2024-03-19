@@ -355,6 +355,24 @@ button[type="submit"] {
     opacity: 0.2;
     z-index: -1;
   }
+
+  .infoRep{
+    display: flex;
+    align-items: center;
+  }
+
+  .infoRep span{
+    margin-left: 1rem;
+  }
+
+  .repli{
+    margin-left: 2rem;
+  }
+
+  .bioyangrepli{
+    display: flex;
+    margin-left: 2rem !important;
+  }
   
   .bottom-sheet .content {
     height: 50vh;
@@ -491,6 +509,7 @@ button[type="submit"] {
     flex-direction: column;
     justify-content: flex-end;
     transition: 0.1s linear;
+    z-index: 999;
   }
   .bottom-sheets.show {
     opacity: 1;
