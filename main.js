@@ -798,8 +798,51 @@ async function initpoin9() {
         document.getElementById("imghip").src = data.imghip;
     }
 
+    
+    await requestdata('counselorList');
+    function initPopular() {
+        // console.log("masuk function")
+        // await requestdata('counselorList');
+        var ul = document.getElementById('carouselExample');
+        var template = ''; 
+        alldata.users.forEach(index => {
+            console.log(index)
+            var id = index.user_id;
+            var name = index.name;
+            var rating = index.rating;
+            var fare = index.fare;
+            var profile_pic = index.profile_pic;
+            profile_pic=profile_pic ? histhost+profile_pic: histhost+'Admin/images/profile.jpg'
+            template += `
+            <li class="carousel inner card dpilist" id="${id}">
+                <img class="dct_img" src="${profile_pic}">
+                <div class="NamaJob">
+                    <h5>${name}</h5>
+                    <div class="rating">
+                        <i data-rating="${rating}">
+                            <span>${rating}</span>
+                        </i>
+                    </div>
+                    <p>${formatCurrency(parseFloat(fare))}</p>
+                </div>
+            </li>
+            `
+        }); 
+        ul.innerHTML = template;
+        var dpilist = document.getElementsByClassName('dpilist');  
+        for (var i = 0; i < dpilist.length; i++) {
+            dpilist[i].addEventListener('click', function(e) {
+                var id = this.id
+                sessionStorage.setItem('dokter_id', id);
+                window.location.href = `./detail_dokter.html?id=${id}`;
+            });
+        }
+    }
+
+    initPopular();
+
     $('.owl-carousel').owlCarousel({
-        loop:false,
+        loop:true,
         margin:5,
         nav:false,
         responsive:{
@@ -815,35 +858,6 @@ async function initpoin9() {
         }
     })
 
-    async function initPopular() {
-        // console.log("masuk function")
-        await requestdata('counselorList');
-        var ul = document.getElementById('carouselExamplePopular');
-        var template = ''; 
-        for (const index of alldata.users) {
-            var id = index.user_id;
-            var name = index.name;
-            var rating = index.rating;
-            var fare = index.fare;
-            var profile_pic = index.profile_pic;
-            profile_pic = profile_pic ? histhost + profile_pic : histhost + 'Admin/images/profile.jpg'
-            template += `
-            <li class="carousel inner card dpilist" id="${id}">
-                <img class="dct_img" src="${profile_pic}">
-                <div class="NamaJob">
-                    <h5>${name}</h5>
-                    <div class="rating">
-                        <i data-rating="${rating}">
-                            <span>${rating}</span>
-                        </i>
-                    </div>
-                    <p>${formatCurrency(parseFloat(fare))}</p>
-                </div>
-            </li>
-            `
-        };
-        ul.innerHTML = template;
-    }
 
     async function initskj() {
         var jadwal = {
@@ -915,7 +929,6 @@ async function initpoin9() {
     await initskj();
     document.getElementById("Test_DatetimeLocal").addEventListener("change", await initskj);
     document.getElementById("orderpay").addEventListener("click", await generatepaymend);
-    await initPopular();
     initdokter(data);
 }
 

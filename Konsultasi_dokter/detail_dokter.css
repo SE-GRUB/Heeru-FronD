@@ -1,6 +1,9 @@
 d*{
     font-family: sans-serif;
 }
+::-webkit-scrollbar{
+  display: none;
+}
 
 body{
     padding-bottom: 8rem;
@@ -10,6 +13,14 @@ body{
   display: flex;
   justify-content: center;
 }
+
+/* #popular-doctor-section{
+  background-color: orange;
+} */
+
+/* #popdoc{
+  font-size: larger;
+} */
 
 .circle1{
     height: 92%;
@@ -34,7 +45,7 @@ body{
 }
 
 header{
-    padding-left: 5dvw;
+    padding-left: 1dvw;
     margin-top: 20px;
     /* background-color: green; */
     border-width: 0px;
@@ -74,7 +85,7 @@ header button:hover{background-color:rgb(168, 168, 168);}
 /* button:focus{background-color:red;} */
 
 #sortdoctor{
-    padding-left: 5dvw;
+    padding-left: 1dvw;
     /* background-color: red; */
     /* display: flex;
     flex-wrap: wrap; */
@@ -84,7 +95,7 @@ header button:hover{background-color:rgb(168, 168, 168);}
     /* background-color: aqua; */
     display: flex;
     flex-wrap: wrap;
-    width: 85dvw;
+    width: 90dvw;
     align-items: center;
     /* justify-content: center; */
     margin: auto auto 25px 0px;
@@ -134,7 +145,7 @@ header button:hover{background-color:rgb(168, 168, 168);}
     padding-bottom: 15px; */
     margin-left: 5dvw;
     display: flex;
-    width: 85dvw;
+    width: 90dvw;
     border-radius: 15px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.295);
 }
@@ -169,15 +180,23 @@ header button:hover{background-color:rgb(168, 168, 168);}
 
 .services{
     /* background-color: red; */
-    width: 85dvw;
-    margin-left: 5dvw;
+    width: 90dvw;
+    margin-left: 1dvw;
+}
+
+h2 {
+  /* margin-top: 25px; */
+  margin-left: 1dvw;
+  /* font-weight: bold; */
+  /* font-size: medium; */
+  margin-bottom: 10px;
 }
 
 .services h2{
-    /* margin-top: 25px; */
-    margin-left: 0px;
-    margin-bottom: 0px;
-    font-weight: bold;
+    margin-top: 25px; 
+    margin-left: 1dvw;
+    /* margin-bottom: 10px; */
+    /* font-weight: bold; */
 }
 
 .services li{
@@ -188,23 +207,19 @@ header button:hover{background-color:rgb(168, 168, 168);}
     padding-top: 5px;
     border-bottom: 3px outset #64A5F9;
     /* padding-top: 10px; */
-    padding-left: 10px;
+    padding-left: 1dvw;
 }
 
 #listbit{
     text-align: justify;
+    padding-left: 1dvw;
 }
 
-h2 {
-    /* margin-top: 25px; */
-    margin-left: 5dvw;
-    font-weight: bold;
-    /* font-size: medium; */
-}
+
 
 header h2{
     /* background-color: #007bff; */
-    margin-left: 10px;
+    margin-left: 1dvw;
 }
 
 #container {
@@ -217,6 +232,7 @@ header h2{
 }
   
 p{
+  padding-left: 1dvw;
     text-align: left;
     font-size: small;
 }
@@ -251,7 +267,9 @@ p{
   }
   
   #carouselExample{
-    padding-left: 5dvw;
+    padding-left: 1dvw;
+    width: 100dvw;
+    margin-bottom: 0px;
   }
 
 
@@ -270,6 +288,7 @@ p{
     text-align: center;
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 2;
 }
 .bookbarr button{
     background-color: #64A5F9 ;
@@ -310,16 +329,6 @@ p{
     'GRAD' 0,
     'opsz' 24;
 }
-
-/* .nonactivate{
-    font-size: 36px !important;
-    color: #C6D2E2;
-}
-
-.navbarr .active{
-    font-size: 36px !important;
-    color: #64A5F9;
-} */
 
 .rating {
     display: inline-block;
