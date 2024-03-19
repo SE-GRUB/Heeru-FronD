@@ -4,9 +4,69 @@
       defer
       src="https://widget-js.cometchat.io/v3/cometchatwidget.js"
     ></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+      body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden; 
+        position: relative;
+      }
+
+      .atas{
+        margin: 10px;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .judul{
+        font-family: 'Poppins' !important;
+        font-size: x-large;
+        font-weight: 500;
+      }
+
+      .butBack {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        aspect-ratio: 1/1;
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.295);
+        background-color: rgb(255, 255, 255);
+      }
+      
+      .material-symbols-outlined {
+        font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24;
+      }
+      
+      #cometchat {
+        height: 100%;
+        overflow: auto;
+        z-index: -1;
+        border-radius: 0;
+      }
+    </style>
   </head>
 
   <body>
+    <div class="atas">
+      <button class="butBack" onclick="document.location='/Konsultasi_dokter/konsultasiRiwayat.html'">
+        <span class="material-symbols-outlined">
+          arrow_back_ios_new
+        </span>
+      </button>
+      <span class="judul">Konsultasi</span>
+    </div>
     <div id="cometchat" style="overflow: hidden"></div>
     <script>
       window.addEventListener("DOMContentLoaded", (event) => {

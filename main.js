@@ -519,15 +519,13 @@ async function initpoin5() {
 
     var container = document.getElementById('containerisi');
 
-
-    for(var i = 0; i < Object.keys(alldata.report_categories).length; i+=3){
+    for (var i = 0; i < Object.keys(alldata.report_categories).length; i += 3) {
         var row = document.createElement('div');
         row.className = 'row';
-        for(var j = 0; j < 3 && (i + j) < Object.keys(alldata.report_categories).length; j++){
+        for (var j = 0; j < 3 && (i + j) < Object.keys(alldata.report_categories).length; j++) {
             var weight = alldata.report_categories[i + j].weight;
             var category_name = alldata.report_categories[i + j].category_name;
             var category_id = alldata.report_categories[i + j].id;
-
 
             var colElement = document.createElement('button');
             colElement.className = 'col bobot' + weight;
@@ -535,7 +533,6 @@ async function initpoin5() {
 
             var teksElement = document.createElement('div');
             teksElement.className = 'teks';
-            teksElement.id = 'col bobot' + weight;
             teksElement.textContent = category_name;
 
             colElement.appendChild(teksElement);
@@ -544,47 +541,36 @@ async function initpoin5() {
         container.appendChild(row);
     }
 
-    
-    for (var i = 0; i < Object.keys(alldata.report_categories).length; i++) {
-        var categoryId = alldata.report_categories[i].id;
-        
-        document.getElementById(categoryId).addEventListener("click", createClickListener(categoryId));
-    }
-
+    var buttonNext = document.getElementById('buttonnext');
     var currentClickedCategoryId = null;
 
     function createClickListener(categoryId) {
         return function () {
-            var buttonNext = document.getElementById('buttonnext');
             var element = document.getElementById(categoryId);
-
-            if (currentClickedCategoryId !== null) {
-                // Remove 'clicked' class from the previously clicked element
+    
+            if (currentClickedCategoryId !== null && currentClickedCategoryId !== categoryId) {
                 var previousClickedElement = document.getElementById(currentClickedCategoryId);
                 previousClickedElement.classList.remove('clicked');
-    
-                // Reset localStorage and hide the button if the same element is clicked again
-                if (currentClickedCategoryId === categoryId) {
-                    localStorage.removeItem('category_id');
-                    buttonNext.style.display = 'none';
-                    currentClickedCategoryId = null;
-                    return;
-                }
             }
-
-           // Store categoryId in localStorage
-            localStorage.setItem('category_id', categoryId);
-            // console.log(localStorage.getItem('category_id'));
-
-            // Add 'clicked' class to the clicked element
-            element.classList.add('clicked');
-
-            // Toggle the display of the 'buttonnext' element
-            buttonNext.style.display = buttonNext.style.display === 'none' ? 'block' : 'none';
-
-            // Update currentClickedCategoryId
-            currentClickedCategoryId = categoryId;
+    
+            if (currentClickedCategoryId === categoryId) {
+                element.classList.remove('clicked');
+                localStorage.removeItem('category_id');
+                buttonNext.style.display = 'none';
+                currentClickedCategoryId = null;
+            } else {
+                localStorage.setItem('category_id', categoryId);
+                element.classList.add('clicked');
+                buttonNext.style.display = 'block';
+                currentClickedCategoryId = categoryId;
+            }
         };
+    }
+    
+
+    for (var i = 0; i < Object.keys(alldata.report_categories).length; i++) {
+        var categoryId = alldata.report_categories[i].id;
+        document.getElementById(categoryId).addEventListener("click", createClickListener(categoryId));
     }
 }
 
@@ -792,14 +778,10 @@ async function initpoin8() {
 
 async function initpoin9() {
     await requestdata('counselorShow?user_id=' + sessionStorage.getItem('dokter_id'));
-
-    console.log(alldata.users.name);
-
     var ul = document.getElementById('carouselExample');
     var data = {
         namedoctor: alldata.users.name,
-        // jobpoin: alldata.users.rating + " bintang",
-        start: alldata.users.rating + " bintang",
+        start: alldata.users.rating,
         Harga: alldata.users.fare,
         success: "0",
         listbit: alldata.users.description ? alldata.users.description : 'Description not available!',
@@ -816,18 +798,35 @@ async function initpoin9() {
         document.getElementById("imghip").src = data.imghip;
     }
 
+    $('.owl-carousel').owlCarousel({
+        loop:false,
+        margin:5,
+        nav:false,
+        responsive:{
+            0:{
+                items:2.3
+            },
+            600:{
+                items:3
+            },
+            1000:{
+                items:3
+            }
+        }
+    })
+
     async function initPopular() {
-        await requestdata2('counselorList');
-        var ul = document.getElementById('carouselExample');
+        // console.log("masuk function")
+        await requestdata('counselorList');
+        var ul = document.getElementById('carouselExamplePopular');
         var template = ''; 
-        alldata.users.forEach(index => {
-            console.log(index)
+        for (const index of alldata.users) {
             var id = index.user_id;
             var name = index.name;
             var rating = index.rating;
             var fare = index.fare;
             var profile_pic = index.profile_pic;
-            profile_pic=profile_pic ? histhost+profile_pic: histhost+'Admin/images/profile.jpg'
+            profile_pic = profile_pic ? histhost + profile_pic : histhost + 'Admin/images/profile.jpg'
             template += `
             <li class="carousel inner card dpilist" id="${id}">
                 <img class="dct_img" src="${profile_pic}">
@@ -842,16 +841,8 @@ async function initpoin9() {
                 </div>
             </li>
             `
-        });
+        };
         ul.innerHTML = template;
-        var dpilist = document.getElementsByClassName('dpilist');  
-        for (var i = 0; i < dpilist.length; i++) {
-            dpilist[i].addEventListener('click', function(e) {
-                var id = this.id
-                sessionStorage.setItem('dokter_id', id);
-                window.location.href = `./detail_dokter.html?id=${id}`;
-            });
-        }
     }
 
     async function initskj() {
@@ -871,7 +862,6 @@ async function initpoin9() {
         try {
             var response = await fetch(`${histhost}api/counSlot?time=${time}`);
             var data = await response.json();
-            console.log(data.time);
             data=data.time;
             notav = data.map(item => parseInt(item.duration));
             notav.forEach((duration) => {
@@ -925,8 +915,8 @@ async function initpoin9() {
     await initskj();
     document.getElementById("Test_DatetimeLocal").addEventListener("change", await initskj);
     document.getElementById("orderpay").addEventListener("click", await generatepaymend);
-    initdokter(data);
     await initPopular();
+    initdokter(data);
 }
 
 async function initpoin10() {
@@ -1298,6 +1288,7 @@ async function initpoin10() {
 
         kotp = [];
         inp = [];
+        like();
     }
     
     await allpost();
@@ -1311,31 +1302,33 @@ async function initpoin10() {
         }
     });
 
-    document.querySelectorAll('.like-btn').forEach(btn => {
-        btn.addEventListener('click', async function() {
-            const postId = this.getAttribute('data-id');
-            const type = this.getAttribute('data-type');
-            const isActive = this.classList.contains('unlike');
-            const action = isActive ? 'like' : 'unlike';
-    
-            try {
-                await requestdata(`like?post_id=${postId}&user_id=${localStorage.getItem('user_id')}&action=${action}`);
-    
-                if (!alldata.success) {
-                    throw new Error('Failed to update like/dislike');
+    function like(){
+        document.querySelectorAll('.like-btn').forEach(btn => {
+            btn.addEventListener('click', async function() {
+                const postId = this.getAttribute('data-id');
+                const type = this.getAttribute('data-type');
+                const isActive = this.classList.contains('unlike');
+                const action = isActive ? 'like' : 'unlike';
+        
+                try {
+                    await requestdata(`like?post_id=${postId}&user_id=${localStorage.getItem('user_id')}&action=${action}`);
+        
+                    if (!alldata.success) {
+                        throw new Error('Failed to update like/dislike');
+                    }
+        
+                    this.classList.toggle('unlike');
+        
+                    const likeCountElement = document.getElementById(`databaseJumlahLike${postId}`);
+                    likeCountElement.textContent = alldata.likeCount;
+        
+                    this.setAttribute('data-type', isActive ? 'unlike' : 'like');
+                } catch (error) {
+                    console.error(error);
                 }
-    
-                this.classList.toggle('unlike');
-    
-                const likeCountElement = document.getElementById(`databaseJumlahLike${postId}`);
-                likeCountElement.textContent = alldata.likeCount;
-    
-                this.setAttribute('data-type', isActive ? 'unlike' : 'like');
-            } catch (error) {
-                console.error(error);
-            }
-        });
-    });    
+            });
+        });    
+    }
 }
 
 async function initpoin11() {

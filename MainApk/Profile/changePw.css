@@ -12,6 +12,24 @@ p{
     font-size: 14px;
 }
 
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+}
+
+.balik a{
+    color: #5f6368;
+    text-decoration: none;
+}
+
+.balik{
+    margin-top: 2rem;
+    margin-left: 2rem;
+}   
+
 
 
 #labelForFileInput{
