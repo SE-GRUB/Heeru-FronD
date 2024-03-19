@@ -919,29 +919,9 @@ async function initpoin9() {
     initdokter(data);
 }
 
-async function initpoin10() {
-    var user_id = localStorage.getItem("user_id");
-
-    await requestdata2(`pponly?user_id=${user_id}`);
-    // console.log(alldata.pp)
-    var ppPost = alldata.pp['profile_pic'];
-    ppPost = ppPost ? histhost + ppPost : histhost + 'Admin/images/profile.jpg';
-    document.getElementById("ppModal").src = ppPost;
-
-    let posterContainer = document.querySelector("#containerPreview");
-    document.getElementById('postImage').addEventListener('change', function() {
-        updateHeight(98);
-        posterContainer.style.display = 'block';
-        var file = this.files[0];
-        var reader = new FileReader();
-        
-        reader.onload = function(e) {
-            document.getElementById('imagePreview').src = e.target.result;
-        }
-
-        reader.readAsDataURL(file);
-    });      
-
+async function initpoin10() {   
+    let sheetBody = document.querySelector(".sheet-body")
+    let btn2 = document.querySelector(".show-btn");
     let btn = document.querySelector("#openBtn");
     let bottomSheet = document.querySelector("#modalPost");
     let overlay = document.querySelector("#overlayPost");
@@ -958,12 +938,246 @@ async function initpoin10() {
     bottomSheet.classList.toggle("fullscreen", height === 100);
     };
 
-    let showSheet = () => {
-    bottomSheet.classList.add("show");
-    btn.style.display = "none";
-    updateHeight(50);
+    let showSheet = async () => {
+        bottomSheet.classList.add("show");
+        btn.style.display = "none";
+        updateHeight(50);
+        document.body.style.overflow = "hidden";
 
-    document.body.style.overflow = "hidden";
+        let addPostDiv = `
+        <form id="postForm" enctype="multipart/form-data">
+            <div class="modal-button">
+            <button type="button" class="postBtn" id="btnPost">Post</button>
+            </div>
+            <div class="modal-body">
+            <div class="community-post" id="containerPreview" style="display: none;">
+                <div class="image-container">
+                <img src="" id="imagePreview" alt="Community Post Image" class="post-image" onclick="zoomImage(this)">
+                </div>
+            </div>            
+            <div class="container-info">
+                <div class="containerfoto">
+                <img
+                    id="ppModal"
+                    class="photoprofile rounded-circle"
+                    src="https://static.wikia.nocookie.net/naruto/images/7/70/Naruto_newshot.jpg/revision/latest/scale-to-width-down/1200?cb=20141107130405&path-prefix=id"
+                    alt=""
+                />
+                </div>            
+                <div class="container-isi">
+                <textarea placeholder="What do you think ?" class="texta" id="postBody"></textarea>
+                <span id="errortext" class="text-danger hide">text</span>
+                </div>
+            </div>
+            </div>
+            <div class="row justify-content-end fixed-bottom bikinpost">
+            <label for="postImage" class="btn btn-primary col-3 ciptain">
+                <input type="file" id="postImage" class="d-none" accept="image/*">
+                <span class="material-symbols-outlined ciptains">add_photo_alternate</span>
+            </label>
+            </div>        
+        </form>
+        `
+        sheetBody.innerHTML = addPostDiv;
+
+        var user_id = localStorage.getItem("user_id");
+
+        await requestdata(`pponly?user_id=${user_id}`);
+        console.log(alldata.pp)
+        var ppPost = alldata.pp['profile_pic'];
+        ppPost = ppPost ? histhost + ppPost : histhost + 'Admin/images/profile.jpg';
+        document.getElementById("ppModal").src = ppPost;
+
+        let posterContainer = document.querySelector("#containerPreview");
+        document.getElementById('postImage').addEventListener('change', function() {
+            updateHeight(98);
+            posterContainer.style.display = 'block';
+            var file = this.files[0];
+            var reader = new FileReader();
+            
+            reader.onload = function(e) {
+                document.getElementById('imagePreview').src = e.target.result;
+            }
+
+            reader.readAsDataURL(file);
+        });   
+
+
+        document.getElementById("btnPost").addEventListener("click", async function() {
+            var poster = document.getElementById("postImage");
+            var post_body = document.getElementById("postBody");
+
+            var errortext=document.getElementById("errortext");
+
+            if (post_body.value.trim() === "") {
+                errortext.innerHTML = "Please input your post!";
+                errortext.classList.remove("hide");
+            } else {
+                errortext.classList.add("hide");
+                var formData = new FormData();
+                if(poster.files.length != 0){
+                    poster = poster.files[0];
+                    formData.append('poster', poster);
+                }
+                formData.append('post_body', post_body.value);
+                formData.append('user_id', user_id);
+        
+                await $.ajax({
+                    url: `${histhost}api/createPost`,
+                    method: 'POST',
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    success: function (response) {
+                        if (response.success) {
+                            window.location.href = "./MainApk/home.html";
+                            return true;
+                        } else {
+                            errortext.innerHTML = "Error in creating your post!";
+                            errortext.classList.remove("hide");
+                        }
+                    },
+                });
+            }
+            
+        });
+    };
+
+    let showSheets = async () => {
+        bottomSheet.classList.add("show");
+        btn.style.display = "none";
+        updateHeight(70);
+        document.body.style.overflow = "hidden";
+    
+        let showKomen = `
+        <div class="bioyangkomen row" id="komenField">
+
+            <!-- KOMEN -->
+            <div class="col-1">
+              <div class="containerfoto">
+                <img
+                  id="profileImage"
+                  class="photoprofile2 rounded-circle"
+                  src="https://static.wikia.nocookie.net/naruto/images/7/70/Naruto_newshot.jpg/revision/latest/scale-to-width-down/1200?cb=20141107130405&path-prefix=id"
+                  alt=""
+                />
+              </div>
+            </div>
+
+            <div class="bagiantext col-11">
+              <span id="isikomen" class="isikomen">
+                <span id="databaseName" class="databaseName namekomen">
+                  Nama yang Komen</span>
+                <br>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Cupiditate doloremque itaque ex
+              </span>
+
+              <br>
+
+              <span id="waktukomen" class="waktukomen">
+                10m   ·  
+              </span>
+
+              <button class="tombolreply" id="tombolreply">
+                Reply
+              </button>
+
+              <br>
+
+              <button class="hideshow" id="tombolreply"">
+                — View Reply
+              </button>
+            </div>
+
+            <!-- KOMEN -->
+            
+            <!-- REPLY KOMEN -->
+            <div class="bagianreply" id="bagianreply">
+              <div class="bagiantext col-12">
+                <span id="isireply" class="isireply">
+                  <span id="databaseName" class="databaseName namekomen">
+                    Nama yang reply</span>
+                  <br>
+                  <span id="namayangngepost" class="namayangngepost">
+                    @namayangngepost
+                  </span>
+                  Lorem ipsum dolor sit amet ssss consectetur adipisicing elit.
+                  Cupiditate doloremque itaque ex.
+                </span>
+              </div>
+
+              <br>
+            </div>
+
+            <!-- REPLY KOMEN -->
+            
+            <div class="col-1">
+              <div class="containerfoto">
+                <img
+                  id="profileImage"
+                  class="photoprofile2 rounded-circle"
+                  src="https://static.wikia.nocookie.net/naruto/images/7/70/Naruto_newshot.jpg/revision/latest/scale-to-width-down/1200?cb=20141107130405&path-prefix=id"
+                  alt=""
+                />
+              </div>
+            </div>
+
+            <div class="bagiantext col-11">
+              <span id="isikomen" class="isikomen">
+                <span id="databaseName" class="databaseName namekomen">
+                  Nama yang Komen</span>
+                <br>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Cupiditate doloremque itaque ex
+              </span>
+
+              <br>
+
+              <span id="waktukomen" class="waktukomen">
+                10m   ·  
+              </span>
+
+              <button class="tombolreply" id="tombolreply2">
+                Reply
+              </button>
+
+              <br>
+
+              <button class="hideshow" id="tombolreply2"">
+                — View Reply
+              </button>
+            </div>
+
+            <div class="buatreply">
+              <textarea 
+              type="textarea" 
+              class="inputreply col-10"
+              placeholder="Add comment..."></textarea>
+              
+              <button class="ngepost col-2">
+                Post
+              </button>
+            </div>
+            
+
+          </div>
+        `
+        sheetBody.innerHTML = showKomen;
+
+        document.querySelectorAll('.hideshow').forEach(element => {
+            element.addEventListener("click", function () {
+                var div = document.getElementById("bagianreply");
+                if (div.style.display === "none") {
+                    div.style.display = "block";
+                } else {
+                    div.style.display = "none";
+                }
+            });
+        });
+        
+
+        
     };
 
     let hideSheet = () => {
@@ -995,7 +1209,7 @@ async function initpoin10() {
         ? hideSheet()
         : sheetHeight > 75
         ? updateHeight(100)
-        : updateHeight(50);
+        : updateHeight(70);
     };
 
     dragIcon.addEventListener("mousedown", dragStart);
@@ -1007,46 +1221,8 @@ async function initpoin10() {
     document.addEventListener("touchend", dragStop);
 
     btn.addEventListener("click", showSheet);
+    btn2.addEventListener("click", showSheets);
     overlay.addEventListener("click", hideSheet);
-
-    document.getElementById("btnPost").addEventListener("click", async function() {
-        var poster = document.getElementById("postImage");
-        var post_body = document.getElementById("postBody");
-
-        var errortext=document.getElementById("errortext");
-
-        if (post_body.value.trim() === "") {
-            errortext.innerHTML = "Please input your post!";
-            errortext.classList.remove("hide");
-        } else {
-            errortext.classList.add("hide");
-            var formData = new FormData();
-            if(poster.files.length != 0){
-                poster = poster.files[0];
-                formData.append('poster', poster);
-            }
-            formData.append('post_body', post_body.value);
-            formData.append('user_id', user_id);
-    
-            await $.ajax({
-                url: `${histhost}api/createPost`,
-                method: 'POST',
-                processData: false,
-                contentType: false,
-                data: formData,
-                success: function (response) {
-                    if (response.success) {
-                        window.location.href = "./MainApk/home.html";
-                        return true;
-                    } else {
-                        errortext.innerHTML = "Error in creating your post!";
-                        errortext.classList.remove("hide");
-                    }
-                },
-            });
-        }
-        
-    });
 
     // let btnAdd = document.querySelector("#openBtn");
     // Modal Komen
@@ -1386,6 +1562,7 @@ async function initpoin10() {
             });
         });    
     }
+
 }
 
 async function initpoin11() {

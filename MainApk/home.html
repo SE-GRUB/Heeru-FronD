@@ -115,7 +115,7 @@
 
             <div class="garisver"></div>
 
-            <button id="komenBtn">
+            <button class="show-btn">
               <div class="bagreply" id="bagreply">
                 <span class="material-symbols-outlined"> reply </span>
                 <span id="databaseJumlahReply" class="databaseJumlahReply">
@@ -127,57 +127,100 @@
 
 
           <!-- KOMEN BENTUK BARU -->
-
           <!-- <div class="badankomen">
-            <div class="gelapinbg"></div>
+            <div class="lapisan"></div>
+      
             <div class="konten">
-              <div class="modal-header">
-                <div class="drag-icon">
+              <div class="kepalakomen">
+                <div class="tariktarik">
                   <span></span>
                 </div>
               </div>
-              <form id="postForm" enctype="multipart/form-data">
-                <div class="modal-button">
-                  <button type="button" class="postBtn" id="btnPost">Post</button>
-                </div>
-                <div class="modal-body">
-                  <div class="community-post" id="containerPreview" style="display: none;">
-                    <div class="image-container">
-                      <img src="" id="imagePreview" alt="Community Post Image" class="post-image" onclick="zoomImage(this)">
-                    </div>
-                  </div>            
-                  <div class="container-info">
+      
+              <div class="body">
+                <div class="bioyangkomen row" id="komenField">
+                  <div class="garis"></div>
+      
+                  <div class="col-1">
                     <div class="containerfoto">
                       <img
-                          id="ppModal"
-                          class="photoprofile rounded-circle"
-                          src="https://static.wikia.nocookie.net/naruto/images/7/70/Naruto_newshot.jpg/revision/latest/scale-to-width-down/1200?cb=20141107130405&path-prefix=id"
-                          alt=""
+                        id="profileImage"
+                        class="photoprofile2 rounded-circle"
+                        src="https://static.wikia.nocookie.net/naruto/images/7/70/Naruto_newshot.jpg/revision/latest/scale-to-width-down/1200?cb=20141107130405&path-prefix=id"
+                        alt=""
                       />
-                    </div>            
-                    <div class="container-isi">
-                      <textarea placeholder="What do you think ?" class="texta" id="postBody"></textarea>
-                      <span id="errortext" class="text-danger hide">text</span>
                     </div>
                   </div>
+      
+                  <div class="bagiantext col-11">
+                    <span id="isikomen" class="isikomen">
+                      <span id="databaseName" class="databaseName namekomen">
+                        Nama yang Komen</span>
+                      <br>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Cupiditate doloremque itaque ex
+                    </span>
+      
+                    <br>
+      
+                    <span id="waktukomen" class="waktukomen">
+                      10m   ·  
+                    </span>
+      
+                    <button class="tombolreply" id="tombolreply">
+                      Reply
+                    </button>
+      
+                    <br>
+      
+                    <button class="hideshow" id="tombolreply"
+                            onclick="hideshow()">
+                      — View Reply
+                    </button>
+      
+                  </div>
+                  
+                  <div class="bagianreply" id="bagianreply">
+                    <div class="bagiantext col-12">
+                      <span id="isireply" class="isireply">
+                        <span id="databaseName" class="databaseName namekomen">
+                          Nama yang reply</span>
+                        <br>
+                        <span id="namayangngepost" class="namayangngepost">
+                          @namayangngepost
+                        </span>
+                        Lorem ipsum dolor sit amet ssss consectetur adipisicing elit.
+                        Cupiditate doloremque itaque ex.
+                      </span>
+                    </div>
+      
+                    <br>
+                  </div>
+                  
+      
+                  <div class="buatreply">
+                    <textarea 
+                    type="textarea" 
+                    class="inputreply col-10"
+                    placeholder="Add comment..."></textarea>
+                    
+                    <button class="ngepost col-2">
+                      Post
+                    </button>
+                  </div>
+      
                 </div>
-                <div class="row justify-content-end fixed-bottom bikinpost">
-                  <label for="postImage" class="btn btn-primary col-3 ciptain">
-                      <input type="file" id="postImage" class="d-none" accept="image/*">
-                      <span class="material-symbols-outlined ciptains">add_photo_alternate</span>
-                  </label>
-                </div>        
-              </form>
+              </div>
             </div>
           </div> -->
-
           <!-- KOMEN BENTUK BARU -->
 
+          <div class="garis"></div>
+          
+          <!-- <div class="bioyangkomen row" id="komenField"> -->
 
-          <div class="bioyangkomen row" id="komenField">
-            <div class="garis"></div>
-
-            <div class="col-1">
+            <!-- KOMEN -->
+            <!-- <div class="col-1">
               <div class="containerfoto">
                 <img
                   id="profileImage"
@@ -213,10 +256,12 @@
                       onclick="hideshow()">
                 — View Reply
               </button>
+            </div> -->
 
-            </div>
+            <!-- KOMEN -->
             
-            <div class="bagianreply" id="bagianreply">
+            <!-- REPLY KOMEN -->
+            <!-- <div class="bagianreply" id="bagianreply">
               <div class="bagiantext col-12">
                 <span id="isireply" class="isireply">
                   <span id="databaseName" class="databaseName namekomen">
@@ -231,8 +276,47 @@
               </div>
 
               <br>
-            </div>
+            </div> -->
+
+            <!-- REPLY KOMEN -->
             
+            <!-- <div class="col-1">
+              <div class="containerfoto">
+                <img
+                  id="profileImage"
+                  class="photoprofile2 rounded-circle"
+                  src="https://static.wikia.nocookie.net/naruto/images/7/70/Naruto_newshot.jpg/revision/latest/scale-to-width-down/1200?cb=20141107130405&path-prefix=id"
+                  alt=""
+                />
+              </div>
+            </div>
+
+            <div class="bagiantext col-11">
+              <span id="isikomen" class="isikomen">
+                <span id="databaseName" class="databaseName namekomen">
+                  Nama yang Komen</span>
+                <br>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Cupiditate doloremque itaque ex
+              </span>
+
+              <br>
+
+              <span id="waktukomen" class="waktukomen">
+                10m   ·  
+              </span>
+
+              <button class="tombolreply" id="tombolreply">
+                Reply
+              </button>
+
+              <br>
+
+              <button class="hideshow" id="tombolreply"
+                      onclick="hideshow()">
+                — View Reply
+              </button>
+            </div>
 
             <div class="buatreply">
               <textarea 
@@ -244,8 +328,9 @@
                 Post
               </button>
             </div>
+            
 
-          </div>
+          </div> -->
 
           <!-- Loading Spinner-->
           <div id="loadingContainer">
@@ -348,7 +433,8 @@
         </button>
       </div>
 
-    <div class="bottom-sheet" id="modalPost">
+    <!-- BAGIAN CREATE POST -->
+    <!-- <div class="bottom-sheet" id="modalPost">
       <div class="overlay" id="overlayPost"></div>
       <div class="content" id="kontenPost">
         <div class="modal-header" id="postHeader">
@@ -389,22 +475,25 @@
           </div>        
         </form>
       </div>
-    </div>
+    </div> -->
+    <!-- BAGIAN CREATE POST -->
 
-    <!-- <div class="bottom-sheet" id="komenView">
-      <div class="overlay" id="komenOverlay"></div>
-      <div class="content" id="komenKonten">
-        <div class="modal-header" id="komenHeader">
-          <div class="drag-icon" id="komenDrag">
+    <div class="bottom-sheet" id="modalPost">
+      <div class="overlay" id="overlayPost"></div>
+      <div class="content" id="kontenPost">
+        <div class="modal-header" id="postHeader">
+          <div class="drag-icon" id="dragIconPost">
             <span></span>
           </div>
         </div>
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet quis, quam neque perferendis voluptatibus voluptas reiciendis odit. Error voluptatibus delectus ipsam nobis ullam in minus fugiat, quidem, voluptate amet praesentium.
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores magnam corrupti ipsa maiores facere earum eius, tempora, inventore recusandae dignissimos officia at repellendus consequatur modi adipisci! Mollitia veniam accusantium fuga.
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit perspiciatis, neque odio ipsam veritatis accusantium rerum porro perferendis quia illo dolorum voluptates ullam quibusdam ratione repellendus velit repellat harum ut.
-        </p>
+        <div class="sheet-body">
+
+        </div>
+        <!-- Coba Disiniii -->
       </div>
-    </div> -->
+    </div>
+
+    
     
 
     <!-- JS -->
@@ -421,14 +510,11 @@
         image.classList.toggle('zoomed');
       }
 
-      function hideshow(){
-        var div = document.getElementById("bagianreply");
-        if(div.style.display === "none"){
-          div.style.display = "block";
-        } else{
-          div.style.display = "none";
-        }
-      }
+     
+
+      // KOMEN BENTUK BARU
+
+      // KOMEN BENTUK BARU
     </script>
     <script>
       initpoin10();
