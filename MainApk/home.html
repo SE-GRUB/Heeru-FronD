@@ -115,12 +115,14 @@
 
             <div class="garisver"></div>
 
-            <div class="bagreply" id="bagreply">
-              <span class="material-symbols-outlined"> reply </span>
-              <span id="databaseJumlahReply" class="databaseJumlahReply">
-                100
-              </span>
-            </div>
+            <button id="komenBtn">
+              <div class="bagreply" id="bagreply">
+                <span class="material-symbols-outlined"> reply </span>
+                <span id="databaseJumlahReply" class="databaseJumlahReply">
+                  100
+                </span>
+              </div>
+            </button>
           </div>
 
 
@@ -333,18 +335,6 @@
       </div>
 
       <div class="row justify-content-end fixed-bottom bikinpost">
-        <!-- <button
-          type="button"
-          class="btn btn-primary col-3 ciptain"
-          data-bs-toggle="modal"
-          data-bs-target="#newpostnow"
-          >
-          
-          <span class="material-symbols-outlined">
-            stylus_note
-          </span>
-
-        </button> -->
         <button
           type="button"
           class="btn btn-primary col-3 ciptain"
@@ -357,50 +347,6 @@
 
         </button>
       </div>
-
-      <!-- <div
-        class="modal fade"
-        id="newpostnow"
-        tabindex="-1"
-        aria-labelledby="newpostnowLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header" style="display: none">
-              <h1 class="modal-title fs-5" id="newpostnowLabel">Post</h1>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body" id="isi">
-              <iframe
-                id="tulispostnya"
-                src=""
-                frameborder="0"
-                style="width: 100%; height: 80dvh"
-                class="col-12"
-              ></iframe>
-            </div>
-            <div class="modal-footer" style="display: none">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="button" class="btn btn-primary">
-                Save changes
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
 
     <div class="bottom-sheet">
       <div class="overlay"></div>
@@ -444,6 +390,21 @@
         </form>
       </div>
     </div>
+
+    <div class="bottom-sheet" id="komenView">
+      <div class="overlay" id="komenOverlay"></div>
+      <div class="content" id="komenKonten">
+        <div class="modal-header" id="komenHeader">
+          <div class="drag-icon" id="komenDrag">
+            <span></span>
+          </div>
+        </div>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Amet quis, quam neque perferendis voluptatibus voluptas reiciendis odit. Error voluptatibus delectus ipsam nobis ullam in minus fugiat, quidem, voluptate amet praesentium.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores magnam corrupti ipsa maiores facere earum eius, tempora, inventore recusandae dignissimos officia at repellendus consequatur modi adipisci! Mollitia veniam accusantium fuga.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit perspiciatis, neque odio ipsam veritatis accusantium rerum porro perferendis quia illo dolorum voluptates ullam quibusdam ratione repellendus velit repellat harum ut.
+        </p>
+      </div>
+    </div>
     
 
     <!-- JS -->
@@ -469,7 +430,82 @@
         }
       }
 
+    let btnKomen = document.querySelector("#komenBtn");
+    let bottomSheetK = document.querySelector("#komenView");
+    let overlayK = document.querySelector("#komenOverlay");
+    let contentK = document.querySelector("#komenKonten");
+    let dragIconK = document.querySelector("#komenDrag");
+    let btnAdd = document.getElementById("openBtn");
+    
+    let isDragging = false,
+    startY,
+    startHeight;
+    
+    let updateHeightK= (height) => {
+    contentK.style.height = `${height}vh`;
 
+    bottomSheetK.classList.toggle("fullscreen", height === 100);
+    };
+
+    let showSheetK = () => {
+    bottomSheetK.classList.add("show");
+    btnAdd.style.display = "none";
+    updateHeightK(50);
+
+    document.body.style.overflow = "hidden";
+    };
+
+    let hideSheetK = () => {
+    bottomSheetK.classList.remove("show");
+    btnAdd.style.display = "block";
+    document.body.style.overflow = "auto";
+    };
+
+    let dragStartK = (e) => {
+    isDragging = true;
+    bottomSheetK.classList.add("dragging");
+    //recording intitial y position and sheet height
+    startY = e.pageY || e.touches?.[0].pageY;
+    startHeight = parseInt(contentK.style.height);
+    };
+
+    let draggingK = (e) => {
+    //return if isDragging is false
+    if (!isDragging) return;
+
+    //calculating new height of sheet by using starty and start height
+    //calling updateHeight function with new height as argument
+
+    let delta = startY - (e.pageY || e.touches?.[0].pageY);
+    let newHeight = startHeight + (delta / window.innerHeight) * 100;
+
+    updateHeightK(newHeight);
+    };
+
+    let dragStopK = () => {
+    isDragging = false;
+    bottomSheetK.classList.remove("dragging");
+
+    let sheetHeight = parseInt(contentK.style.height);
+
+    sheetHeight < 25
+        ? hideSheetK()
+        : sheetHeight > 75
+        ? updateHeightK(100)
+        : updateHeightK(50);
+
+    };
+
+    dragIconK.addEventListener("mousedown", dragStartK);
+    dragIconK.addEventListener("mousemove", draggingK);
+    document.addEventListener("mouseup", dragStopK);
+
+    dragIconK.addEventListener("touchstart", dragStartK);
+    dragIconK.addEventListener("touchmove", draggingK);
+    document.addEventListener("touchend", dragStopK);
+
+    btnKomen.addEventListener("click", showSheetK);
+    overlayK.addEventListener("click", hideSheetK);
     </script>
     <script>
       initpoin10();
