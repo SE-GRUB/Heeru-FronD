@@ -1288,6 +1288,7 @@ async function initpoin10() {
 
         kotp = [];
         inp = [];
+        like();
     }
     
     await allpost();
@@ -1301,31 +1302,33 @@ async function initpoin10() {
         }
     });
 
-    document.querySelectorAll('.like-btn').forEach(btn => {
-        btn.addEventListener('click', async function() {
-            const postId = this.getAttribute('data-id');
-            const type = this.getAttribute('data-type');
-            const isActive = this.classList.contains('unlike');
-            const action = isActive ? 'like' : 'unlike';
-    
-            try {
-                await requestdata(`like?post_id=${postId}&user_id=${localStorage.getItem('user_id')}&action=${action}`);
-    
-                if (!alldata.success) {
-                    throw new Error('Failed to update like/dislike');
+    function like(){
+        document.querySelectorAll('.like-btn').forEach(btn => {
+            btn.addEventListener('click', async function() {
+                const postId = this.getAttribute('data-id');
+                const type = this.getAttribute('data-type');
+                const isActive = this.classList.contains('unlike');
+                const action = isActive ? 'like' : 'unlike';
+        
+                try {
+                    await requestdata(`like?post_id=${postId}&user_id=${localStorage.getItem('user_id')}&action=${action}`);
+        
+                    if (!alldata.success) {
+                        throw new Error('Failed to update like/dislike');
+                    }
+        
+                    this.classList.toggle('unlike');
+        
+                    const likeCountElement = document.getElementById(`databaseJumlahLike${postId}`);
+                    likeCountElement.textContent = alldata.likeCount;
+        
+                    this.setAttribute('data-type', isActive ? 'unlike' : 'like');
+                } catch (error) {
+                    console.error(error);
                 }
-    
-                this.classList.toggle('unlike');
-    
-                const likeCountElement = document.getElementById(`databaseJumlahLike${postId}`);
-                likeCountElement.textContent = alldata.likeCount;
-    
-                this.setAttribute('data-type', isActive ? 'unlike' : 'like');
-            } catch (error) {
-                console.error(error);
-            }
-        });
-    });    
+            });
+        });    
+    }
 }
 
 async function initpoin11() {
