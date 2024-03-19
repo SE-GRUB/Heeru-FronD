@@ -2209,3 +2209,68 @@ async function initpoin19(){
 
     initDetail();
 }
+
+async function initotp() {
+    var email = localStorage.getItem('email');
+    await requestdata2('otp?email=' + email); 
+    if(alldata.success){
+        var otp = alldata.otp;
+        // console.log(otp);
+        var konOTp = document.getElementById("kontainerOTP");
+        var hehe = `
+            <p><b>We send you an OTP verification code, 
+            <br> Please enter your OTP code</b></p>
+    
+        <div class="formnya">
+            <div class="mb-3">
+                    <input type="number" class="form-control" id="otpinput" placeholder="OTP code">
+                    <span id="errortext" class="text-danger hide">text</span>
+            </div>
+    
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <!-- <a href="./sign_up2.html"> -->
+                <button class="btn btn-primary" type="button" id="submitBtn">Submit</button>
+                <!-- </a> -->
+            </div>
+    
+            <div class="needhelp">
+                <a href="#">Need help?</a>
+            </div>
+        </div>
+        `
+        konOTp.innerHTML = hehe;
+
+        document.getElementById("submitBtn").addEventListener("click", async function() {
+            var inputField = document.getElementById("otpinput");
+            var errortext = document.getElementById("errortext");
+    
+            if (inputField.value.trim() === "") {
+                errortext.innerHTML = "Please input your OTP code";
+                errortext.classList.remove("hide");
+                // return false; 
+            } else {
+                try {
+                    // console.log("INPUT : " + inputField.value);
+                    if (inputField.value == otp) {
+                        errortext.classList.remove("hide");
+                        var pass = localStorage.getItem('password');
+                        // console.log(pass)
+                        if (pass == '') {
+                            localStorage.removeItem('password');
+                            window.location.href = "./setup.html";
+                        } else {
+                            localStorage.removeItem('password');
+                            window.location.href = "./login.html";
+                        }
+                    } else {
+                        errortext.innerHTML = "Error! OTP code incorrect";
+                        errortext.classList.remove("hide");
+                    }
+                } catch (error) {
+                    errortext.innerHTML('Error:', error);
+                    errortext.classList.remove("hide");
+                }
+            }
+        });
+    }
+}
