@@ -1831,7 +1831,7 @@ async function initpoin13(){
                     data: formData,
                     success: function (response) {
                         if (response.success) {
-                            window.location.href = "./Konsultasi_dokter/detail_konsul.html?id=" + document.getElementById("consultation_id").value;
+                            location.reload();
                         } else {
                             console.error('Error:', response.message);
                             errortext.innerHTML=response.message + " Please try again later.";
