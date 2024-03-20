@@ -349,6 +349,7 @@ button[type="submit"] {
   .bottom-sheet.show {
     opacity: 1;
     pointer-events: auto;
+    z-index: 999 !important;
   }
   
   .overlay {
@@ -392,7 +393,6 @@ button[type="submit"] {
     position: relative;
     transform: translateY(100%);
     transition: 0.3s ease;
-    z-index: 99 !important;
   }
 
   /* .carousel-control-next,.carousel-control-prev{
