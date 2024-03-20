@@ -186,7 +186,7 @@ function initpoin2(){
                     errortext.classList.add("hide");
                     window.location.href="./otp_signup.html";        
                 }else{
-                    inputField.value = email;
+                    // inputField.value = email;
                     errortext.innerHTML="Email is not registered, please contact your PIC"
                     errortext.classList.remove("hide")
                 }
