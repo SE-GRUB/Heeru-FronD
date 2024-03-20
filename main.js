@@ -1287,7 +1287,7 @@ async function initpoin10() {
                         data: formData,
                         success: function (response) {
                             if (response.success) {
-                                window.location.href = "./MainApk/home.html";
+                                window.location.href = "home.html";
                                 return true;
                             } else {
                                 errortext.innerHTML = "Error in creating your post!";
