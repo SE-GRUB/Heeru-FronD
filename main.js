@@ -2139,7 +2139,7 @@ async function initpoin18(){
             if (consultation.endIn) {
                 sessionStorage.setItem("uid", 'dh1');
                 kotak = `
-                <a href="./CHAT/last.html">
+                <a href="../CHAT/last.html">
                     <div class="kotak" id="OP_CON${consultation.id}">
                         <div class="tulisan">
                             <p class="status">
