@@ -392,12 +392,12 @@ button[type="submit"] {
     position: relative;
     transform: translateY(100%);
     transition: 0.3s ease;
-    z-index: 99;
+    z-index: 99 !important;
   }
 
-  .carousel-control-next,.carousel-control-prev{
-    z-index: -1 !important;
-  }
+  /* .carousel-control-next,.carousel-control-prev{
+    z-index: -1 ;
+  } */
 
   .modal-button{
     display: flex;
