@@ -1287,7 +1287,7 @@ async function initpoin10() {
                         data: formData,
                         success: function (response) {
                             if (response.success) {
-                                window.location.href = "/MainApk/home.html";
+                                window.location.href = "./MainApk/home.html";
                                 return true;
                             } else {
                                 errortext.innerHTML = "Error in creating your post!";
@@ -1831,7 +1831,7 @@ async function initpoin13(){
                     data: formData,
                     success: function (response) {
                         if (response.success) {
-                            window.location.href = "/Konsultasi_dokter/detail_konsul.html?id=" + document.getElementById("consultation_id").value;
+                            window.location.href = "./Konsultasi_dokter/detail_konsul.html?id=" + document.getElementById("consultation_id").value;
                         } else {
                             console.error('Error:', response.message);
                             errortext.innerHTML=response.message + " Please try again later.";
