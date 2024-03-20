@@ -210,6 +210,12 @@ button[type="submit"] {
     display: flex;
 }
 
+.bioyangkomen .text-danger{
+  display: flex;
+  align-items: center;
+  justify-content: center !important;
+}
+
 .photoprofile2 {
     background-color: #D6D6D6;
     width: 22px;
@@ -300,6 +306,7 @@ button[type="submit"] {
     padding: 10px;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 1.25rem;
+    z-index: 1 !important;
 }
 
 .buletin {
@@ -338,11 +345,13 @@ button[type="submit"] {
     opacity: 0;
     pointer-events: none;
     transition: 0.3s linear;
+    z-index: 999 !important;
   }
   
   .bottom-sheet.show {
     opacity: 1;
     pointer-events: auto;
+    z-index: 999 !important;
   }
   
   .overlay {
@@ -354,6 +363,24 @@ button[type="submit"] {
     background: #000;
     opacity: 0.2;
     z-index: -1;
+  }
+
+  .infoRep{
+    display: flex;
+    align-items: center;
+  }
+
+  .infoRep span{
+    margin-left: 1rem;
+  }
+
+  .repli{
+    margin-left: 2rem;
+  }
+
+  .bioyangrepli{
+    display: flex;
+    margin-left: 2rem !important;
   }
   
   .bottom-sheet .content {
@@ -369,6 +396,10 @@ button[type="submit"] {
     transform: translateY(100%);
     transition: 0.3s ease;
   }
+
+  /* .carousel-control-next,.carousel-control-prev{
+    z-index: -1 ;
+  } */
 
   .modal-button{
     display: flex;
@@ -491,6 +522,7 @@ button[type="submit"] {
     flex-direction: column;
     justify-content: flex-end;
     transition: 0.1s linear;
+    z-index: 999;
   }
   .bottom-sheets.show {
     opacity: 1;

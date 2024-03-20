@@ -9,10 +9,10 @@ var histhost;
 
 var datasession = [];
 // tanggal expired 1 bulan dari sekarang
-var histhost = 'http://127.0.0.1:8000/';    
+// var histhost = 'http://127.0.0.1:8000/';    
 // var histhost = 'http://172.16.31.107:8000/';
 // var histhost = 'http://47.245.121.87/Heeru-BackD/public/';
-// var histhost = 'https://enp.lahoras.my.id/';
+var histhost = 'https://enp.lahoras.my.id/';
 
 function poinexp() {
     try {
@@ -122,14 +122,6 @@ function timeAgo(dateString) {
     }
 }
 
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
-
 async function initpoin() {
     async function ceknip() {
         var inputField = document.getElementById("nipinput");
@@ -175,29 +167,29 @@ async function initpoin() {
 }
 
 function initpoin2(){
-    let phonenumber=localStorage.getItem('no_telp');
+    let email=localStorage.getItem('email');
 
     document.getElementById("submitBtn").addEventListener("click", function() {
-        var inputField = document.getElementById("PhoneNumberinput");
+        var inputField = document.getElementById("emailinput");
         var errortext = document.getElementById("errortext")
-        
-        var phoneNumber = inputField.value.trim();
-        if (phoneNumber === "") {
-            errortext.innerHTML="Please input your Phone Number"
-            errortext.classList.remove("hide")
-            return false;
-        }else{
-            if (phoneNumber.charAt(0) === '8') {
-                inputField.value = '0' + phoneNumber;
-            }
 
-            if (inputField.value==phonenumber) {
-                localStorage.removeItem('no_telp');
-                window.location.href="./otp_signup.html";        
+        if (inputField.value.trim() === "") {
+            errortext.innerHTML = "Please input your email address";
+            errortext.classList.remove("hide");
+        } else {
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(inputField.value)) {
+                errortext.innerHTML = "Email address is not valid";
+                errortext.classList.remove("hide");
             }else{
-                inputField.value = phoneNumber;
-                errortext.innerHTML="Phone number is not registered, please contact your PIC"
-                errortext.classList.remove("hide")
+                if (inputField.value==email) {
+                    errortext.classList.add("hide");
+                    window.location.href="./otp_signup.html";        
+                }else{
+                    // inputField.value = email;
+                    errortext.innerHTML="Email is not registered, please contact your PIC"
+                    errortext.classList.remove("hide")
+                }
             }
         }
     });
@@ -211,12 +203,12 @@ function initpoin3() {
     dataNama.innerHTML = names;
 
     document.addEventListener('DOMContentLoaded', function() {
-        var emailInput = document.getElementById("emailinput");
-        var storedEmail = localStorage.getItem('email');
-        if (storedEmail !== null) {
-            emailInput.value = storedEmail;
-            localStorage.removeItem('email');
-        }
+        // var emailInput = document.getElementById("emailinput");
+        // var storedEmail = localStorage.getItem('email');
+        // if (storedEmail !== null) {
+        //     emailInput.value = storedEmail;
+        //     localStorage.removeItem('email');
+        // }
 
         var togglePassword = document.getElementById('togglePassword');
         var togglePassword2 = document.getElementById('togglePassword2');
@@ -268,13 +260,11 @@ function initpoin3() {
 
     document.getElementById("submitBtn").addEventListener("click", async function() {
         var username = document.getElementById('usernameInput');
-        var email = document.getElementById("emailinput");
         var password = document.getElementById('passwordinput');
         var password_confirmation = document.getElementById('passwordconfirmationinput');
         var profile_pic = document.getElementById('fileInput');
 
         var errortext0=document.getElementById("errortext0");
-        var errortext=document.getElementById("errortext");
         var errortext2=document.getElementById("errortext2");
         var errortext3=document.getElementById("errortext3");   
 
@@ -290,22 +280,6 @@ function initpoin3() {
                 errortext0.classList.remove("hide");
             }
         }        
-        
-
-        if (email.value.trim() === "") {
-            errortext.innerHTML = "Please input your email address";
-            errortext.classList.remove("hide");
-            // return false;
-        } else {
-            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email.value)) {
-                errortext.innerHTML = "Email address is not valid";
-                errortext.classList.remove("hide");
-                // return false;
-            }else{
-                errortext.classList.add('hide');
-            }
-        }
 
         if (password.value.trim() === "") {
             errortext2.innerHTML="Please input your Password"
@@ -351,7 +325,7 @@ function initpoin3() {
                 }
         }
 
-        if(errortext.classList.contains("hide") && errortext0.classList.contains("hide") && errortext2.classList.contains("hide") && errortext3.classList.contains("hide")){
+        if(errortext0.classList.contains("hide") && errortext2.classList.contains("hide") && errortext3.classList.contains("hide")){
             profile_pic = profile_pic.files[0];
 
             var formData = new FormData();
@@ -371,8 +345,7 @@ function initpoin3() {
                     if (response.success) {
                         window.location.href = "./MainApk/home.html";
                         return true;
-                    } else {
-                        // console.error('Error:', response.message);
+                    } else {;
                         errortext3.innerHTML = "Error in updating your data!";
                         errortext3.classList.remove("hide");
                     }
@@ -798,8 +771,51 @@ async function initpoin9() {
         document.getElementById("imghip").src = data.imghip;
     }
 
+    
+    await requestdata('counselorList');
+    function initPopular() {
+        // console.log("masuk function")
+        // await requestdata('counselorList');
+        var ul = document.getElementById('carouselExample');
+        var template = ''; 
+        alldata.users.forEach(index => {
+            console.log(index)
+            var id = index.user_id;
+            var name = index.name;
+            var rating = index.rating;
+            var fare = index.fare;
+            var profile_pic = index.profile_pic;
+            profile_pic=profile_pic ? histhost+profile_pic: histhost+'Admin/images/profile.jpg'
+            template += `
+            <li class="carousel inner card dpilist" id="${id}">
+                <img class="dct_img" src="${profile_pic}">
+                <div class="NamaJob">
+                    <h5>${name}</h5>
+                    <div class="rating">
+                        <i data-rating="${rating}">
+                            <span>${rating}</span>
+                        </i>
+                    </div>
+                    <p>${formatCurrency(parseFloat(fare))}</p>
+                </div>
+            </li>
+            `
+        }); 
+        ul.innerHTML = template;
+        var dpilist = document.getElementsByClassName('dpilist');  
+        for (var i = 0; i < dpilist.length; i++) {
+            dpilist[i].addEventListener('click', function(e) {
+                var id = this.id
+                sessionStorage.setItem('dokter_id', id);
+                window.location.href = `./detail_dokter.html?id=${id}`;
+            });
+        }
+    }
+
+    initPopular();
+
     $('.owl-carousel').owlCarousel({
-        loop:false,
+        loop:true,
         margin:5,
         nav:false,
         responsive:{
@@ -815,35 +831,6 @@ async function initpoin9() {
         }
     })
 
-    async function initPopular() {
-        // console.log("masuk function")
-        await requestdata('counselorList');
-        var ul = document.getElementById('carouselExamplePopular');
-        var template = ''; 
-        for (const index of alldata.users) {
-            var id = index.user_id;
-            var name = index.name;
-            var rating = index.rating;
-            var fare = index.fare;
-            var profile_pic = index.profile_pic;
-            profile_pic = profile_pic ? histhost + profile_pic : histhost + 'Admin/images/profile.jpg'
-            template += `
-            <li class="carousel inner card dpilist" id="${id}">
-                <img class="dct_img" src="${profile_pic}">
-                <div class="NamaJob">
-                    <h5>${name}</h5>
-                    <div class="rating">
-                        <i data-rating="${rating}">
-                            <span>${rating}</span>
-                        </i>
-                    </div>
-                    <p>${formatCurrency(parseFloat(fare))}</p>
-                </div>
-            </li>
-            `
-        };
-        ul.innerHTML = template;
-    }
 
     async function initskj() {
         var jadwal = {
@@ -915,437 +902,77 @@ async function initpoin9() {
     await initskj();
     document.getElementById("Test_DatetimeLocal").addEventListener("change", await initskj);
     document.getElementById("orderpay").addEventListener("click", await generatepaymend);
-    await initPopular();
     initdokter(data);
 }
 
 async function initpoin10() {   
-    let sheetBody = document.querySelector(".sheet-body")
-    let btn2 = document.querySelector(".show-btn");
-    let btn = document.querySelector("#openBtn");
-    let bottomSheet = document.querySelector("#modalPost");
-    let overlay = document.querySelector("#overlayPost");
-    let content = document.querySelector("#kontenPost");
-    let dragIcon = document.querySelector("#dragIconPost");
-    
-    let isDragging = false,
-    startY,
-    startHeight;
-    
-    let updateHeight = (height) => {
-    content.style.height = `${height}vh`;
-
-    bottomSheet.classList.toggle("fullscreen", height === 100);
-    };
-
-    let showSheet = async () => {
-        bottomSheet.classList.add("show");
-        btn.style.display = "none";
-        updateHeight(50);
-        document.body.style.overflow = "hidden";
-
-        let addPostDiv = `
-        <form id="postForm" enctype="multipart/form-data">
-            <div class="modal-button">
-            <button type="button" class="postBtn" id="btnPost">Post</button>
-            </div>
-            <div class="modal-body">
-            <div class="community-post" id="containerPreview" style="display: none;">
-                <div class="image-container">
-                <img src="" id="imagePreview" alt="Community Post Image" class="post-image" onclick="zoomImage(this)">
-                </div>
-            </div>            
-            <div class="container-info">
-                <div class="containerfoto">
-                <img
-                    id="ppModal"
-                    class="photoprofile rounded-circle"
-                    src="https://static.wikia.nocookie.net/naruto/images/7/70/Naruto_newshot.jpg/revision/latest/scale-to-width-down/1200?cb=20141107130405&path-prefix=id"
-                    alt=""
-                />
-                </div>            
-                <div class="container-isi">
-                <textarea placeholder="What do you think ?" class="texta" id="postBody"></textarea>
-                <span id="errortext" class="text-danger hide">text</span>
-                </div>
-            </div>
-            </div>
-            <div class="row justify-content-end fixed-bottom bikinpost">
-            <label for="postImage" class="btn btn-primary col-3 ciptain">
-                <input type="file" id="postImage" class="d-none" accept="image/*">
-                <span class="material-symbols-outlined ciptains">add_photo_alternate</span>
-            </label>
-            </div>        
-        </form>
-        `
-        sheetBody.innerHTML = addPostDiv;
-
-        var user_id = localStorage.getItem("user_id");
-
-        await requestdata(`pponly?user_id=${user_id}`);
-        console.log(alldata.pp)
-        var ppPost = alldata.pp['profile_pic'];
-        ppPost = ppPost ? histhost + ppPost : histhost + 'Admin/images/profile.jpg';
-        document.getElementById("ppModal").src = ppPost;
-
-        let posterContainer = document.querySelector("#containerPreview");
-        document.getElementById('postImage').addEventListener('change', function() {
-            updateHeight(98);
-            posterContainer.style.display = 'block';
-            var file = this.files[0];
-            var reader = new FileReader();
-            
-            reader.onload = function(e) {
-                document.getElementById('imagePreview').src = e.target.result;
-            }
-
-            reader.readAsDataURL(file);
-        });   
-
-
-        document.getElementById("btnPost").addEventListener("click", async function() {
-            var poster = document.getElementById("postImage");
-            var post_body = document.getElementById("postBody");
-
-            var errortext=document.getElementById("errortext");
-
-            if (post_body.value.trim() === "") {
-                errortext.innerHTML = "Please input your post!";
-                errortext.classList.remove("hide");
-            } else {
-                errortext.classList.add("hide");
-                var formData = new FormData();
-                if(poster.files.length != 0){
-                    poster = poster.files[0];
-                    formData.append('poster', poster);
-                }
-                formData.append('post_body', post_body.value);
-                formData.append('user_id', user_id);
-        
-                await $.ajax({
-                    url: `${histhost}api/createPost`,
-                    method: 'POST',
-                    processData: false,
-                    contentType: false,
-                    data: formData,
-                    success: function (response) {
-                        if (response.success) {
-                            window.location.href = "./MainApk/home.html";
-                            return true;
-                        } else {
-                            errortext.innerHTML = "Error in creating your post!";
-                            errortext.classList.remove("hide");
-                        }
-                    },
-                });
-            }
-            
-        });
-    };
-
-    let showSheets = async () => {
-        bottomSheet.classList.add("show");
-        btn.style.display = "none";
-        updateHeight(70);
-        document.body.style.overflow = "hidden";
-    
-        let showKomen = `
-        <div class="bioyangkomen row" id="komenField">
-
-            <!-- KOMEN -->
-            <div class="col-1">
-              <div class="containerfoto">
-                <img
-                  id="profileImage"
-                  class="photoprofile2 rounded-circle"
-                  src="https://static.wikia.nocookie.net/naruto/images/7/70/Naruto_newshot.jpg/revision/latest/scale-to-width-down/1200?cb=20141107130405&path-prefix=id"
-                  alt=""
-                />
-              </div>
-            </div>
-
-            <div class="bagiantext col-11">
-              <span id="isikomen" class="isikomen">
-                <span id="databaseName" class="databaseName namekomen">
-                  Nama yang Komen</span>
-                <br>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Cupiditate doloremque itaque ex
-              </span>
-
-              <br>
-
-              <span id="waktukomen" class="waktukomen">
-                10m   ·  
-              </span>
-
-              <button class="tombolreply" id="tombolreply">
-                Reply
-              </button>
-
-              <br>
-
-              <button class="hideshow" id="tombolreply"">
-                — View Reply
-              </button>
-            </div>
-
-            <!-- KOMEN -->
-            
-            <!-- REPLY KOMEN -->
-            <div class="bagianreply" id="bagianreply">
-              <div class="bagiantext col-12">
-                <span id="isireply" class="isireply">
-                  <span id="databaseName" class="databaseName namekomen">
-                    Nama yang reply</span>
-                  <br>
-                  <span id="namayangngepost" class="namayangngepost">
-                    @namayangngepost
-                  </span>
-                  Lorem ipsum dolor sit amet ssss consectetur adipisicing elit.
-                  Cupiditate doloremque itaque ex.
-                </span>
-              </div>
-
-              <br>
-            </div>
-
-            <!-- REPLY KOMEN -->
-            
-            <div class="col-1">
-              <div class="containerfoto">
-                <img
-                  id="profileImage"
-                  class="photoprofile2 rounded-circle"
-                  src="https://static.wikia.nocookie.net/naruto/images/7/70/Naruto_newshot.jpg/revision/latest/scale-to-width-down/1200?cb=20141107130405&path-prefix=id"
-                  alt=""
-                />
-              </div>
-            </div>
-
-            <div class="bagiantext col-11">
-              <span id="isikomen" class="isikomen">
-                <span id="databaseName" class="databaseName namekomen">
-                  Nama yang Komen</span>
-                <br>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Cupiditate doloremque itaque ex
-              </span>
-
-              <br>
-
-              <span id="waktukomen" class="waktukomen">
-                10m   ·  
-              </span>
-
-              <button class="tombolreply" id="tombolreply2">
-                Reply
-              </button>
-
-              <br>
-
-              <button class="hideshow" id="tombolreply2"">
-                — View Reply
-              </button>
-            </div>
-
-            <div class="buatreply">
-              <textarea 
-              type="textarea" 
-              class="inputreply col-10"
-              placeholder="Add comment..."></textarea>
-              
-              <button class="ngepost col-2">
-                Post
-              </button>
-            </div>
-            
-
-          </div>
-        `
-        sheetBody.innerHTML = showKomen;
-
-        document.querySelectorAll('.hideshow').forEach(element => {
-            element.addEventListener("click", function () {
-                var div = document.getElementById("bagianreply");
-                if (div.style.display === "none") {
-                    div.style.display = "block";
-                } else {
-                    div.style.display = "none";
-                }
-            });
-        });
-        
-
-        
-    };
-
-    let hideSheet = () => {
-    bottomSheet.classList.remove("show");
-    btn.style.display = "block";
-    document.body.style.overflow = "auto";
-    };
-
-    let dragStart = (e) => {
-    isDragging = true;
-    bottomSheet.classList.add("dragging");
-    startY = e.pageY || e.touches?.[0].pageY;
-    startHeight = parseInt(content.style.height);
-    };
-
-    let dragging = (e) => {
-    if (!isDragging) return;
-    let delta = startY - (e.pageY || e.touches?.[0].pageY);
-    let newHeight = startHeight + (delta / window.innerHeight) * 100;
-    updateHeight(newHeight);
-    };
-
-    let dragStop = () => {
-    isDragging = false;
-    bottomSheet.classList.remove("dragging");
-    let sheetHeight = parseInt(content.style.height);
-
-    sheetHeight < 25
-        ? hideSheet()
-        : sheetHeight > 75
-        ? updateHeight(100)
-        : updateHeight(70);
-    };
-
-    dragIcon.addEventListener("mousedown", dragStart);
-    dragIcon.addEventListener("mousemove", dragging);
-    document.addEventListener("mouseup", dragStop);
-
-    dragIcon.addEventListener("touchstart", dragStart);
-    dragIcon.addEventListener("touchmove", dragging);
-    document.addEventListener("touchend", dragStop);
-
-    btn.addEventListener("click", showSheet);
-    btn2.addEventListener("click", showSheets);
-    overlay.addEventListener("click", hideSheet);
-
-    // let btnAdd = document.querySelector("#openBtn");
-    // Modal Komen
-    // let btnKomenOpen = document.querySelector("#komenBtn");
-    // let bottomSheetK = document.querySelector("#komenView");
-    // let overlayK = document.querySelector("#komenOverlay");
-    // let contentK = document.querySelector("#komenKonten");
-    // let dragIconK = document.querySelector("#komenDrag");
-    
-    // let isDraggingK = false,
-    // startYK,
-    // startHeightK;
-    
-    // let updateHeightK = (height) => {
-    // contentK.style.height = `${height}vh`;
-    // bottomSheetK.classList.toggle("fullscreen", height === 100);
-    // };
-
-    // let showSheetK = () => {
-    // console.log("OPEN KOMEN");
-    // bottomSheetK.classList.add("show");
-    // // btnKomen.style.display = "none";
-    // updateHeightK(50);
-    // document.body.style.overflow = "hidden";
-    // };
-
-    // let hideSheetK = () => {
-    // console.log("HIDE KOMEN");
-    // bottomSheetK.classList.remove("show");
-    // // btnKomen.style.display = "block";
-    // document.body.style.overflow = "auto";
-    // };
-
-    // let dragStartK = (e) => {
-    // isDraggingK = true;
-    // bottomSheetK.classList.add("dragging");
-    // startYK = e.pageY || e.touches?.[0].pageY;
-    // startHeightK = parseInt(contentK.style.height);
-    // };
-
-    // let draggingK = (e) => {
-    // if (!isDraggingK) return;
-    // let delta = startYK - (e.pageY || e.touches?.[0].pageY);
-    // let newHeight = startHeightK + (delta / window.innerHeight) * 100;
-    // updateHeightK(newHeight);
-    // };
-
-    // let dragStopK = () => {
-    // isDraggingK = false;
-    // bottomSheetK.classList.remove("dragging");
-
-    // let sheetHeightK = parseInt(contentK.style.height);
-
-    // sheetHeightK < 25
-    //     ? hideSheetK()
-    //     : sheetHeightK > 75
-    //     ? updateHeightK(100)
-    //     : updateHeightK(50);
-
-    // };
-
-    // dragIconK.addEventListener("mousedown", dragStartK);
-    // dragIconK.addEventListener("mousemove", draggingK);
-    // document.addEventListener("mouseup", dragStopK);
-
-    // dragIconK.addEventListener("touchstart", dragStartK);
-    // dragIconK.addEventListener("touchmove", draggingK);
-    // document.addEventListener("touchend", dragStopK);
-
-    // btnKomenOpen.addEventListener("click", showSheetK);
-    // overlayK.addEventListener("click", hideSheetK);
-
     var badanpost = document.getElementById('badanpost');
     var kotp = [];
     var inp = [];
 
     async function loadReply(comment_id){
-        await requestdata('showReply?id='+comment_id);
-        var replies = alldata.replies;
-        for (const singlereply of replies) {
+        await requestdata3('showReply?id='+comment_id);
+        if(alldata.success){
+            var replies = alldata.replies;
+            var replyElements = [];
+            for (const singlereply of replies) {
+                var reply = singlereply.reply;
+                var namareply = singlereply.username;
+                var profilkomen = singlereply.profile_pic ? histhost + singlereply.profile_pic : histhost + 'Admin/images/profile.jpg';
+                var created_at = timeAgo(singlereply.created_at);
+                var tag = singlereply.tag;
 
-            var reply = alldata.singlereply.reply;
-            var namareply = alldata.singlereply.username;
-            var profilkomen = alldata.singlereply.profile_pic ? histhost + oneonone.profilkomen : histhost + 'Admin/images/profile.jpg';
-            var created_at = alldata.singlereply.created_at;
-            var tag = alldata.singlereply.tag;
+                var load =  `
+                    <div class="col-11 infoRep">
+                        <div class="containerfoto">
+                            <img
+                                class="photoprofile2 rounded-circle"
+                                src="${profilkomen}"
+                                alt=""
+                            />
+                        </div>
+                        <span id="databaseName" class="databaseName namekomen">
+                            ${namareply}</span>
+                    </div>
 
-            var load =  `
-                <div class="bagiantext col-11">
-                <span id="isikomen" class="isikomen">
-                <span id="databaseName" class="databaseName namekomen">
-                    ${namareply }</span>
-                <br>
-
-                <span id="namayangngepost" class="namayangngepost">
-                    ${tag }
-                </span>
-                    ${reply }
-                </span>
-
-                <br>
-
-                <button class="tombolreply" id="tombolreply">
-                Reply
-                </button>
-            </div>
-
-            `;
-            
+                    <div class="bagiantext col-11 repli">
+                    <span id="isikomen" class="isikomen">
+                        <span id="namayangngepost" class="namayangngepost">
+                            ${tag}
+                        </span>
+                        ${reply }
+                    </span>
+                    <br>
+                    <span id="waktukomen" class="waktukomen">
+                        ${created_at}   ·  
+                    </span>
+                    <br>
+                </div>
+                `;
+                replyElements += load
+            }
+            return replyElements;
+        }else{
+            return '';
         }
     }
 
-    async function showcomments(post_Id){
-        await requestdata('showComment?id='+ post_Id);
-        if(alldata.success){
-            return alldata.comments.map(oneonone => {
-                var id = oneonone.comment_id;
-                var comment = oneonone.comment;
-                var username = oneonone.username;
-                var profile_pic = oneonone.profile_pic ? histhost + oneonone.profile_pic : histhost + 'Admin/images/profile.jpg';
-                // var reply = loadReply(oneonone.comment_id);
-                var reply = '';
-                return `
+    async function showcomments(post_Id) {
+        await requestdata3('showComment?id=' + post_Id);
+        let html = ''; 
+        if (alldata.success) {
+            for (let i = 0; i < alldata.comments.length; i++) {
+                let oneonone = alldata.comments[i];
+                let id = oneonone.comment_id;
+                let comment = oneonone.comment;
+                let username = oneonone.username;
+                let time = timeAgo(oneonone.time);
+                let profile_pic = oneonone.profile_pic ? histhost + oneonone.profile_pic : histhost + 'Admin/images/profile.jpg';
+                let hasReplies = oneonone.hasReplies;
+                // var reply = await loadReply(oneonone.comment_id);
+                // let reply = ''; // Define reply here
+    
+                html += `
                     <span class="row">
                         <div class="garis"></div>
                         <div class="col-1">
@@ -1358,15 +985,27 @@ async function initpoin10() {
                                 <span id="databaseName" class="databaseName namekomen">${username}</span>
                                 ${comment}
                             </span>
+                            <br>
+                            <span id="waktukomen" class="waktukomen">
+                                ${time}  ·  
+                            </span>
+    
+                            <button class="tombolreply" id="tombolreply${id}">
+                                Reply
+                            </button>
+    
+                            <br>
+    
+                            ${hasReplies ? 
+                                `<button class="hideshow" id="tombolViewRep${id}">
+                                — View Reply
+                                </button>` : '' }
                         </div>
-                        <div class="bioyangkomen row" id="komenField${id}">
-                       ${reply}
-                    </div>
+                        <div class="bioyangrepli row" id="komenField${id}"></div>
                     </span>`;
-            }).join('');
-        }else{
-            return '';
+            }
         }
+        return html;
     }    
 
     async function loadMorePosts(currentPage) {
@@ -1387,7 +1026,7 @@ async function initpoin10() {
             var timelib = timeAgo(created_at);
             var name = singgaldatapost.name;
             var totalcomend = singgaldatapost.totalcomments;
-            var comment = await showcomments(singgaldatapost.post_id);
+            // var comment = await showcomments(singgaldatapost.post_id);
             var isLiked = singgaldatapost.isLiked;
     
             var loadkonten = `
@@ -1415,20 +1054,21 @@ async function initpoin10() {
                         <span class="material-symbols-outlined like-btn ${isLiked ? '' : 'unlike'}" data-id="${id}" data-type="${isLiked ? 'unlike' : 'like'}"> favorite </span>
                         <span id="databaseJumlahLike${id}" class="databaseJumlahLike">${like}</span>
                     </div>            
-                    <div class="bagreply">
+                    <div class="garisver"></div>
+
+                    <button class="show-btn" id="${id}">
+                    <div class="bagreply" id="bagreply">
                         <span class="material-symbols-outlined"> reply </span>
-                        <span id="databaseJumlahReply${id}" class="databaseJumlahReply">${totalcomend}</span>
+                        <span id="databaseJumlahReply" class="databaseJumlahReply">
+                            ${totalcomend}
+                        </span>
                     </div>
-                </div>
-                <div class="bioyangkomen row" id="komenField${id}">
-                    ${comment}
+                    </button>
                 </div>
             </div>`;
-    
             if (index === posting.length - 1) {
                 loadkonten += '<div class="spinner" id="spin"></div>';
             }
-    
             kotp.push(loadkonten);
         }
     }    
@@ -1522,8 +1162,9 @@ async function initpoin10() {
         kotp = [];
         inp = [];
         like();
+        komenkomen();
     }
-    
+
     await allpost();
 
     var isFetching = false;
@@ -1534,6 +1175,326 @@ async function initpoin10() {
             isFetching = false;
         }
     });
+
+    function komenkomen(){
+        let sheetBody = document.querySelector(".sheet-body")
+        let btns = document.querySelectorAll(".show-btn");
+        let btn = document.querySelector("#openBtn");
+        let bottomSheet = document.querySelector("#modalPost");
+        let overlay = document.querySelector("#overlayPost");
+        let content = document.querySelector("#kontenPost");
+        let dragIcon = document.querySelector("#dragIconPost");
+        
+        let isDragging = false,
+        startY,
+        startHeight;
+        
+        let updateHeight = (height) => {
+        content.style.height = `${height}vh`;
+
+        bottomSheet.classList.toggle("fullscreen", height === 100);
+        };
+
+        async function showSheet (){
+            bottomSheet.classList.add("show");
+            btn.style.display = "none";
+            updateHeight(50);
+            document.body.style.overflow = "hidden";
+
+            let addPostDiv = `
+            <form id="postForm" enctype="multipart/form-data">
+                <div class="modal-button">
+                <button type="button" class="postBtn" id="btnPost">Post</button>
+                </div>
+                <div class="modal-body">
+                <div class="community-post" id="containerPreview" style="display: none;">
+                    <div class="image-container">
+                    <img src="" id="imagePreview" alt="Community Post Image" class="post-image" onclick="zoomImage(this)">
+                    </div>
+                </div>            
+                <div class="container-info">
+                    <div class="containerfoto">
+                    <img
+                        id="ppModal"
+                        class="photoprofile rounded-circle"
+                        src=""
+                        alt=""
+                    />
+                    </div>            
+                    <div class="container-isi">
+                    <textarea placeholder="What do you think ?" class="texta" id="postBody"></textarea>
+                    <span id="errortext" class="text-danger hide">text</span>
+                    </div>
+                </div>
+                </div>
+                <div class="row justify-content-end fixed-bottom bikinpost">
+                <label for="postImage" class="btn btn-primary col-3 ciptain">
+                    <input type="file" id="postImage" class="d-none" accept="image/*">
+                    <span class="material-symbols-outlined ciptains">add_photo_alternate</span>
+                </label>
+                </div>        
+            </form>
+            `
+            sheetBody.innerHTML = addPostDiv;
+
+            var user_id = localStorage.getItem("user_id");
+
+            await requestdata(`pponly?user_id=${user_id}`);
+            // console.log(alldata.pp)
+            var ppPost = alldata.pp['profile_pic'];
+            ppPost = ppPost ? histhost + ppPost : histhost + 'Admin/images/profile.jpg';
+            document.getElementById("ppModal").src = ppPost;
+
+            let posterContainer = document.querySelector("#containerPreview");
+            document.getElementById('postImage').addEventListener('change', function() {
+                updateHeight(98);
+                posterContainer.style.display = 'block';
+                var file = this.files[0];
+                var reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    document.getElementById('imagePreview').src = e.target.result;
+                }
+
+                reader.readAsDataURL(file);
+            });   
+
+
+            document.getElementById("btnPost").addEventListener("click", async function() {
+                var poster = document.getElementById("postImage");
+                var post_body = document.getElementById("postBody");
+
+                var errortext=document.getElementById("errortext");
+
+                if (post_body.value.trim() === "") {
+                    errortext.innerHTML = "Please input your post!";
+                    errortext.classList.remove("hide");
+                } else {
+                    errortext.classList.add("hide");
+                    var formData = new FormData();
+                    if(poster.files.length != 0){
+                        poster = poster.files[0];
+                        formData.append('poster', poster);
+                    }
+                    formData.append('post_body', post_body.value);
+                    formData.append('user_id', user_id);
+            
+                    await $.ajax({
+                        url: `${histhost}api/createPost`,
+                        method: 'POST',
+                        processData: false,
+                        contentType: false,
+                        data: formData,
+                        success: function (response) {
+                            if (response.success) {
+                                window.location.href = "./MainApk/home.html";
+                                return true;
+                            } else {
+                                errortext.innerHTML = "Error in creating your post!";
+                                errortext.classList.remove("hide");
+                            }
+                        },
+                    });
+                }
+                
+            });
+        };
+
+        let showSheets = async (id) => {
+            bottomSheet.classList.add("show");
+            btn.style.display = "none";
+            updateHeight(70);
+            document.body.style.overflow = "hidden";
+            sheetBody.innerHTML=`
+                <div id="loadingContainer">
+                    <div class="spinner" id="spin"></div>
+                </div>
+
+            `
+            var comment = await showcomments(id);
+            var loadingContainer = document.getElementById("loadingContainer");
+            loadingContainer.parentNode.removeChild(loadingContainer);
+            let showKomen = `
+                <div class="bioyangkomen row" id="komenField">
+                    ${comment}
+                    <div class="buatreply">
+                    <textarea 
+                    type="textarea" 
+                    class="inputreply col-10"
+                    id="postInput"
+                    data-id="${id}"
+                    data-type="komen"
+                    placeholder="Add comment..."></textarea>
+                    
+                    <button class="ngepost col-2" id="btnInputPost">
+                        Post
+                    </button>
+                    </div>
+                    <span id="errortext0" class="text-danger hide"></span>
+                </div>
+            `
+            sheetBody.innerHTML = showKomen;
+
+            document.querySelectorAll('.hideshow').forEach(element => {
+                element.addEventListener("click", async function () {
+                    let id = element.id.match(/\d+/)[0];
+                    // console.log(id);
+                    var div = document.getElementById("komenField" + id);
+                    element.innerHTML=`
+                    <div class="spinner" id="spin"></div>
+                    `
+                    div.innerHTML = await loadReply(id);
+                    if (div.style.display === "none") {
+                        div.style.display = "block";
+                        element.textContent = " — Hide Reply";
+                    } else {
+                        div.style.display = "none";
+                        element.textContent = " — View Reply";
+                    }
+                });
+            });
+
+            var div = document.getElementById("postInput");
+            document.querySelectorAll('.tombolreply').forEach(element => {
+                element.addEventListener("click", async function () {
+                    let id = element.id.match(/\d+/)[0];
+                    // console.log(id);
+                    element.innerHTML=`
+                    <div class="spinner" id="spin"></div>
+                    `
+                    await requestdata3('tag?comment_id='+id)
+                    var spinnerElement = document.getElementById("spin");
+                    spinnerElement.parentNode.removeChild(spinnerElement);
+                    if(alldata.success){
+                        element.innerText = "Reply"
+                        div.value = `${alldata.tag} `;
+                        div.selectionStart = div.selectionEnd = div.value.length;
+                        div.focus();
+                        div.setAttribute("data-id", id);
+                        div.setAttribute("data-type", "reply");
+                    }
+                });
+            });
+
+            document.getElementById("btnInputPost").addEventListener( 'click', async function(){ 
+                // console.log("CLicked");
+                var value = div.value;
+                // console.log("value : " + value)
+                var regex = /@\S+/;
+                var isMatch = regex.test(value);
+                // console.log("Match : " + isMatch);
+                var errortext0 = document.getElementById('errortext0');
+                var jenis = div.getAttribute("data-type");
+                // console.log(jenis)
+                if(value.trim() === ''){
+                    errortext0.innerHTML = "Please  enter any comment!";
+                    errortext0.classList.remove("hide");
+                }else{
+                    errortext0.classList.add("hide");
+                }
+        
+                if (!isMatch) {
+                    var post_id = div.getAttribute("data-id");
+                    div.setAttribute("data-type", "komen");
+                    div.setAttribute("data-id", post_id);
+                } else {
+                    var match = value.match(/^[^ ]+/);;
+                    var tagValue = match[0];
+                    // console.log("TAG : " + tagValue);
+                    if(tagValue !== (alldata.tag)){
+                        // console.error("Format error: Teks tidak sesuai dengan format yang diharapkan.");
+                        // console.log("Tag invalid");
+                        errortext0.innerHTML = "Invalid tag"
+                        errortext0.classList.remove("hide");
+                    }else{
+                        if(value <= (alldata.tag + ' ')){
+                            errortext0.innerHTML = "Please  enter any replies!";
+                            errortext0.classList.remove("hide");
+                        }else{
+                            errortext0.classList.add("hide");
+                        }
+                    }
+                }
+                
+
+                if(errortext0.classList.contains("hide")){
+                    var user_id = localStorage.getItem('user_id')
+                    // console.log("SIAP KIRIM");
+                    if(jenis === "reply"){
+                        var comment_id = div.getAttribute("data-id");
+                        var value = div.value.trim();
+                        var match = value.match(/^[^ ]+\s(.+)/);
+                        var reply = match[1];
+                        await requestdata(`createReply?user_id=${user_id}&comment_id=${comment_id}&reply=${reply}`)
+                        if(alldata.success){
+                            showSheets(id)
+                        }else{
+                            errortext0.innerHTML = alldata.message;
+                            errortext0.classList.remove("hide");
+                        }
+                       
+                    }else if(jenis === "komen"){
+                        var post_id = div.getAttribute("data-id");
+                        await requestdata(`createComment?user_id=${user_id}&post_id=${post_id}&comment=${value}`)
+                        if(alldata.success){
+                            showSheets(post_id)
+                        }else{
+                            errortext0.innerHTML = alldata.message;
+                            errortext0.classList.remove("hide");
+                        }
+                    }
+                }
+             });
+            
+        };
+
+        let hideSheet = () => {
+        bottomSheet.classList.remove("show");
+        btn.style.display = "block";
+        document.body.style.overflow = "auto";
+        };
+
+        let dragStart = (e) => {
+        isDragging = true;
+        bottomSheet.classList.add("dragging");
+        startY = e.pageY || e.touches?.[0].pageY;
+        startHeight = parseInt(content.style.height);
+        };
+
+        let dragging = (e) => {
+        if (!isDragging) return;
+        let delta = startY - (e.pageY || e.touches?.[0].pageY);
+        let newHeight = startHeight + (delta / window.innerHeight) * 100;
+        updateHeight(newHeight);
+        };
+
+        let dragStop = () => {
+        isDragging = false;
+        bottomSheet.classList.remove("dragging");
+        let sheetHeight = parseInt(content.style.height);
+
+        sheetHeight < 25
+            ? hideSheet()
+            : sheetHeight > 75
+            ? updateHeight(100)
+            : updateHeight(70);
+        };
+
+        dragIcon.addEventListener("mousedown", dragStart);
+        dragIcon.addEventListener("mousemove", dragging);
+        document.addEventListener("mouseup", dragStop);
+
+        dragIcon.addEventListener("touchstart", dragStart);
+        dragIcon.addEventListener("touchmove", dragging);
+        document.addEventListener("touchend", dragStop);
+
+        btn.addEventListener("click", showSheet);
+        btns.forEach(btn2 => {
+            let id = btn2.id;
+            btn2.addEventListener("click", () => showSheets(id));
+        });
+        overlay.addEventListener("click", hideSheet);
+    }
 
     function like(){
         document.querySelectorAll('.like-btn').forEach(btn => {
@@ -1603,7 +1564,7 @@ async function initpoin11() {
                         Username
                     </div>
                     <span id="userName" class="daridata">
-                        @${alldata.user.username}
+                        ${alldata.user.username}
                     </span>
 
                     <div class="jenis">
@@ -1870,7 +1831,7 @@ async function initpoin13(){
                     data: formData,
                     success: function (response) {
                         if (response.success) {
-                            window.location.href = "/Konsultasi_dokter/detail_konsul.html?id=" + document.getElementById("consultation_id").value;
+                            window.location.href = "./Konsultasi_dokter/detail_konsul.html?id=" + document.getElementById("consultation_id").value;
                         } else {
                             console.error('Error:', response.message);
                             errortext.innerHTML=response.message + " Please try again later.";
@@ -2073,7 +2034,7 @@ async function initpoin17(){
         var onprogressContent = '';
         alldata.reports.forEach(report => {
             var kotak = `
-            <a href="/MainApk/Laporan/detailRiwayatLaporan.html?report_id=${report.id}">
+            <a href="./MainApk/Laporan/detailRiwayatLaporan.html?report_id=${report.id}">
                 <div class="kotak" id="OP${report.id}">
                     <div class="tulisan">
                         <p class="status">${report.isProcess == 0 ? 'Report Submitted' : 'Report Under Review'}</p>
@@ -2098,7 +2059,7 @@ async function initpoin17(){
         var doneContent = '';
         alldata.reports.forEach(report => {
             var kotak = `
-            <a href="/MainApk/Laporan/detailRiwayatLaporan.html?report_id=${report.id}">
+            <a href="./MainApk/Laporan/detailRiwayatLaporan.html?report_id=${report.id}">
                 <div class="kotak" id= "D${report.id}" >
                     <div class="tulisan">
                         <p class="status">Done</p>
@@ -2178,7 +2139,7 @@ async function initpoin18(){
             if (consultation.endIn) {
                 sessionStorage.setItem("uid", 'dh1');
                 kotak = `
-                <a href="/CHAT/last.html">
+                <a href="./CHAT/last.html">
                     <div class="kotak" id="OP_CON${consultation.id}">
                         <div class="tulisan">
                             <p class="status">
