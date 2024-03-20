@@ -635,7 +635,6 @@ button[type="submit"] {
   opacity: 0;
   pointer-events: none;
   transition: 0.3s linear;
-  z-index: 5;
 }
 
 .badankomen.show {
