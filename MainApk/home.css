@@ -210,6 +210,12 @@ button[type="submit"] {
     display: flex;
 }
 
+.bioyangkomen .text-danger{
+  display: flex;
+  align-items: center;
+  justify-content: center !important;
+}
+
 .photoprofile2 {
     background-color: #D6D6D6;
     width: 22px;
@@ -386,6 +392,11 @@ button[type="submit"] {
     position: relative;
     transform: translateY(100%);
     transition: 0.3s ease;
+    z-index: 99;
+  }
+
+  .carousel-control-next,.carousel-control-prev{
+    z-index: -1 !important;
   }
 
   .modal-button{

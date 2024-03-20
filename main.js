@@ -122,14 +122,6 @@ function timeAgo(dateString) {
     }
 }
 
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
-
 async function initpoin() {
     async function ceknip() {
         var inputField = document.getElementById("nipinput");
@@ -175,29 +167,29 @@ async function initpoin() {
 }
 
 function initpoin2(){
-    let phonenumber=localStorage.getItem('no_telp');
+    let email=localStorage.getItem('email');
 
     document.getElementById("submitBtn").addEventListener("click", function() {
-        var inputField = document.getElementById("PhoneNumberinput");
+        var inputField = document.getElementById("emailinput");
         var errortext = document.getElementById("errortext")
-        
-        var phoneNumber = inputField.value.trim();
-        if (phoneNumber === "") {
-            errortext.innerHTML="Please input your Phone Number"
-            errortext.classList.remove("hide")
-            return false;
-        }else{
-            if (phoneNumber.charAt(0) === '8') {
-                inputField.value = '0' + phoneNumber;
-            }
 
-            if (inputField.value==phonenumber) {
-                localStorage.removeItem('no_telp');
-                window.location.href="./otp_signup.html";        
+        if (inputField.value.trim() === "") {
+            errortext.innerHTML = "Please input your email address";
+            errortext.classList.remove("hide");
+        } else {
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(inputField.value)) {
+                errortext.innerHTML = "Email address is not valid";
+                errortext.classList.remove("hide");
             }else{
-                inputField.value = phoneNumber;
-                errortext.innerHTML="Phone number is not registered, please contact your PIC"
-                errortext.classList.remove("hide")
+                if (inputField.value==email) {
+                    errortext.classList.add("hide");
+                    window.location.href="./otp_signup.html";        
+                }else{
+                    inputField.value = email;
+                    errortext.innerHTML="Email is not registered, please contact your PIC"
+                    errortext.classList.remove("hide")
+                }
             }
         }
     });
@@ -211,12 +203,12 @@ function initpoin3() {
     dataNama.innerHTML = names;
 
     document.addEventListener('DOMContentLoaded', function() {
-        var emailInput = document.getElementById("emailinput");
-        var storedEmail = localStorage.getItem('email');
-        if (storedEmail !== null) {
-            emailInput.value = storedEmail;
-            localStorage.removeItem('email');
-        }
+        // var emailInput = document.getElementById("emailinput");
+        // var storedEmail = localStorage.getItem('email');
+        // if (storedEmail !== null) {
+        //     emailInput.value = storedEmail;
+        //     localStorage.removeItem('email');
+        // }
 
         var togglePassword = document.getElementById('togglePassword');
         var togglePassword2 = document.getElementById('togglePassword2');
@@ -268,13 +260,11 @@ function initpoin3() {
 
     document.getElementById("submitBtn").addEventListener("click", async function() {
         var username = document.getElementById('usernameInput');
-        var email = document.getElementById("emailinput");
         var password = document.getElementById('passwordinput');
         var password_confirmation = document.getElementById('passwordconfirmationinput');
         var profile_pic = document.getElementById('fileInput');
 
         var errortext0=document.getElementById("errortext0");
-        var errortext=document.getElementById("errortext");
         var errortext2=document.getElementById("errortext2");
         var errortext3=document.getElementById("errortext3");   
 
@@ -290,22 +280,6 @@ function initpoin3() {
                 errortext0.classList.remove("hide");
             }
         }        
-        
-
-        if (email.value.trim() === "") {
-            errortext.innerHTML = "Please input your email address";
-            errortext.classList.remove("hide");
-            // return false;
-        } else {
-            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email.value)) {
-                errortext.innerHTML = "Email address is not valid";
-                errortext.classList.remove("hide");
-                // return false;
-            }else{
-                errortext.classList.add('hide');
-            }
-        }
 
         if (password.value.trim() === "") {
             errortext2.innerHTML="Please input your Password"
@@ -351,7 +325,7 @@ function initpoin3() {
                 }
         }
 
-        if(errortext.classList.contains("hide") && errortext0.classList.contains("hide") && errortext2.classList.contains("hide") && errortext3.classList.contains("hide")){
+        if(errortext0.classList.contains("hide") && errortext2.classList.contains("hide") && errortext3.classList.contains("hide")){
             profile_pic = profile_pic.files[0];
 
             var formData = new FormData();
@@ -371,8 +345,7 @@ function initpoin3() {
                     if (response.success) {
                         window.location.href = "./MainApk/home.html";
                         return true;
-                    } else {
-                        // console.error('Error:', response.message);
+                    } else {;
                         errortext3.innerHTML = "Error in updating your data!";
                         errortext3.classList.remove("hide");
                     }
@@ -938,7 +911,7 @@ async function initpoin10() {
     var inp = [];
 
     async function loadReply(comment_id){
-        await requestdata('showReply?id='+comment_id);
+        await requestdata3('showReply?id='+comment_id);
         if(alldata.success){
             var replies = alldata.replies;
             var replyElements = [];
@@ -985,7 +958,7 @@ async function initpoin10() {
     }
 
     async function showcomments(post_Id) {
-        await requestdata('showComment?id=' + post_Id);
+        await requestdata3('showComment?id=' + post_Id);
         let html = ''; 
         if (alldata.success) {
             for (let i = 0; i < alldata.comments.length; i++) {
@@ -1244,7 +1217,7 @@ async function initpoin10() {
                     <img
                         id="ppModal"
                         class="photoprofile rounded-circle"
-                        src="https://static.wikia.nocookie.net/naruto/images/7/70/Naruto_newshot.jpg/revision/latest/scale-to-width-down/1200?cb=20141107130405&path-prefix=id"
+                        src=""
                         alt=""
                     />
                     </div>            
@@ -1332,8 +1305,15 @@ async function initpoin10() {
             btn.style.display = "none";
             updateHeight(70);
             document.body.style.overflow = "hidden";
+            sheetBody.innerHTML=`
+                <div id="loadingContainer">
+                    <div class="spinner" id="spin"></div>
+                </div>
 
+            `
             var comment = await showcomments(id);
+            var loadingContainer = document.getElementById("loadingContainer");
+            loadingContainer.parentNode.removeChild(loadingContainer);
             let showKomen = `
                 <div class="bioyangkomen row" id="komenField">
                     ${comment}
@@ -1341,12 +1321,16 @@ async function initpoin10() {
                     <textarea 
                     type="textarea" 
                     class="inputreply col-10"
+                    id="postInput"
+                    data-id="${id}"
+                    data-type="komen"
                     placeholder="Add comment..."></textarea>
                     
-                    <button class="ngepost col-2">
+                    <button class="ngepost col-2" id="btnInputPost">
                         Post
                     </button>
                     </div>
+                    <span id="errortext0" class="text-danger hide"></span>
                 </div>
             `
             sheetBody.innerHTML = showKomen;
@@ -1356,8 +1340,10 @@ async function initpoin10() {
                     let id = element.id.match(/\d+/)[0];
                     // console.log(id);
                     var div = document.getElementById("komenField" + id);
-                    var isi = await loadReply(id);
-                    div.innerHTML = isi;
+                    element.innerHTML=`
+                    <div class="spinner" id="spin"></div>
+                    `
+                    div.innerHTML = await loadReply(id);
                     if (div.style.display === "none") {
                         div.style.display = "block";
                         element.textContent = " — Hide Reply";
@@ -1367,6 +1353,98 @@ async function initpoin10() {
                     }
                 });
             });
+
+            var div = document.getElementById("postInput");
+            document.querySelectorAll('.tombolreply').forEach(element => {
+                element.addEventListener("click", async function () {
+                    let id = element.id.match(/\d+/)[0];
+                    // console.log(id);
+                    element.innerHTML=`
+                    <div class="spinner" id="spin"></div>
+                    `
+                    await requestdata3('tag?comment_id='+id)
+                    var spinnerElement = document.getElementById("spin");
+                    spinnerElement.parentNode.removeChild(spinnerElement);
+                    if(alldata.success){
+                        element.innerText = "Reply"
+                        div.value = `${alldata.tag} `;
+                        div.selectionStart = div.selectionEnd = div.value.length;
+                        div.focus();
+                        div.setAttribute("data-id", id);
+                        div.setAttribute("data-type", "reply");
+                    }
+                });
+            });
+
+            document.getElementById("btnInputPost").addEventListener( 'click', async function(){ 
+                // console.log("CLicked");
+                var value = div.value;
+                // console.log("value : " + value)
+                var regex = /@\S+/;
+                var isMatch = regex.test(value);
+                // console.log("Match : " + isMatch);
+                var errortext0 = document.getElementById('errortext0');
+                var jenis = div.getAttribute("data-type");
+                // console.log(jenis)
+                if(value.trim() === ''){
+                    errortext0.innerHTML = "Please  enter any comment!";
+                    errortext0.classList.remove("hide");
+                }else{
+                    errortext0.classList.add("hide");
+                }
+        
+                if (!isMatch) {
+                    var post_id = div.getAttribute("data-id");
+                    div.setAttribute("data-type", "komen");
+                    div.setAttribute("data-id", post_id);
+                } else {
+                    var match = value.match(/^[^ ]+/);;
+                    var tagValue = match[0];
+                    // console.log("TAG : " + tagValue);
+                    if(tagValue !== (alldata.tag)){
+                        // console.error("Format error: Teks tidak sesuai dengan format yang diharapkan.");
+                        // console.log("Tag invalid");
+                        errortext0.innerHTML = "Invalid tag"
+                        errortext0.classList.remove("hide");
+                    }else{
+                        if(value <= (alldata.tag + ' ')){
+                            errortext0.innerHTML = "Please  enter any replies!";
+                            errortext0.classList.remove("hide");
+                        }else{
+                            errortext0.classList.add("hide");
+                        }
+                    }
+                }
+                
+
+                if(errortext0.classList.contains("hide")){
+                    var user_id = localStorage.getItem('user_id')
+                    // console.log("SIAP KIRIM");
+                    if(jenis === "reply"){
+                        var comment_id = div.getAttribute("data-id");
+                        var value = div.value.trim();
+                        var match = value.match(/^[^ ]+\s(.+)/);
+                        var reply = match[1];
+                        await requestdata(`createReply?user_id=${user_id}&comment_id=${comment_id}&reply=${reply}`)
+                        if(alldata.success){
+                            showSheets(id)
+                        }else{
+                            errortext0.innerHTML = alldata.message;
+                            errortext0.classList.remove("hide");
+                        }
+                       
+                    }else if(jenis === "komen"){
+                        var post_id = div.getAttribute("data-id");
+                        await requestdata(`createComment?user_id=${user_id}&post_id=${post_id}&comment=${value}`)
+                        if(alldata.success){
+                            showSheets(post_id)
+                        }else{
+                            errortext0.innerHTML = alldata.message;
+                            errortext0.classList.remove("hide");
+                        }
+                    }
+                }
+             });
             
         };
 
