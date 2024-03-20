@@ -876,7 +876,7 @@ async function initpoin9() {
     var waktu = document.getElementById("Test_DatetimeLocal").value;
     var jam = document.getElementById("selectopt").value;
     // var uri='http://'+window.location.hostname+':5500/Konsultasi_dokter/list.html'
-    var uri='http://'+window.location.hostname+'/Heeru-FronD/Konsultasi_dokter/konsultasiRiwayat.html'
+    var uri='https://'+window.location.hostname+'/Heeru-FronD/Konsultasi_dokter/konsultasiRiwayat.html'
     var data = {
         iddokter: iddokter,
         idpasien: idpasien,
