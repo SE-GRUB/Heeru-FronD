@@ -306,6 +306,7 @@ button[type="submit"] {
     padding: 10px;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 1.25rem;
+    z-index: 1 !important;
 }
 
 .buletin {
