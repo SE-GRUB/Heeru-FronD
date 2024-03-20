@@ -2034,7 +2034,7 @@ async function initpoin17(){
         var onprogressContent = '';
         alldata.reports.forEach(report => {
             var kotak = `
-            <a href="/MainApk/Laporan/detailRiwayatLaporan.html?report_id=${report.id}">
+            <a href="./MainApk/Laporan/detailRiwayatLaporan.html?report_id=${report.id}">
                 <div class="kotak" id="OP${report.id}">
                     <div class="tulisan">
                         <p class="status">${report.isProcess == 0 ? 'Report Submitted' : 'Report Under Review'}</p>
@@ -2059,7 +2059,7 @@ async function initpoin17(){
         var doneContent = '';
         alldata.reports.forEach(report => {
             var kotak = `
-            <a href="/MainApk/Laporan/detailRiwayatLaporan.html?report_id=${report.id}">
+            <a href="./MainApk/Laporan/detailRiwayatLaporan.html?report_id=${report.id}">
                 <div class="kotak" id= "D${report.id}" >
                     <div class="tulisan">
                         <p class="status">Done</p>
@@ -2139,7 +2139,7 @@ async function initpoin18(){
             if (consultation.endIn) {
                 sessionStorage.setItem("uid", 'dh1');
                 kotak = `
-                <a href="/CHAT/last.html">
+                <a href="./CHAT/last.html">
                     <div class="kotak" id="OP_CON${consultation.id}">
                         <div class="tulisan">
                             <p class="status">
