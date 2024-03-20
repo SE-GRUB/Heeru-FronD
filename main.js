@@ -1314,23 +1314,10 @@ async function initpoin10() {
             var comment = await showcomments(id);
             var loadingContainer = document.getElementById("loadingContainer");
             loadingContainer.parentNode.removeChild(loadingContainer);
+            document.querySelector('.buatreply').style.display = 'flex';
             let showKomen = `
                 <div class="bioyangkomen row" id="komenField">
                     ${comment}
-                    <div class="buatreply">
-                    <textarea 
-                    type="textarea" 
-                    class="inputreply col-10"
-                    id="postInput"
-                    data-id="${id}"
-                    data-type="komen"
-                    placeholder="Add comment..."></textarea>
-                    
-                    <button class="ngepost col-2" id="btnInputPost">
-                        Post
-                    </button>
-                    </div>
-                    <span id="errortext0" class="text-danger hide"></span>
                 </div>
             `
             sheetBody.innerHTML = showKomen;
@@ -1427,6 +1414,7 @@ async function initpoin10() {
                         var reply = match[1];
                         await requestdata(`createReply?user_id=${user_id}&comment_id=${comment_id}&reply=${reply}`)
                         if(alldata.success){
+                            // document.getElementById("tombolViewRep"+comment_id).click();
                             showSheets(id)
                         }else{
                             errortext0.innerHTML = alldata.message;
@@ -1452,6 +1440,7 @@ async function initpoin10() {
         bottomSheet.classList.remove("show");
         btn.style.display = "block";
         document.body.style.overflow = "auto";
+        document.querySelector('.buatreply').style.display = 'none'
         };
 
         let dragStart = (e) => {

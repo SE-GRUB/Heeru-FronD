@@ -188,6 +188,7 @@ p {
   /* padding-top: 100%; */
   aspect-ratio: 1/1;
   border-radius: 10px 10px 0px 0px;
+  object-fit: cover;
   /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.295); */
 }
 
@@ -262,6 +263,7 @@ img.gambar {
   border-radius: 50%;
   margin: 10px;
   margin-right: 1rem;
+  object-fit: cover;
 }
 
 .sortcard-info {
