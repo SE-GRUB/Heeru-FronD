@@ -148,7 +148,7 @@ async function initpoin() {
                     localStorage.setItem('profile_pic', profile_pic);
                     password = alldata.user['password'];
                     localStorage.setItem('password', password);
-                    if (nip=="8978") {
+                    if (nip==8978) {
                         window.location.href = "./MainApk/home.html";
                     }else{
                         window.location.href = "./sign_up2.html";
