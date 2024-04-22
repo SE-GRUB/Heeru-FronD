@@ -135,7 +135,7 @@ async function initpoin() {
             alldata = await requestdata(`checkuser?nip=${inputField.value}`);
             try {
                 if (alldata.success) {
-                    nip = alldata.user["nip"];
+                    nip = inputField.value;
                     username = alldata.user["name"];
                     localStorage.setItem('username', username);
                     no_telp = alldata.user["no_telp"];
